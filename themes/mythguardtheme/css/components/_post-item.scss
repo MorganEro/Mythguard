@@ -1,0 +1,13 @@
+@use 'sass:color';
+@use '../abstracts/variables' as v;
+
+.post-item {
+  border-bottom: 1px dotted color.adjust(v.$blue-grey, $alpha: -0.8);
+  padding-bottom: 1.7rem;
+  margin-bottom: 1.7rem;
+
+  &:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+}

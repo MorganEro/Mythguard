@@ -1,0 +1,128 @@
+<?php
+get_header();
+
+while (have_posts()) {
+    the_post();
+    pageBanner();
+?>
+
+    <div class="container container--narrow page-section">
+        <div class="metabox metabox--position-up metabox--with-home-link">
+            <p>
+                <a class="metabox__blog-home-link" href="<?php echo get_post_type_archive_link('location'); ?>">
+                    <i class="fa fa-home" aria-hidden="true"></i> All Locations
+                </a>
+                <span class="metabox__main"><?php the_title(); ?></span>
+            </p>
+        </div>
+
+        <div class="generic-content">
+            <?php the_content(); ?>
+        </div>
+
+        <!-- Map Container -->
+        <div class="acf-map">
+            <div class="marker" 
+                 data-lat="<?php echo get_field('coordinates')['latitude']; ?>"
+                 data-lng="<?php echo get_field('coordinates')['longitude']; ?>"
+                 data-type="<?php echo get_field('location_type'); ?>">
+                <h3><?php the_title(); ?></h3>
+                <p><?php echo get_field('address'); ?></p>
+            </div>
+        </div>
+
+        <?php
+        $relatedPrograms = get_field('related_programs');
+
+        if ($relatedPrograms) {
+            echo '<hr class="section-break">';
+            echo '<h2 class="headline headline--medium">Available Programs</h2>';
+            echo '<ul class="link-list min-list">';
+            foreach($relatedPrograms as $program) { ?>
+                <li><a href="<?php echo get_the_permalink($program); ?>"><?php echo get_the_title($program); ?></a></li>
+            <?php }
+            echo '</ul>';
+        }
+        ?>
+
+        <?php
+        $relatedGuardians = new WP_Query(array(
+            'posts_per_page' => -1,
+            'post_type' => 'guardian',
+            'orderby' => 'title',
+            'order' => 'ASC',
+            'meta_query' => array(
+                array(
+                    'key' => 'related_programs',
+                    'compare' => 'LIKE',
+                    'value' => '"' . get_the_ID() . '"'
+                )
+            )
+
+        ));
+
+        if ($relatedGuardians->have_posts()) {
+
+            echo '<hr class="section-break">';
+            echo '<h2 class="headline headline--medium">' . get_the_title() . ' Guardians</h2>';
+
+
+            echo '<ul class="guardian-cards">';
+            while ($relatedGuardians->have_posts()) {
+                $relatedGuardians->the_post(); ?>
+                <li class="guardian-card__list-item">
+                    <a class="guardian-card" href="<?php the_permalink(); ?>">
+                        <img class="guardian-card__image" src="<?php the_post_thumbnail_url('guardianLandscape') ?>">
+                        <span class="guardian-card__name"><?php the_title(); ?></span>
+                    </a>
+                </li>
+        <?php
+            }
+            echo '</ul>';
+        }
+
+
+        wp_reset_postdata(); // Reset the main query loop before starting a new one
+
+        $today = date('Ymd');
+        $homepageEvents = new WP_Query(array(
+            'posts_per_page' => 2,
+            'post_type' => 'event',
+            'orderby' => 'meta_value',
+            'meta_key' => 'event_date',
+            'order' => 'ASC',
+            'meta_query' => array(
+                array(
+                    'key' => 'event_date',
+                    'compare' => '>=',
+                    'value' => $today,
+                    'type' => 'numeric'
+                ),
+                array(
+                    'key' => 'related_programs',
+                    'compare' => 'LIKE',
+                    'value' => '"' . get_the_ID() . '"'
+                )
+            )
+
+        ));
+
+        if ($homepageEvents->have_posts()) {
+
+            echo '<hr class="section-break">';
+            echo '<h2 class="headline headline--medium">Upcoming ' . get_the_title() . ' Events</h2>';
+
+            while ($homepageEvents->have_posts()) {
+                $homepageEvents->the_post();
+                get_template_part('template-parts/content', 'event');
+            }
+        }
+        ?>
+
+    </div>
+
+<?php
+}
+
+get_footer();
+?>

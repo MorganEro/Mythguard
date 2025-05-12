@@ -1,0 +1,37 @@
+// Mixins for media queries
+
+@mixin atSmall {
+  @media (min-width: 530px) {
+    @content;
+  }
+}
+
+@mixin atSmallMedium {
+  @media (min-width: 767px) {
+    @content;
+  }
+}
+
+@mixin atMedium {
+  @media (min-width: 960px) {
+    @content;
+  }
+}
+
+// Animation mixins
+
+@mixin glow-animation {
+  animation: glowingField 1.5s infinite;
+}
+
+@mixin fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@mixin glow-animation-focus {
+  animation: glowingFieldFocus 1.5s infinite;
+}
+
+@mixin pulse-animation {
+  animation: pulse 2s ease-in-out infinite;
+}

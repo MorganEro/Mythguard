@@ -1,0 +1,75 @@
+@use '../abstracts/variables' as v;
+
+.toast-container {
+  position: fixed;
+  top: 1.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: v.$toast;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.toast {
+  padding: .7rem 1.2rem;
+  margin-bottom: .7rem;
+  border-radius: v.$radius-sm;
+  color: v.$text-main;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  font-family: 'Open Sans', sans-serif;
+  border: 1px solid v.$gold;
+
+  &--success {
+    background-color: v.$toast-success;
+  }
+
+  &--error {
+    background-color: v.$toast-error;
+  }
+
+  &--confirm {
+    background-color: v.$white;
+    color: v.$text-dark;
+    padding: 1rem;
+    min-width: 300px;
+  }
+
+  &--fade {
+    opacity: 0;
+  }
+
+  &__message {
+    margin-bottom: 1rem;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+  }
+
+  &__button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: v.$radius-sm;
+    cursor: pointer;
+    font-family: 'Open Sans', sans-serif;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    &--confirm {
+      background-color: v.$rusty-orange;
+      color: v.$text-main;
+    }
+
+    &--cancel {
+      background-color: v.$blue-grey;
+      color: v.$text-main;
+    }
+  }
+}

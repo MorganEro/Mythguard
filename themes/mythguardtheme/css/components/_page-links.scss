@@ -1,0 +1,60 @@
+@use 'sass:color';
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+.page-links {
+  position: relative;
+  z-index: 1;
+  background-color: color.adjust(v.$blue-grey, $alpha: -0.95);
+  margin: 0 0 2rem 0;
+  @include m.atSmallMedium {
+    margin: 0 0 2rem 1.2rem;
+    width: 300px;
+    float: right;
+  }
+
+  &__title {
+    margin: 0;
+    font-weight: normal;
+    text-align: center;
+    padding: 1.2rem 0;
+    background-color: v.$blue-grey;
+    color: v.$text-main;
+
+    a {
+      color: v.$text-main;
+      text-decoration: none;
+      background-color: v.$blue-grey;
+    }
+  }
+
+  li {
+    border-top: 1px solid color.adjust(v.$blue-grey, $alpha: -0.8);
+  }
+
+  li:first-child {
+    border-top: none;
+  }
+
+  &__active,
+  & .current_page_item {
+    text-align: center;
+    background-color: color.adjust(v.$blue-grey, $alpha: -0.9);
+    color: v.$blue-grey;
+    font-weight: bold;
+  }
+
+  li a {
+    display: block;
+    text-align: center;
+    padding: 1rem .7rem;
+    text-decoration: none;
+    color: v.$blue-grey;
+    transition: all 0.3s;
+  }
+
+  li a:hover {
+    color: color.scale(v.$blue-grey, $lightness: -10%);
+    background-color: rgba(v.$blue-grey, 0.15);
+  }
+}

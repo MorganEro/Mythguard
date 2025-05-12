@@ -1,0 +1,66 @@
+@use 'sass:color';
+@use '../../abstracts/variables' as v;
+@use '../../abstracts/mixins' as m;
+@use '../../base/animations' as a;
+
+.single-contract-title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(v.$blue-grey, 0.25);
+}
+
+.single-contract-title-field {
+  font-size: 1.5rem;
+  font-weight: bold;
+  border: none;
+  background: transparent;
+  width: 70%;
+}
+
+.single-contract-status {
+  font-family: 'Cinzel', serif;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: v.$radius-full;
+
+  &.active {
+    background-color: v.$contract-status-active-bg;
+    color: v.$contract-status-active;
+    border: 1px solid v.$contract-status-active;
+  }
+
+  &.inactive {
+    background-color: v.$contract-status-inactive-bg;
+    color: v.$contract-status-inactive;
+    border: 1px solid v.$contract-status-inactive;
+  }
+}
+
+.single-contract-details__row {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+
+.single-contract-details__row strong {
+  color: #666;
+}
+
+.single-contract-details__row textarea {
+  min-height: 100px;
+}
+
+.single-contract-actions {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ddd;
+  display: flex;
+  gap: 1rem;
+}

@@ -1,0 +1,147 @@
+@use 'sass:color';
+@use '../../abstracts/variables' as v;
+@use '../../abstracts/mixins' as m;
+@use '../../base/animations' as a;
+
+.create-contract-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50%;
+  width: 70%;
+  max-width: 500px;
+  margin: 0 auto;
+
+  @include m.atSmallMedium {
+    width: 55%;
+    height: 70%;
+  }
+
+  &__fields {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    width: 95%;
+    max-width: 95%;
+    padding-inline: 5px;
+    padding-block: 5px;
+    border: 1px solid rgba(v.$blue-grey, 0.25);
+  }
+
+  &__actions {
+    padding: 1rem;
+    border: 1px solid rgba(v.$blue-grey, 0.1);
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-top: 0.7rem;
+  }
+}
+
+/* Create contract */
+.create-contract {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  background-color: color.scale(v.$blue-grey, $lightness: 80%);
+  padding: 1.5rem;
+  border-radius: v.$radius-sm;
+}
+
+// Reveal Fields
+.form-group {
+  position: relative;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+
+  &.floating-label {
+    width: 100%;
+    position: relative;
+
+    label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateY(-50%);
+      padding: 0 0.5rem;
+      transition: all 0.2s ease;
+      pointer-events: none;
+      color: v.$text-muted;
+      font-size: 0.9rem;
+    }
+
+    input,
+    textarea,
+    select {
+      font-size: 0.9rem;
+    }
+  }
+
+  &.is-hidden {
+    input,
+    textarea,
+    select {
+      display: none;
+    }
+
+    .reveal-input-btn {
+      display: inline-block;
+      color: v.$rusty-orange;
+      font-weight: 500;
+      border: none;
+      border-radius: v.$radius-sm;
+      background: color.adjust(v.$rusty-orange, $alpha: -0.95);
+      width: 100%;
+      text-align: left;
+      transition: all 0.2s ease;
+      position: relative;
+      pointer-events: auto;
+      font-size: 1rem;
+      padding: 0.1rem;
+
+      &::after {
+        content: '+';
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+
+      &:hover {
+        background: color.adjust(v.$rusty-orange, $alpha: -0.9);
+        outline: 1px solid v.$rusty-orange;
+      }
+
+      &:focus {
+        outline: 1px solid v.$rusty-orange;
+      }
+    }
+  }
+
+ 
+
+  &.active {
+    &.floating-label {
+      button:not(.reveal-input-btn) {
+        transform: translateY(-50%) scale(0.8);
+        color: v.$rusty-orange;
+      }
+    }
+
+    input,
+    textarea,
+    select {
+      display: block;
+    }
+
+    .reveal-input-btn {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,114 @@
+@use 'sass:color';
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+/* Page Sections */
+.page-section {
+  padding-top: 3rem;
+  padding-bottom: 1.6rem;
+
+  @include m.atSmall {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  &--white {
+    background-color: v.$white;
+  }
+
+  &--beige {
+    background-color: color.adjust(v.$blue-grey, $alpha: -0.95);
+  }
+
+  &__list-item {
+    display: inline-block;
+    list-style: none;
+  }
+
+  p:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+/* Full Width Split Layout */
+.full-width-split {
+  @include m.atMedium {
+    display: flex;
+  }
+
+  &__one {
+    flex: 1;
+    padding: 1.6rem 1rem;
+    @include m.atMedium {
+      padding: 2.5rem;
+    }
+
+    .full-width-split__inner {
+      @include m.atMedium {
+        float: right;
+      }
+    }
+  }
+
+  &__two {
+    flex: 1;
+    background-color: color.adjust(v.$blue-grey, $alpha: -0.95);
+    padding: 1.6rem 1rem;
+    @include m.atMedium {
+      padding: 2.5rem;
+    }
+  }
+
+  &__inner {
+    @media (min-width: 1350px) {
+      width: 610px;
+    }
+  }
+}
+
+/* Grid System */
+.one-half,
+.one-third,
+.one-fourth,
+.one-fifth,
+.one-sixth {
+  padding-bottom: 1.6rem;
+}
+
+@include m.atMedium {
+  .row {
+    margin-right: -3rem;
+  }
+
+  .one-half,
+  .one-third,
+  .two-thirds,
+  .one-fourth,
+  .one-fifth,
+  .one-sixth {
+    padding-bottom: 0;
+    float: left;
+    box-sizing: border-box;
+    padding-right: 3rem;
+  }
+
+  .two-thirds {
+    width: 66.66%;
+  }
+  .one-half {
+    width: 50%;
+  }
+  .one-third {
+    width: 33.33%;
+  }
+  .one-fourth {
+    width: 25%;
+  }
+  .one-fifth {
+    width: 20%;
+  }
+  .one-sixth {
+    width: 16.66%;
+  }
+
+}

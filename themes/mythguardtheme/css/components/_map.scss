@@ -1,0 +1,321 @@
+@use 'sass:color';
+@use '../abstracts/variables' as v;
+
+// Basic map container
+.acf-map {
+  width: 100%;
+  height: 700px;
+  border: color.adjust(v.$blue-grey, $alpha: -0.8) solid 1px;
+  margin: 1.5rem 0;
+  position: relative;
+  border-radius: v.$radius-md;
+  margin-bottom: 2rem;
+
+  // Fix potential theme conflicts
+  img {
+    max-width: inherit !important;
+  }
+
+  // Archive page specific styles
+  &.archive-map {
+    height: 700px;
+  }
+}
+
+// Map popup styling
+.map-popup-content {
+  padding: 1.3rem;
+  max-width: 300px;
+  font-family: 'Open Sans', sans-serif;
+
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: v.$blue-grey;
+    font-weight: 600;
+  }
+
+  .directions-form {
+    margin-top: 1.3rem;
+
+    input {
+      width: 100%;
+      padding: .8rem;
+      margin-bottom: 1rem;
+      border: 1px solid color.adjust(v.$blue-grey, $alpha: -0.8);
+      border-radius: v.$radius-sm;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+
+      &:focus {
+        outline: none;
+        border-color: v.$blue-grey;
+        box-shadow: 0 0 0 2px color.adjust(v.$blue-grey, $alpha: -0.9);
+      }
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: .8rem;
+
+      button {
+        width: 100%;
+        padding: .8rem;
+        background: v.$blue-grey;
+        color: v.$text-main;
+        border: none;
+        border-radius: v.$radius-sm;
+        cursor: pointer;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+
+        &:hover {
+          background: color.adjust(v.$blue-grey, $lightness: 10%);
+          transform: translateY(-1px);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+      }
+    }
+  }
+}
+
+// Map container
+.acf-map {
+  position: relative;
+  height: 500px;
+  margin-bottom: 2rem;
+  border-radius: v.$radius-md;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  // Hide marker divs
+  .marker {
+    display: none;
+  }
+
+  // Common routing container styles for both single and archive pages
+  &.show-directions {
+    .leaflet-routing-container {
+      background: v.$white;
+      border-radius: v.$radius-md;
+      box-shadow: 0 8px 16px rgba(v.$blue-grey, 0.1);
+      border: 1px solid rgba(v.$blue-grey, 0.1);
+      overflow: hidden;
+      position: relative;
+
+      // Header styling
+      .leaflet-routing-container-hide {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        background: none;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        color: white;
+        cursor: pointer;
+        font-size: 1.2rem;
+        padding: 0.5rem;
+        transition: all 0.3s ease;
+        border-radius: v.$radius-sm;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: v.$base;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.1);
+          transform: rotate(90deg);
+          border-color: rgba(255, 255, 255, 0.4);
+        }
+      }
+
+      // Directions content
+      .leaflet-routing-alt {
+        padding: 1.5rem;
+        background: linear-gradient(
+          to bottom,
+          rgba(27, 54, 93, 0.02),
+          transparent
+        );
+
+        h2,
+        h3 {
+          font-family: 'Cinzel', serif;
+          font-size: 1.4rem;
+          margin: 0 0 1.5rem;
+          color: v.$blue-grey;
+          font-weight: 600;
+          padding: 1.5rem;
+          background: v.$blue-grey;
+          color: v.$text-main;
+          margin: -1.5rem 0 2rem 0;
+          border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 1rem;
+          margin-right: 2.5rem;
+        }
+
+        tr {
+          &:nth-child(even) {
+            background-color: rgba(v.$blue-grey, 0.03);
+          }
+
+          &:hover {
+            background-color: rgba(v.$blue-grey, 0.06);
+          }
+        }
+
+        td {
+          padding: 1rem;
+          border-bottom: 1px solid rgba(v.$blue-grey, 0.05);
+          font-family: 'Open Sans', sans-serif;
+          color: v.$text-dark;
+
+          &:first-child {
+            width: 3rem;
+            color: v.$blue-grey;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+
+  // Single location page specific styles
+  &.show-directions:not(.archive-map) {
+    display: flex;
+
+    .leaflet-container {
+      width: 50% !important;
+      border-right: 2px solid v.$blue-grey;
+    }
+
+    .leaflet-routing-container {
+      width: 50%;
+      position: relative !important;
+      top: 7px !important;
+      left: -7px !important;
+      margin: 0 !important;
+    }
+
+    @media screen and (max-width: 767px) {
+      flex-direction: column;
+
+      .leaflet-container {
+        width: 100% !important;
+        height: 350px !important;
+        border-right: none;
+        border-bottom: 2px solid v.$blue-grey;
+      }
+
+      .leaflet-routing-container {
+        width: 100% !important;
+        // height: 350px;
+        top: 0 !important;
+        left: 0 !important;
+      }
+    }
+  }
+
+  // Archive page specific styles
+  &.show-directions.archive-map {
+    .leaflet-routing-container {
+      position: relative !important;
+      top: 2rem !important;
+      margin-bottom: 2rem !important;
+      width: 100% !important;
+
+      .leaflet-routing-alt {
+        table {
+          width: 100%;
+          border-collapse: separate;
+          border-spacing: 0 0.5rem;
+          font-family: 'Open Sans', sans-serif;
+
+          tr {
+            transition: all 0.3s ease;
+            border-radius: v.$radius-sm;
+            overflow: hidden;
+
+            &:nth-child(even) {
+              background: rgba(27, 54, 93, 0.03);
+            }
+
+            &:hover {
+              background: rgba(27, 54, 93, 0.06);
+              transform: translateX(4px);
+            }
+          }
+
+          td {
+            padding: 1rem;
+            line-height: 1.6;
+            font-size: 1rem;
+            color: #4a4a4a;
+
+            &:first-child {
+              color: v.$blue-grey;
+              font-weight: 600;
+              width: 80px;
+              text-align: center;
+              background: rgba(27, 54, 93, 0.05);
+              border-right: 2px solid rgba(27, 54, 93, 0.1);
+              border-radius: 0.25rem 0 0 0.25rem;
+            }
+
+            &:last-child {
+              border-radius: 0 0.25rem 0.25rem 0;
+            }
+          }
+        }
+
+        // Customize scrollbar
+        &::-webkit-scrollbar {
+          width: 8px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: rgba(27, 54, 93, 0.05);
+          border-radius: v.$radius-sm;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: v.$blue-grey;
+          border-radius: v.$radius-sm;
+          border: 2px solid rgba(255, 255, 255, 0.8);
+
+          &:hover {
+            background: color.adjust(v.$blue-grey, $lightness: 10%);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Hide unnecessary elements
+.leaflet-routing-geocoders,
+.leaflet-bottom,
+.leaflet-routing-error {
+  display: none;
+}
+
+.leaflet-routing-collapse-btn {
+  right: 1rem;
+  cursor: pointer;
+}

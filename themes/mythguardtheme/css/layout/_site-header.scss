@@ -1,0 +1,245 @@
+@use 'sass:color';
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+.body--blurred {
+  overflow: hidden; // Optional: lock scroll
+
+  > *:not(.site-header) {
+    filter: blur(5px);
+    transition: filter 0.3s ease;
+  }
+}
+
+.site-header {
+  z-index: v.$base;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(v.$blue-grey, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  &__avatar {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  &__avatar img {
+    display: block;
+    width: 30px;
+    height: 30px;
+  }
+
+  &__inner {
+    display: flex;
+
+    @include m.atMedium {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  &__mobile-group {
+    display: flex;
+    width: 100%;
+    justify-content: start;
+    align-items: center;
+    gap: .8rem;
+
+    @include m.atMedium {
+      .forMobile {
+        display: none;
+      }
+    }
+  }
+
+  &__menu {
+    visibility: hidden;
+    position: absolute;
+    background-color: color.adjust(v.$blue-grey, $alpha: -0.15);
+    left: 0;
+    right: 0;
+    top: 0;
+    padding-top: 3.6rem;
+    padding-bottom: 2rem;
+    opacity: 0;
+    transform: translateY(-20%);
+    transition: all 0.3s ease-out;
+
+    &--active {
+      opacity: 1;
+      transform: translateY(0);
+      visibility: visible;
+      backdrop-filter: blur(10px);
+    }
+
+    @include m.atMedium {
+      display: flex;
+      align-items: center;
+      justify-content: end;
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      background-color: transparent;
+      padding-top: 0;
+      padding-bottom: 0;
+      top: 0;
+      margin-right: 1.5rem;
+    }
+  }
+
+  &__search-trigger {
+    cursor: pointer;
+    color: v.$white;
+    font-size: 1.2rem;
+
+    @include m.atSmall {
+      font-size: 1.4rem;
+    }
+
+    @include m.atMedium {
+      display: none;
+    }
+  }
+
+  &__menu-trigger {
+    color: v.$white;
+    cursor: pointer;
+    font-size: 1.2rem;
+    z-index: v.$modal;
+
+    @include m.atSmall {
+      font-size: 1.4rem;
+    }
+
+    @include m.atMedium {
+      display: none;
+    }
+  }
+
+  &__util {
+    display: flex;
+    margin-left: 1.5rem;
+    @include m.atSmall {
+    }
+
+    .search-trigger {
+      display: none;
+
+      @include m.atMedium {
+        display: inline-block;
+      }
+    }
+
+    a {
+      text-decoration: none;
+    }
+  }
+
+  &__btn {
+    margin-right: 1.5rem;
+    @include m.atMedium {
+      float: left;
+    }
+  }
+
+  .btn--with-photo {
+    margin-right: 0;
+  }
+}
+
+// Main Navigation
+.main-navigation {
+  padding-block: 1.5rem;
+
+  @include m.atMedium {
+    padding-block: 0;
+  }
+
+  &__list {
+    display: flex;
+    padding-left: 1.5rem;
+    flex-direction: column;
+    gap: 1rem;
+
+    @include m.atMedium {
+      flex-direction: row;
+    }
+  }
+}
+
+.main-navigation a {
+  color: v.$text-main;
+  font-weight: 300;
+  font-family: 'Cinzel', serif;
+}
+
+.main-navigation .current-menu-item a,
+.main-navigation a:hover {
+  color: v.$gold;
+}
+
+/* Search Trigger */
+.search-trigger {
+  display: none;
+  color: v.$text-main;
+  position: relative;
+  cursor: pointer;
+  top: 1px;
+  margin-left: 1.5rem;
+
+  @include m.atMedium {
+    display: inline-block;
+    top: 6px;
+  }
+
+  &:hover {
+    opacity: 0.65;
+  }
+}
+
+/* Navigation Lists */
+.nav-list {
+  a {
+    font-size: 0.9rem;
+    color: v.$text-muted;
+
+    &:hover {
+      color: v.$white;
+      text-decoration: underline;
+    }
+  }
+}
+
+/* Logo Text */
+.agency-logo-text {
+  margin-block: 0;
+  margin-right: auto;
+  z-index: v.$logo;
+
+  font-size: 1.75rem;
+  font-weight: 100;
+  font-family: 'Cinzel', serif;
+
+  strong {
+    font-weight: 400;
+  }
+
+  a {
+    color: v.$text-main;
+    text-decoration: none;
+  }
+
+  &--alt-color a {
+    color: color.scale(v.$text-dark, $alpha: -40%);
+
+    &:hover {
+      color: v.$blue-grey;
+      text-decoration: underline;
+    }
+  }
+}

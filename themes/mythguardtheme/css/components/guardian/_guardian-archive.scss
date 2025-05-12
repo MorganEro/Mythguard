@@ -1,0 +1,92 @@
+@use 'sass:color';
+@use '../../abstracts/variables' as v;
+@use '../../abstracts/mixins' as m;
+
+.guardian-archive {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 3rem;
+  justify-content: center;
+  width: 100%;
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 350px;
+    background-color: color.scale(v.$list-item-bg, $lightness: -2%);
+    border: 1px solid rgba(v.$rusty-orange, 0.35);
+    border-radius: v.$radius-md;
+    box-shadow: 0 4px 1rem rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 1rem rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  &__subtitle {
+    padding: 1rem 1.25rem 0 1.25rem;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: v.$rusty-orange;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+  }
+
+  &__image-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: v.$radius-sm;
+    border-bottom-right-radius: v.$radius-sm;
+    overflow: hidden;
+
+    &:hover .guardian-archive__title {
+      @include m.atMedium {
+        opacity: 1;
+        transform: scaleY(1);
+      }
+    }
+  }
+
+  &__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 10%;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: v.$radius-sm;
+    border-bottom-right-radius: v.$radius-sm;
+  }
+
+  &__title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(v.$rusty-orange, 0.95);
+    color: v.$white;
+    text-align: center;
+    font-weight: 700;
+    padding: 0.75rem;
+    font-size: 1.5rem;
+    letter-spacing: 0.5px;
+
+    @include m.atMedium {
+      opacity: 0;
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: all 0.3s ease;
+    }
+  }
+}

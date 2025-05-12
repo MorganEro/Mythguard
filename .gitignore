@@ -1,0 +1,11 @@
+uploads 
+node_modules
+upgrade
+upgrade-temp-backup
+ai1wm-backups
+/index.php
+wpvivid_staging
+wpvivid_uploads
+wpvividbackups
+/themes/index.php
+/plugins/index.php

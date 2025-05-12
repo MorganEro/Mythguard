@@ -1,0 +1,60 @@
+@use '../abstracts/variables' as v;
+
+// Glow Animations
+@keyframes glowingField {
+  0% {
+    box-shadow: 0 0 0 0 v.$gold;
+  }
+
+  50% {
+    box-shadow: 0 0 3px v.$gold;
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 v.$gold;
+  }
+}
+
+@keyframes glowingFieldFocus {
+  0% {
+    box-shadow: 0 0 0 0 v.$blue-grey;
+  }
+
+  50% {
+    box-shadow: 0 0 3px v.$blue-grey;
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 v.$blue-grey;
+  }
+}
+
+// Pulse Animations
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+}
+
+// Fade Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Animation Mixins

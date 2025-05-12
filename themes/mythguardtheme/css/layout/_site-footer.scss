@@ -1,0 +1,73 @@
+@use 'sass:color';
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+.site-footer {
+  padding: 2rem 0 3.5rem 0;
+  background-color: v.$blue-grey;
+  color: v.$text-main;
+
+  p {
+    font-size: 0.9rem;
+  }
+
+  .headline {
+    color: v.$gold;
+    margin-bottom: 0.5rem;
+  }
+
+  &__link {
+    color: v.$text-muted;
+    text-decoration: none;
+  }
+
+  &__link:hover {
+    color: v.$white;
+    text-decoration: underline;
+  }
+
+  &__inner {
+    padding-top: 2rem;
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, auto);
+    grid-template-areas:
+      'one one'
+      'two three'
+      'four four';
+
+    @include m.atSmall {
+      justify-items: start;
+      grid-template-columns: 1fr 1fr 1fr max-content;
+      grid-template-areas: 'one two three four';
+    }
+  }
+
+  &__col-one {
+    grid-area: one;
+    text-align: center;
+  }
+
+  &__col-two {
+    grid-area: two;
+    @include m.atSmall {
+      text-align: center;
+    }
+  }
+  &__col-three {
+    grid-area: three;
+    @include m.atSmall {
+      text-align: center;
+    }
+  }
+  &__col-four {
+    grid-area: four;
+    padding-top: 1.4rem;
+    text-align: center;
+    @include m.atSmall {
+      padding-top: 0;
+      margin: 0;
+    }
+  }
+}

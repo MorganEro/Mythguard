@@ -1,0 +1,125 @@
+@use 'sass:color';
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+.headline {
+  margin: 0;
+  font-family: 'Cinzel', serif;
+  font-weight: 300;
+
+  &--large {
+    font-size: 3.6rem;
+    @include m.atSmall {
+      font-size: 6.25rem;
+    }
+  }
+
+  &--large-medium {
+    font-size: 5rem;
+    margin: 0 0 1rem 0;
+  }
+
+  &--medium {
+    font-size: 1.9rem;
+    margin-bottom: 0.75rem;
+    @include m.atSmall {
+      font-size: 3.125rem;
+    }
+  }
+
+  &--small-plus {
+    font-family: 'Cinzel', serif;
+    font-size: 1.6875rem;
+    font-weight: 400;
+    margin-bottom: 1.9rem;
+  }
+
+  &--small {
+    font-size: 1.2rem;
+    margin-bottom: 1.9rem;
+    @include m.atSmall {
+      font-size: 1.6875rem;
+    }
+  }
+
+  &--smaller {
+    font-size: 1.5rem;
+  }
+
+  &--tiny {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3875rem;
+    margin-bottom: 0.25rem;
+  }
+}
+
+.generic-content {
+  p,
+  li {
+    font-size: 1.15rem;
+  }
+
+  blockquote,
+  blockquote p {
+    font-size: 1.5rem;
+    font-style: italic;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Cinzel', serif;
+    font-weight: 300;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: v.$rusty-orange;
+
+    &.wp-block-heading {
+        margin-top: 2rem;
+    }
+  }
+
+  h1 {
+    font-size: 3.6rem;
+  }
+  h2 {
+    font-size: 3.1rem;
+  }
+  h3 {
+    font-size: 2.6rem;
+  }
+  h4 {
+    font-size: 2.1rem;
+  }
+  h5 {
+    font-size: 1.6rem;
+    margin-bottom: 0;
+  }
+  h6 {
+    font-size: 1.15rem;
+  }
+
+  @include m.atSmall {
+    h1 {
+      font-size: 6.25rem;
+    }
+    h2 {
+      font-size: 5rem;
+    }
+    h3 {
+      font-size: 3.125rem;
+    }
+    h4 {
+      font-size: 2.4rem;
+    }
+    h5 {
+      font-size: 1.9rem;
+    }
+    h6 {
+      font-size: 1.15rem;
+    }
+  }
+}

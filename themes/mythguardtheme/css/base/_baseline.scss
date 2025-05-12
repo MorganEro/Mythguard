@@ -1,0 +1,128 @@
+@use 'sass:color';
+@use '../abstracts/variables' as v;
+
+body {
+  color: v.$text-dark;
+  font-family: 'Open Sans', sans-serif;
+  overflow-x: hidden;
+  position: relative;
+  margin: 0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Cinzel', serif;
+  text-transform: capitalize;
+}
+
+
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: inherit;
+}
+
+a {
+  color: v.$link-color;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  color: v.$link-hover-color;
+}
+
+p {
+  margin: 0 0 1.65em 0;
+}
+
+p,
+li {
+  line-height: 1.65;
+}
+
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+}
+
+input,
+textarea,
+select {
+  background-color: v.$white;
+  border: none;
+  border: 1px solid rgba(v.$blue-grey, 0.25);
+  border-radius: v.$radius-sm;
+  outline: none;
+  width: 100%;
+  min-width: 0;
+  color: v.$text-dark;
+  padding: 0.5rem;
+  transition: all 0.2s ease;
+}
+textarea {
+  resize: vertical;
+}
+
+input:active,
+input:focus,
+select:active,
+select:focus,
+textarea:active,
+textarea:focus,
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: v.$rusty-orange;
+  outline: none;
+  color: v.$text-dark;
+}
+input:focus::placeholder,
+input:active::placeholder,
+select:focus::placeholder,
+select:active::placeholder,
+textarea:active::placeholder,
+textarea:focus::placeholder {
+  color: v.$text-muted;
+  border: none;
+}
+input::placeholder,
+select::placeholder,
+textarea::placeholder {
+  color: v.$text-muted;
+}
+
+option:nth-of-type(odd) {
+  background: v.$background-light;
+}
+
+select option {
+  font-size: 0.75rem;
+}
+
+select:invalid,
+select option[value=""],
+select:not(:focus):valid {
+  color: v.$text-muted;
+}
+
+input[type="datetime-local"]:not(:valid) {
+  color: v.$text-muted;
+}

@@ -1,0 +1,40 @@
+@use 'sass:color';
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+.link-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  @include m.atMedium {
+    gap: 1.5rem;
+  }
+
+  li {
+    padding: 1rem;
+    font-size: 1.5rem;
+    border-radius: v.$radius-md;
+    border: 1px solid rgba(v.$blue-grey, 0.18);
+    background-color: color.scale(v.$list-item-bg, $lightness: -3%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 1rem rgba(0, 0, 0, 0.12);
+    }
+
+    .search-overlay & {
+      font-size: 1.3rem;
+    }
+  }
+
+
+  a {
+    color: v.$link-color;
+    &:hover {
+      color: v.$link-hover-color;
+    }
+  }
+}

@@ -1,0 +1,56 @@
+// MythGuard Color Palette
+@use 'sass:color';
+@use 'sass:math';
+@use 'sass:map';
+
+// Core Colors
+$rusty-orange: #c24900;         
+$black: #0f0f0f;                
+$white: #f5f2eb;                
+$blue-grey: #24313e;            
+$gold: #b88a3d;                 
+$deep-red: #91222b;             
+
+// Utility Colors
+$text-main: $white;             
+$text-dark: $black;             
+$text-muted: #999189;           
+$background-dark: #121212;      
+$background-light: #eae4d3;     
+
+// Toast Colors
+$toast-success: #1f5c49;        
+$toast-error: #7e1c1c;          
+
+// Contract Status Colors
+$contract-status-active: #2a8548;
+$contract-status-active-bg: #e3f1e8;
+$contract-status-inactive: #b5323d;
+$contract-status-inactive-bg: #fbe6e8;
+
+// Link Colors
+$link-color: #b75330;           
+$link-hover-color: #994628;
+$link-visited-color: #7d3a21;
+$list-item-bg: #ede6d5f3;       
+$list-item-shadow: 0 2px 8px rgba(28, 18, 10, 0.32); 
+
+
+
+// Border Radius
+$radius-xs: 0.125rem;
+$radius-sm: 0.25rem; // Standard border radius
+$radius-md: 0.5rem; // 8px — default for buttons and inputs
+$radius-lg: 1rem; // 16px — soft and elegant, great for cards
+$radius-xl: 2rem; // 32px — stylized, often used for containers/images
+$radius-full: 9999rem; // full pill/round shape — avatars, toggle switches
+
+// Z-Index Values
+$base: 10; // sticky headers
+$dropdown: 100; // dropdowns
+$sticky: 200; // fixed navs, sticky banners
+$modal: 1000; // modals, overlays, mobile navs
+$logo: 1001; // mobile logo
+$toast: 1100; // toasts, alerts
+$tooltip: 1200; // tooltips, popovers
+$max: 9999; // Emergency use

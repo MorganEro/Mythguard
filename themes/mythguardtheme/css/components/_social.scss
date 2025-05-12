@@ -1,0 +1,37 @@
+@use '../abstracts/variables' as v;
+
+/* Social Icons */
+.social-icons-list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+
+  li a {
+    padding-inline: 0.5rem;
+    display: block;
+    text-align: center;
+    color: v.$text-main;
+    font-size: 1.25rem;
+
+    &:hover {
+      opacity: 0.75;
+    }
+  }
+}
+
+/* Social Colors */
+.social-color-facebook {
+  background-color: #4862a3;
+}
+.social-color-twitter {
+  background-color: #55acee;
+}
+.social-color-youtube {
+  background-color: #cc1e1f;
+}
+.social-color-linkedin {
+  background-color: #0077b5;
+}
+.social-color-instagram {
+  background-color: #d8226b;
+}

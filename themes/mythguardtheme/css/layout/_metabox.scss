@@ -1,0 +1,55 @@
+@use 'sass:color';
+@use '../abstracts/variables' as v;
+
+.metabox {
+  background-color: v.$gold;
+  border-radius: v.$radius-xs;
+  padding: .6rem 1rem;
+  display: inline-block;
+  margin-bottom: 2rem;
+  box-shadow: 2px 2px 1px color.adjust(v.$black, $alpha: -0.93);
+
+  &--position-up {
+    position: absolute;
+    top: 0;
+    transform: translateY(-50%);
+  }
+
+  &--with-home-link {
+    padding: 0;
+  }
+
+  &__main {
+    padding: .6rem 1rem .6rem 1rem;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: v.$blue-grey;
+  }
+
+  a {
+    color: v.$blue-grey;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  & &__blog-home-link {
+    background-color: v.$blue-grey;
+    color: v.$text-main;
+    display: inline-block;
+    padding: .6rem 1rem;
+    border-radius: v.$radius-xs;
+    font-weight: normal;
+  }
+
+  & &__blog-home-link:hover {
+    text-decoration: none;
+    background-color: color.scale(v.$blue-grey, $lightness: -5%);
+  }
+}

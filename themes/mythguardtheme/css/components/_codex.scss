@@ -1,0 +1,183 @@
+@use 'sass:color';
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+@use '../base/animations' as a;
+
+@mixin focus-state {
+  outline: 2px solid v.$gold;
+  background-color: v.$white;
+  box-shadow: 0 2px 4px rgba(v.$blue-grey, 0.1);
+}
+
+/* Codex */
+
+.codex-item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: .6rem;
+}
+
+.codex-title-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: .6rem;
+}
+
+.codex-actions {
+  display: flex;
+  gap: .6rem;
+
+  @include m.atSmallMedium {
+    justify-content: space-between;
+  }
+}
+
+.update-codex {
+  visibility: hidden;
+}
+
+.update-codex--visible {
+  visibility: visible;
+  align-self: flex-start;
+}
+
+// Shared field styles
+%codex-field-base {
+  border: 1px solid rgba(v.$blue-grey, 0.25);
+  border-radius: v.$radius-sm;
+  background-color: rgba(v.$white, 0.95);
+  transition: all 0.2s ease;
+  padding: .6rem;
+
+  &:focus {
+    outline: 1px solid v.$blue-grey;
+  }
+}
+
+.codex-title-field {
+  @extend %codex-field-base;
+  font-size: 1.4rem;
+  font-family: 'Cinzel', serif;
+  font-weight: 300;
+  color: v.$blue-grey;
+  width: 100%;
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @include m.atSmallMedium {
+    font-size: 2rem;
+  }
+}
+
+.codex-body-field {
+  @extend %codex-field-base;
+  color: v.$text-dark;
+  font-family: 'Satisfy', cursive;
+  resize: none;
+  line-height: 1.65;
+  font-size: 1.2rem;
+  height: 175px;
+}
+
+.codex-active-field {
+  background-color: v.$white;
+  outline: 1px solid rgba(v.$blue-grey, 0.4);
+
+  &:focus {
+    @include focus-state;
+  }
+}
+
+/* Create codex */
+.create-codex {
+  background-color: color.scale(v.$blue-grey, $lightness: 80%);
+  padding: 1.2rem;
+  margin-bottom: 1.2rem;
+  border-radius: v.$radius-sm;
+}
+
+.codex-count {
+  float: right;
+  margin-top: 5px;
+  font-size: 1.15rem;
+  color: v.$rusty-orange;
+}
+
+.create-codex-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  gap: 15px;
+  width: 75%;
+  margin-top: 30px;
+
+  @include m.atSmallMedium {
+    width: 50%;
+  }
+}
+
+.create-codex-actions {
+  display: flex;
+  justify-content: center;
+  gap: .6rem;
+  margin-top: 1rem;
+
+  @include m.atSmallMedium {
+    margin-top: 2rem;
+  }
+}
+
+.new-codex-title,
+.new-codex-body {
+  padding: .5rem;
+}
+
+.new-codex-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.3rem;
+}
+.new-codex-body {
+  font-family: 'Satisfy', cursive;
+  resize: none;
+  line-height: 1.65;
+  font-size: 1rem;
+  height: 175px;
+
+  @include m.atSmallMedium {
+    height: 250px;
+  }
+}
+
+/* Reveal and Hide Fade Transitions */
+#codex {
+  position: relative;
+}
+
+#codex li {
+  transition: all 0.4s ease-out;
+  opacity: 1;
+}
+
+#codex li.fade-out {
+  height: 0px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  opacity: 0.5;
+}
+
+#codex li.fade-in-calc {
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  position: absolute;
+  left: 0;
+  right: 0;
+  opacity: 0;
+}

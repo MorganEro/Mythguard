@@ -1,0 +1,102 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+.wp-block-table.guardian-roster {
+  margin: 0 0 2rem 0;
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: v.$white;
+    border: 1px solid v.$text-muted;
+    border-radius: v.$radius-sm;
+    overflow: hidden;
+  
+    th,
+    td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid v.$text-muted;
+      vertical-align: top;
+    }
+  
+    thead {
+      background-color: v.$list-item-bg;
+    }
+  
+    th:nth-child(1),
+    td:nth-child(1) {
+      width: 30%;
+    }
+
+    // Style guardian names
+    td:nth-child(1) {
+      color: v.$rusty-orange;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+  
+    th:nth-child(2),
+    td:nth-child(2) {
+      width: 60%;
+    }
+  
+    th:nth-child(3),
+    td:nth-child(3) {
+      width: 10%;
+      text-align: center;
+    }
+  
+    // Optional: alternate row background for clarity
+    tbody tr:nth-child(even) {
+      background-color: v.$list-item-bg;
+    }
+  
+    // Mobile styles
+    @media (max-width: 767px) {
+      font-size: 0.875rem; // Slightly smaller font for mobile
+
+      th, td {
+        padding: 0.75rem 0.5rem; // Reduced padding
+      }
+
+      th:nth-child(1),
+      td:nth-child(1) {
+        width: 35%;
+      }
+
+      th:nth-child(2),
+      td:nth-child(2) {
+        width: 45%;
+      }
+
+      th:nth-child(3),
+      td:nth-child(3) {
+        width: 20%;
+      }
+
+      // Ensure table stays as grid
+      tr {
+        display: table-row;
+      }
+
+      td {
+        display: table-cell;
+        border-bottom: 1px solid v.$text-muted;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  &.is-style-stripes {
+    tbody tr:nth-child(odd) {
+      background-color: v.$white;
+    }
+    tbody tr:nth-child(even) {
+      background-color: v.$list-item-bg;
+    }
+  }
+}
+  

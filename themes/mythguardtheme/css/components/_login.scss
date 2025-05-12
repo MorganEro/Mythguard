@@ -1,0 +1,42 @@
+@use 'sass:color';
+@use '../abstracts/variables' as v;
+
+/* Customize Login Screen */
+
+body.login .button-primary {
+  background-color: v.$rusty-orange;
+  border-color: color.scale(v.$rusty-orange, $lightness: -10%);
+  text-shadow:
+    0 -1px 1px color.scale(v.$rusty-orange, $lightness: -15%),
+    1px 0 1px color.scale(v.$rusty-orange, $lightness: -15%),
+    0 1px 1px color.scale(v.$rusty-orange, $lightness: -15%),
+    -1px 0 1px color.scale(v.$rusty-orange, $lightness: -15%);
+  box-shadow: 0 1px 0 color.scale(v.$rusty-orange, $lightness: -20%);
+}
+
+body.login .button-primary:active,
+body.login .button-primary:focus,
+body.login .button-primary:hover {
+  background-color: color.scale(v.$rusty-orange, $lightness: -9%);
+  border-color: v.$rusty-orange;
+  text-shadow:
+    0 -1px 1px color.scale(v.$rusty-orange, $lightness: -20%),
+    1px 0 1px color.scale(v.$rusty-orange, $lightness: -20%),
+    0 1px 1px color.scale(v.$rusty-orange, $lightness: -20%),
+    -1px 0 1px color.scale(v.$rusty-orange, $lightness: -20%);
+  box-shadow: 0 1px 0 color.scale(v.$rusty-orange, $lightness: -25%);
+}
+
+body.login {
+  background-color: color.adjust(v.$blue-grey, $alpha: -0.95);
+}
+
+.login h1 a {
+  color: v.$blue-grey;
+  font-size: 2rem;
+  font-weight: 300;
+  background-image: none;
+  width: auto;
+  height: auto;
+  text-indent: 0;
+}
