@@ -2,6 +2,7 @@
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins' as m;
 
+
 .container {
   max-width: 1300px;
   margin: 0 auto;
@@ -11,12 +12,6 @@
 
 .container--narrow {
   max-width: 960px;
-}
-
-.section-break {
-  border: none;
-  border-top: 1px solid color.adjust(v.$blue-grey, $alpha: -0.8);
-  margin: 2.5rem 0;
 }
 
 .section-break {

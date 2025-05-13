@@ -77,8 +77,14 @@
     top: 2rem;
   }
 
+  .container {
+    box-sizing: border-box;
+    width: 100%;
+  }
+
   &__top {
-    // background-color: color.adjust(v.$black, $alpha: -0.88);
+    box-sizing: border-box;
+    width: 100%;
     background-color: v.$white;
     border-bottom: 1px solid rgba(v.$text-muted, 0.4);
   }

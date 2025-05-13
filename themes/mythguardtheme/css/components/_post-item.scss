@@ -2,7 +2,7 @@
 @use '../abstracts/variables' as v;
 
 .post-item {
-  border-bottom: 1px dotted color.adjust(v.$blue-grey, $alpha: -0.8);
+  border-bottom: 1px solid color.adjust(v.$blue-grey, $alpha: -0.9);
   padding-bottom: 1.7rem;
   margin-bottom: 1.7rem;
 

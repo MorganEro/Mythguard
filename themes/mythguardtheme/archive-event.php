@@ -16,7 +16,7 @@ pageBanner(array(
 
     while (have_posts()) {
         the_post();
-        get_template_part('template-parts/content-event');
+        get_template_part('template-parts/content', 'event', ['has_border' => true]);
     }
 
     echo paginate_links();

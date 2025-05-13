@@ -32,34 +32,45 @@
 
 /* Full Width Split Layout */
 .full-width-split {
+  display: grid;
+  grid-template-columns: 1fr;
+  
   @include m.atMedium {
-    display: flex;
+    grid-template-columns: 1fr 1fr;
   }
 
   &__one {
-    flex: 1;
-    padding: 1.6rem 1rem;
-    @include m.atMedium {
-      padding: 2.5rem;
-    }
-
-    .full-width-split__inner {
-      @include m.atMedium {
-        float: right;
-      }
-    }
-  }
-
-  &__two {
-    flex: 1;
     background-color: color.adjust(v.$blue-grey, $alpha: -0.95);
     padding: 1.6rem 1rem;
+    display: grid;
+    justify-items: center;
+    
     @include m.atMedium {
       padding: 2.5rem;
+      justify-items: end;
+    }
+  }
+  
+  &__two {
+    background-color: v.$background-light;
+    padding: 1.6rem 1rem;
+    display: grid;
+    justify-items: center;
+    
+    @include m.atMedium {
+      padding: 2.5rem;
+      justify-items: start;
     }
   }
 
   &__inner {
+    display: grid;
+    align-items: center;
+    grid-template-rows: 10% auto auto 15% ;
+    
+    width: 100%;
+    max-width: 610px;
+    
     @media (min-width: 1350px) {
       width: 610px;
     }

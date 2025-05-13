@@ -34,7 +34,7 @@
     <div class="site-footer__col-four">
       <h3 class="headline headline--small">Connect With Us</h3>
       <nav>
-        <ul class="min-list social-icons-list group">
+        <ul class="min-list social-icons-list">
           <li>
             <a href="#" class="social-color-facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
           </li>
