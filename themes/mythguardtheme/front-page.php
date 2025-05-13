@@ -3,7 +3,7 @@
 <div class="page-banner">
     <div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri('/images/front-page.png') ?>)"></div>
     <div class="page-banner__content container t-center c-white">
-        <h1 class="headline headline--large">Welcome to MythGuard!</h1>
+        <h1 class="headline headline--large">Welcome to MythGuard!!!</h1>
         <h2 class="headline headline--medium">Your protection is our specialty.</h2>
         <h3 class="headline headline--small">Why not explore the <strong>program</strong> that fits your needs?</h3>
         <a href="<?php echo get_post_type_archive_link('program'); ?>" class="btn btn--large btn--blue">Find Your Guardian Program</a>
