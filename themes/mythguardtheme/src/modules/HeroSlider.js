@@ -12,10 +12,11 @@ class HeroSlider {
         type: 'loop',
         perPage: 1,
         autoplay: true,
-        interval: 3000,
+        interval: 4000,
+        speed: 1000, // transition animation duration in milliseconds
         pauseOnHover: true,
         pagination: true,
-        arrows: false,
+        arrows: true,
         classes: {
           pagination: 'splide__pagination hero-slider__bullets',
           page: 'splide__pagination__page hero-slider__bullet'

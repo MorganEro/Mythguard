@@ -8,6 +8,7 @@ pageBanner(array(
 ?>
 
 <div class="container container--narrow page-section">
+    <?php get_template_part('template-parts/content', 'pagination'); ?>
     <div class="guardian-archive">
         <?php
         while (have_posts()) {
@@ -40,8 +41,7 @@ pageBanner(array(
         ?>
 
     </div>
-    <hr class="section-break">
-    <?php echo paginate_links(); ?>
+
 </div>
 
 <?php

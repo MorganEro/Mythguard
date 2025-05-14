@@ -12,14 +12,12 @@ pageBanner(array(
 
 
 <div class="container container--narrow page-section">
+    <?php get_template_part('template-parts/content', 'pagination', ['variant' => 'blue-grey']); ?>
     <?php
-
     while (have_posts()) {
         the_post();
         get_template_part('template-parts/content', 'event', ['has_border' => true]);
     }
-
-    echo paginate_links();
     ?>
 
     <hr class="section-break">

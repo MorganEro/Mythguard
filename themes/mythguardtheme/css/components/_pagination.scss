@@ -1,0 +1,82 @@
+@use 'sass:color';
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+.pagination-wrapper {
+  text-align: center;
+  margin-bottom: 1rem;
+  margin-top: -2.5rem;
+  background-color: transparent;
+  float: right;
+
+
+} 
+
+.pagination {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  display: inline-flex;
+  border-radius: v.$radius-sm;
+  font-family: 'Cinzel', serif;
+  background-color: transparent;
+
+  .page-numbers {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    padding: 0 3px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    border: 1px solid rgba(v.$text-muted, .4);
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: rgba(v.$rusty-orange, .5);
+      background-color: rgba(v.$rusty-orange, .1);
+      transform: translateY(1px);
+    }
+
+    &.current {
+      background-color: rgba(v.$rusty-orange, .3);
+      border-color: rgba(v.$rusty-orange, .5);
+      pointer-events: none;
+      color: v.$rusty-orange;
+    }
+
+    &.prev,
+    &.next,
+    &.first,
+    &.last {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      padding: 0 1rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      
+    }
+  }
+}
+
+.pagination--blue-grey {
+  
+  .page-numbers {
+    color: v.$blue-grey;
+    &:hover {
+      border-color: rgba(v.$blue-grey, .5);
+      background-color: rgba(v.$blue-grey, .1);
+      transform: translateY(1px);
+    }
+
+    &.current {
+      background-color: rgba(v.$blue-grey, .3);
+      border-color: rgba(v.$blue-grey, .5);
+      pointer-events: none;
+      color: v.$blue-grey;
+    }
+
+  }
+}

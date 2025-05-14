@@ -12,6 +12,7 @@ pageBanner(array(
 
 <div class="container container--narrow page-section">
     <ul class="link-list min-list">
+        <?php get_template_part('template-parts/content', 'pagination'); ?>
         <?php
 
         while (have_posts()) {
@@ -19,7 +20,6 @@ pageBanner(array(
             <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
         <?php }
 
-        echo paginate_links();
         ?>
 
     </ul>

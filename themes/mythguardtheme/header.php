@@ -23,7 +23,9 @@
             <ul class="main-navigation__list">
               <li <?php if (get_post_type() == 'program') echo 'class="current-menu-item"' ?>><a href="<?php echo get_post_type_archive_link('program'); ?>">Programs</a></li>
               <li <?php if (get_post_type() == 'guardian')  echo 'class="current-menu-item"' ?>><a href="<?php echo get_post_type_archive_link('guardian'); ?>">Guardians</a></li>
-              <li <?php if (get_post_type() == 'contract')  echo 'class="current-menu-item"' ?>><a href="<?php echo esc_url(site_url('/contracts')); ?>">Contracts</a></li>
+              <?php if (is_user_logged_in()) : ?>
+                <li <?php if (get_post_type() == 'contract')  echo 'class="current-menu-item"' ?>><a href="<?php echo esc_url(site_url('/contracts')); ?>">Contracts</a></li>
+              <?php endif; ?>
               <li <?php if (get_post_type() == 'event' or is_page('past-events'))  echo 'class="current-menu-item"' ?>><a href="<?php echo get_post_type_archive_link('event'); ?>">Events</a></li>
               <li <?php if (get_post_type() == 'post') echo 'class="current-menu-item"' ?>><a href="<?php echo site_url('/blog'); ?>">Chronicles</a></li>
               <li <?php if (get_post_type() == 'location') echo 'class="current-menu-item"' ?>><a href="<?php echo get_post_type_archive_link('location'); ?>">Locations</a></li>
