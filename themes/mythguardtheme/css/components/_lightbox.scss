@@ -1,11 +1,28 @@
 @use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
 
 .guardian-image {
   position: relative;
+  height: 33vh;
+  width: 100%;
+  overflow: hidden;
+
+  @include m.atSmallMedium {
+    height: 50vh;
+  }
 
   .wp-block-image {
     position: relative;
     margin: 0;
+    width: 100%;
+    height: 100%;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
   }
 
   .guardian-image-link {

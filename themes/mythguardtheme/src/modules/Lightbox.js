@@ -8,10 +8,14 @@ class Lightbox {
             const link = e.target.closest('.guardian-image-link');
             const button = e.target.closest('.lightbox-trigger');
             
-            if (link || button) {
+            if (link) {
                 e.preventDefault();
-                const imageUrl = link ? link.href : link.closest('.guardian-image').querySelector('.guardian-image-link').href;
-                this.openLightbox(imageUrl);
+                this.openLightbox(link.href);
+            } else if (button) {
+                e.preventDefault();
+                const container = button.closest('.guardian-image');
+                const imageLink = container.querySelector('.guardian-image-link');
+                this.openLightbox(imageLink.href);
             }
         });
     }
