@@ -27,16 +27,56 @@ body.login .button-primary:hover {
   box-shadow: 0 1px 0 color.scale(v.$rusty-orange, $lightness: -25%);
 }
 
+
 body.login {
-  background-color: color.adjust(v.$blue-grey, $alpha: -0.95);
+  background: v.$white url('../screenshot.png') center center no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(36, 49, 62, 0.85); // matches $blue-grey
+    z-index: -1;
+  }
 }
 
+
 .login h1 a {
-  color: v.$blue-grey;
+  color: v.$white;
   font-size: 2rem;
   font-weight: 300;
   background-image: none;
   width: auto;
   height: auto;
   text-indent: 0;
+  font-family: 'Cinzel', serif;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    color: v.$white;
+    transform: scale(1.1);
+  }
+}
+
+
+.login #loginform, .login .message, .login .notice, .login .success{
+  background-color: rgba(v.$white, 0.5);
+  border-radius: v.$radius-sm;
+  border: none;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.login #nav a, .login #backtoblog a {
+  color: v.$white;
+  font-family: 'Open Sans', sans-serif;
+
+  &:hover {
+    color: v.$rusty-orange;
+  }
 }

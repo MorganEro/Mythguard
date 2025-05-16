@@ -35,7 +35,7 @@ function mythguardSearchHandler($request)
 
         // Setup main query
         $mainQuery = new WP_Query(array(
-            'post_type' => array('guardian', 'post', 'page', 'program', 'location', 'event'),
+            'post_type' => array('guardian', 'post', 'page', 'program', 'location', 'gathering'),
             's' => $term,
             'posts_per_page' => 50 // Limit results for performance
         ));
@@ -44,7 +44,7 @@ function mythguardSearchHandler($request)
         'guardians' => array(),
         'programs' => array(),
         'locations' => array(),
-        'events' => array()
+        'gatherings' => array()
     );
 
     while ($mainQuery->have_posts()) {
@@ -68,7 +68,7 @@ function mythguardSearchHandler($request)
                 'title' => get_the_title(),
                 'permalink' => get_permalink()
             ));
-        } elseif (get_post_type() == 'event') {
+        } elseif (get_post_type() == 'gathering') {
             $eventDate = new DateTime(get_field('event_date'));
             $description = null;
             if (has_excerpt()) {
@@ -76,7 +76,7 @@ function mythguardSearchHandler($request)
             } else {
                 $description = wp_trim_words(get_the_content(), 18);
             }
-            array_push($results['events'], array(
+            array_push($results['gatherings'], array(
                 'title' => get_the_title(),
                 'permalink' => get_permalink(),
                 'month' => $eventDate->format('M'),
@@ -104,7 +104,7 @@ function mythguardSearchHandler($request)
         }
 
         $programRelationshipQuery = new WP_Query(array(
-            'post_type' => array('guardian', 'event'),
+            'post_type' => array('guardian', 'gathering'),
             'meta_query' => $programsMetaQuery,
         ));
 
@@ -118,7 +118,7 @@ function mythguardSearchHandler($request)
                     'permalink' => get_permalink(),
                     'image' => get_the_post_thumbnail_url(0, 'guardianLandscape')
                 ));
-            } elseif (get_post_type() == 'event') {
+            } elseif (get_post_type() == 'gathering') {
                 $eventDate = new DateTime(get_field('event_date'));
                 $description = null;
                 if (has_excerpt()) {
@@ -126,7 +126,7 @@ function mythguardSearchHandler($request)
                 } else {
                     $description = wp_trim_words(get_the_content(), 18);
                 }
-                array_push($results['events'], array(
+                array_push($results['gatherings'], array(
                     'title' => get_the_title(),
                     'permalink' => get_permalink(),
                     'month' => $eventDate->format('M'),
@@ -137,7 +137,7 @@ function mythguardSearchHandler($request)
         }
 
         $results['guardians'] = array_values(array_unique($results['guardians'], SORT_REGULAR));
-        $results['events'] = array_values(array_unique($results['events'], SORT_REGULAR));
+        $results['gatherings'] = array_values(array_unique($results['gatherings'], SORT_REGULAR));
     };
 
 

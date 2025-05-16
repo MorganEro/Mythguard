@@ -84,10 +84,10 @@ while (have_posts()) {
 
         wp_reset_postdata(); // Reset the main query loop before starting a new one
 
-        $today = date('Ymd');
-        $homepageEvents = new WP_Query(array(
+        $today = date('Y-m-d H:i:s');
+        $homepageGatherings = new WP_Query(array(
             'posts_per_page' => 2,
-            'post_type' => 'event',
+            'post_type' => 'gathering',
             'orderby' => 'meta_value',
             'meta_key' => 'event_date',
             'order' => 'ASC',
@@ -96,7 +96,7 @@ while (have_posts()) {
                     'key' => 'event_date',
                     'compare' => '>=',
                     'value' => $today,
-                    'type' => 'numeric'
+                    'type' => 'datetime'
                 ),
                 array(
                     'key' => 'related_programs',
@@ -107,14 +107,14 @@ while (have_posts()) {
 
         ));
 
-        if ($homepageEvents->have_posts()) {
+        if ($homepageGatherings->have_posts()) {
 
             echo '<hr class="section-break">';
-            echo '<h2 class="headline headline--medium">Upcoming ' . get_the_title() . ' Events</h2>';
+            echo '<h2 class="headline headline--medium">Upcoming ' . get_the_title() . ' Gatherings</h2>';
 
-            while ($homepageEvents->have_posts()) {
-                $homepageEvents->the_post();
-                get_template_part('template-parts/content', 'event');
+            while ($homepageGatherings->have_posts()) {
+                $homepageGatherings->the_post();
+                get_template_part('template-parts/content', 'gathering');
             }
         }
         ?>

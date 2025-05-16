@@ -1,0 +1,44 @@
+@use '../abstracts/variables' as v;
+@import 'flatpickr/dist/flatpickr.min.css';
+
+// Custom Flatpickr Styles
+.flatpickr-calendar {
+  background: v.$white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+  .flatpickr-day {
+    &.selected,
+    &.startRange,
+    &.endRange {
+      background: v.$rusty-orange;
+      border-color: v.$rusty-orange;
+      color: v.$white;
+      
+      &:hover {
+        background: color-mix(in srgb, v.$rusty-orange, black 5%);
+        border-color: color-mix(in srgb, v.$rusty-orange, black 5%);
+      }
+    }
+    
+    &.inRange {
+      background: rgba(v.$rusty-orange, 0.1);
+      border-color: rgba(v.$rusty-orange, 0.2);
+      box-shadow: -5px 0 0 rgba(v.$rusty-orange, 0.1), 5px 0 0 rgba(v.$rusty-orange, 0.1);
+    }
+    
+    &:hover {
+      background: rgba(v.$rusty-orange, 0.1);
+    }
+  }
+
+  .flatpickr-time {
+    input {
+      color: v.$text-dark;
+    }
+    .flatpickr-am-pm:hover,
+    .flatpickr-hour:hover,
+    .flatpickr-minute:hover {
+      background: rgba(v.$rusty-orange, 0.1);
+    }
+  }
+}

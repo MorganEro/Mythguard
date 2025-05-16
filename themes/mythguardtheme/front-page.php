@@ -13,13 +13,13 @@
 <div class="full-width-split ">
     <div class="full-width-split__one">
         <div class="full-width-split__inner">
-            <h2 class="headline headline--small-plus t-center">Upcoming Sightings</h2>
+            <h2 class="headline headline--small-plus t-center">Upcoming Gatherings</h2>
 
             <?php
-            $today = date('Ymd');
+            $today = date('Y-m-d H:i:s');
             $homepageEvents = new WP_Query(array(
                 'posts_per_page' => 2,
-                'post_type' => 'event',
+                'post_type' => 'gathering',
                 'orderby' => 'meta_value',
                 'meta_key' => 'event_date',
                 'order' => 'ASC',
@@ -28,7 +28,7 @@
                         'key' => 'event_date',
                         'compare' => '>=',
                         'value' => $today,
-                        'type' => 'numeric'
+                        'type' => 'datetime'
                     )
                 )
 
@@ -36,12 +36,12 @@
 
             while ($homepageEvents->have_posts()) {
                 $homepageEvents->the_post();
-                get_template_part('template-parts/content', 'event');
+                get_template_part('template-parts/content', 'gathering');
             }
             ?>
 
 
-            <p class="t-center no-margin"><a href="<?php echo get_post_type_archive_link('event') ?>" class="btn btn--blue">View All Sightings</a></p>
+            <p class="t-center no-margin"><a href="<?php echo get_post_type_archive_link('gathering') ?>" class="btn btn--blue">View All Gatherings</a></p>
         </div>
     </div>
     <div class="full-width-split__two">
@@ -55,13 +55,13 @@
 
             while ($homepagePosts->have_posts()) {
                 $homepagePosts->the_post(); ?>
-                <div class="event-summary">
-                    <a class="event-summary__date event-summary__date--beige t-center" href="<?php the_permalink(); ?>">
-                        <span class="event-summary__month"><?php the_time('M') ?></span>
-                        <span class="event-summary__day"><?php the_time('d') ?></span>
+                <div class="gathering-summary">
+                    <a class="gathering-summary__date gathering-summary__date--beige t-center" href="<?php the_permalink(); ?>">
+                        <span class="gathering-summary__month"><?php the_time('M') ?></span>
+                        <span class="gathering-summary__day"><?php the_time('d') ?></span>
                     </a>
-                    <div class="event-summary__content">
-                        <h5 class="event-summary__title headline headline--tiny"><a href="<?php the_permalink
+                    <div class="gathering-summary__content">
+                        <h5 class="gathering-summary__title headline headline--tiny"><a href="<?php the_permalink
                         (); ?>"><?php the_title(); ?></a></h5>
                         <div>
                         <p><?php if (has_excerpt()) {

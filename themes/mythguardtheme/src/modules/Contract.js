@@ -1,4 +1,5 @@
 import { singletonToast } from './Toast';
+import flatpickr from 'flatpickr';
 
 class Contract {
   constructor() {
@@ -21,6 +22,7 @@ class Contract {
     this.loadPrograms();
     this.setupSelectListeners();
     this.setupRevealFields();
+    this.setupDatePickers();
   }
 
   setupSelectListeners() {
@@ -33,6 +35,32 @@ class Contract {
       this.programSelect.addEventListener('change', () =>
         this.handleProgramChange()
       );
+    }
+  }
+
+  setupDatePickers() {
+    const dateRange = document.querySelector('.new-contract-date-range');
+
+    if (dateRange) {
+      flatpickr(dateRange, {
+        enableTime: true,
+        allowInput: true,
+        mode: 'range',
+        altInput: true,
+        altFormat: 'm/d/Y h:i K',
+        dateFormat: 'Y-m-d H:i',
+        minDate: 'today',
+        time_24hr: false,
+        minuteIncrement: 30,
+        defaultHour: 9,
+        placeholder: 'Select contract dates...',
+        onClose: (selectedDates) => {
+          // Ensure both dates are selected
+          if (selectedDates.length === 2) {
+            dateRange.dispatchEvent(new Event('change'));
+          }
+        }
+      });
     }
   }
 
@@ -139,38 +167,68 @@ class Contract {
     this.updateGuardianOptions(relatedGuardians);
   }
 
-  updateProgramOptions(programs) {
-    if (!this.programSelect) return;
+  updateProgramOptions(programs, targetSelect = null) {
+    const select = targetSelect || this.programSelect;
+    if (!select) return;
 
-    const currentValue = this.programSelect.value;
-    this.programSelect.innerHTML = '<option value="">Select Program</option>';
+    // Store current value
+    const currentValue = select.value;
 
-    const sortedPrograms = [...programs].sort((a, b) =>
-      a.title.rendered.localeCompare(b.title.rendered)
-    );
+    // Clear existing options
+    select.innerHTML = '';
 
-    sortedPrograms.forEach(program => {
-      this.programSelect.innerHTML += `<option value="${program.id}" ${
-        currentValue === program.id.toString() ? 'selected' : ''
-      }>${program.title.rendered}</option>`;
+    // Add placeholder only for new contract form
+    if (select === this.programSelect) {
+      const placeholder = document.createElement('option');
+      placeholder.value = '';
+      placeholder.textContent = 'Select a program...';
+      select.appendChild(placeholder);
+    }
+
+    // Add program options
+    programs.forEach(program => {
+      const option = document.createElement('option');
+      option.value = program.id;
+      option.textContent = program.title.rendered;
+      select.appendChild(option);
     });
+
+    // Restore value if it exists
+    if (currentValue) {
+      select.value = currentValue;
+    }
   }
 
-  updateGuardianOptions(guardians) {
-    if (!this.guardianSelect) return;
+  updateGuardianOptions(guardians, targetSelect = null) {
+    const select = targetSelect || this.guardianSelect;
+    if (!select) return;
 
-    const currentValue = this.guardianSelect.value;
-    this.guardianSelect.innerHTML = '<option value="">Select Guardian</option>';
+    // Store current value
+    const currentValue = select.value;
 
-    const sortedGuardians = [...guardians].sort((a, b) =>
-      a.title.rendered.localeCompare(b.title.rendered)
-    );
+    // Clear existing options
+    select.innerHTML = '';
 
-    sortedGuardians.forEach(guardian => {
-      this.guardianSelect.innerHTML += `<option value="${guardian.id}" ${
-        currentValue === guardian.id.toString() ? 'selected' : ''
-      }>${guardian.title.rendered}</option>`;
+    // Add placeholder only for new contract form
+    if (select === this.guardianSelect) {
+      const placeholder = document.createElement('option');
+      placeholder.value = '';
+      placeholder.textContent = 'Select a guardian...';
+      select.appendChild(placeholder);
+    }
+
+    // Add guardian options
+    guardians.forEach(guardian => {
+      const option = document.createElement('option');
+      option.value = guardian.id;
+      option.textContent = guardian.title.rendered;
+      select.appendChild(option);
     });
+
+    // Restore value if it exists
+    if (currentValue) {
+      select.value = currentValue;
+    }
   }
 
   bindEvents() {
@@ -215,8 +273,7 @@ class Contract {
       ),
       programField: contractItem.querySelector('.contract-program-field, .single-contract-program-field'),
       guardianField: contractItem.querySelector('.contract-guardian-field, .single-contract-guardian-field'),
-      startDateField: contractItem.querySelector('.contract-start-field, .single-contract-start-field'),
-      endDateField: contractItem.querySelector('.contract-end-field'),
+      dateRangeField: contractItem.querySelector('.contract-date-range, .single-contract-date-range'),
 
       updateButton: contractItem.querySelector(
         '[data-action="update-contract"]'
@@ -276,8 +333,7 @@ class Contract {
       state.originalDescription = elements.descriptionField.value;
       state.originalProgram = elements.programField.value;
       state.originalGuardian = elements.guardianField.value;
-      state.originalStartDate = elements.startDateField.value;
-      state.originalEndDate = elements.endDateField.value;
+      state.originalDateRange = elements.dateRangeField.value;
       state.originalNotes = elements.notesField?.value || '';
 
       // Enable editing
@@ -285,9 +341,28 @@ class Contract {
       elements.descriptionField.removeAttribute('readonly');
       elements.programField.removeAttribute('disabled');
       elements.guardianField.removeAttribute('disabled');
-      elements.startDateField.removeAttribute('readonly');
-      elements.endDateField.removeAttribute('readonly');
+      elements.dateRangeField.removeAttribute('readonly');
 
+      // Update program and guardian options
+      this.updateProgramOptions(this.programs, elements.programField);
+      this.updateGuardianOptions(this.guardians, elements.guardianField);
+
+      // Initialize Flatpickr on the date range field
+      const fp = flatpickr(elements.dateRangeField, {
+        enableTime: true,
+        allowInput: true,
+        mode: 'range',
+        altInput: true,
+        altFormat: 'm/d/Y h:i K',
+        dateFormat: 'Y-m-d H:i:s',
+        time_24hr: false,
+        minuteIncrement: 30,
+        parseDate: (dateStr) => {
+          const [date, time, ampm] = dateStr.split(' ');
+          return new Date(date + ' ' + time + ' ' + ampm);
+        },
+        defaultDate: elements.dateRangeField.value.split(' to ').map(date => date.trim())
+      });
 
       if (elements.updateButton) elements.updateButton.style.display = 'inline-block';
       if (elements.editButton) {
@@ -301,16 +376,20 @@ class Contract {
       elements.descriptionField.value = state.originalDescription;
       elements.programField.value = state.originalProgram;
       elements.guardianField.value = state.originalGuardian;
-      elements.startDateField.value = state.originalStartDate;
-      elements.endDateField.value = state.originalEndDate;
+      elements.dateRangeField.value = state.originalDateRange;
 
       // Disable editing
       elements.titleField.setAttribute('readonly', true);
       elements.descriptionField.setAttribute('readonly', true);
       elements.programField.setAttribute('disabled', true);
       elements.guardianField.setAttribute('disabled', true);
-      elements.startDateField.setAttribute('readonly', true);
-      elements.endDateField.setAttribute('readonly', true);
+      elements.dateRangeField.setAttribute('readonly', true);
+
+      // Destroy Flatpickr instance and ensure readonly
+      if (elements.dateRangeField._flatpickr) {
+        elements.dateRangeField._flatpickr.destroy();
+      }
+      elements.dateRangeField.setAttribute('readonly', true);
 
       if (elements.updateButton) elements.updateButton.style.display = 'none';
       if (elements.editButton) {
@@ -385,10 +464,18 @@ class Contract {
     const description = form.querySelector('.new-contract-description').value;
     const programId = form.querySelector('.new-contract-program').value;
     const guardianId = form.querySelector('.new-contract-guardian').value;
-    const startDate = form.querySelector('.new-contract-start').value;
-    const endDate = form.querySelector('.new-contract-end').value;
+    const dateRange = form.querySelector('.new-contract-date-range')._flatpickr;
+    
+    if (!dateRange || !dateRange.selectedDates || dateRange.selectedDates.length !== 2) {
+      singletonToast.show('Please select both start and end dates', 'error');
+      this.isProcessing = false;
+      return;
+    }
 
-    if (!title || !programId || !guardianId || !startDate || !endDate) {
+    const startDate = dateRange.formatDate(dateRange.selectedDates[0], 'Y-m-d H:i:s');
+    const endDate = dateRange.formatDate(dateRange.selectedDates[1], 'Y-m-d H:i:s');
+
+    if (!title || !programId || !guardianId) {
       singletonToast.show('Please fill in all required fields', 'error');
       return;
     }
@@ -431,14 +518,22 @@ class Contract {
       descriptionField,
       programField,
       guardianField,
-      startDateField,
-      endDateField,
+      dateRangeField
     } = this.getContractElements(clickedElement);
 
     if (!contractId) {
       singletonToast.show('Contract ID not found', 'error');
       return;
     }
+
+    if (!dateRangeField || !dateRangeField._flatpickr || !dateRangeField._flatpickr.selectedDates || dateRangeField._flatpickr.selectedDates.length !== 2) {
+      singletonToast.show('Please select both start and end dates', 'error');
+      this.isProcessing = false;
+      return;
+    }
+
+    const startDate = dateRangeField._flatpickr.formatDate(dateRangeField._flatpickr.selectedDates[0], 'Y-m-d H:i:s');
+    const endDate = dateRangeField._flatpickr.formatDate(dateRangeField._flatpickr.selectedDates[1], 'Y-m-d H:i:s');
 
     try {
       await wp.apiFetch({
@@ -450,8 +545,8 @@ class Contract {
           meta: {
             related_program: programField.value,
             related_guardian: guardianField.value,
-            contract_start: startDateField.value,
-            contract_end: endDateField.value,
+            contract_start: startDate,
+            contract_end: endDate,
           },
         },
       });

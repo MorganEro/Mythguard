@@ -21,7 +21,7 @@
 
 @use './components/_buttons';
 @use './components/_codex';
-@use './components/_event-summary';
+@use './components/_gathering-summary';
 @use './components/_hero-slider';
 @use './components/_like';
 @use './components/_lightbox';
@@ -29,8 +29,10 @@
 @use './components/_login';
 @use './components/_page-links';
 @use './components/_pagination';
+@use './components/calendar';
 @use './components/_post-item';
 @use './components/_program-list';
+@use './components/_flatpickr';
 @use './components/_map' as mapModule;
 @use './components/_mg-modal';
 @use './components/_search';

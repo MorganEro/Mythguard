@@ -26,7 +26,7 @@
               <?php if (is_user_logged_in()) : ?>
                 <li <?php if (get_post_type() == 'contract')  echo 'class="current-menu-item"' ?>><a href="<?php echo esc_url(site_url('/contracts')); ?>">Contracts</a></li>
               <?php endif; ?>
-              <li <?php if (get_post_type() == 'event' or is_page('past-events'))  echo 'class="current-menu-item"' ?>><a href="<?php echo get_post_type_archive_link('event'); ?>">Events</a></li>
+              <li <?php if (get_post_type() == 'gathering' or is_page('past-gatherings'))  echo 'class="current-menu-item"' ?>><a href="<?php echo get_post_type_archive_link('gathering'); ?>">Gatherings</a></li>
               <li <?php if (get_post_type() == 'post') echo 'class="current-menu-item"' ?>><a href="<?php echo site_url('/blog'); ?>">Chronicles</a></li>
               <li <?php if (get_post_type() == 'location') echo 'class="current-menu-item"' ?>><a href="<?php echo get_post_type_archive_link('location'); ?>">Locations</a></li>
               <li <?php if (is_page('about-us') or wp_get_post_parent_id(0) == 16) echo 'class="current-menu-item"' ?>><a href="<?php echo site_url('/about-us'); ?>">About Us</a></li>
@@ -52,3 +52,7 @@
       </div>
     </div>
   </header>
+
+  <?php if (is_user_logged_in()) : ?>
+    <?php get_template_part('template-parts/content-calendar-widget'); ?>
+  <?php endif; ?>

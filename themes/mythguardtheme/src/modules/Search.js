@@ -156,15 +156,15 @@ class Search {
     ${items
       .map(
         item => `
-        <div class="event-summary">
-          <a class="event-summary__date t-center" href=" ${item.permalink}">
-        <span class="event-summary__month">${item.month}</span>
-        <span class="event-summary__day">
+        <div class="gathering-summary">
+          <a class="gathering-summary__date t-center" href=" ${item.permalink}">
+        <span class="gathering-summary__month">${item.month}</span>
+        <span class="gathering-summary__day">
            ${item.day}
         </span>
     </a>
-    <div class="event-summary__content">
-        <h5 class="event-summary__title headline headline--tiny"><a href="${item.permalink}">${item.title}</a></h5>
+    <div class="gathering-summary__content">
+        <h5 class="gathering-summary__title headline headline--tiny"><a href="${item.permalink}">${item.title}</a></h5>
         <p>${item.description} <a href="${item.permalink}" class="nu gray">Learn more</a></p>
             </div>
         </div>`
@@ -208,14 +208,14 @@ class Search {
 
   renderSearchResults(data) {
     this.isSpinnerVisible = false;
-    const { generalInfo, guardians, programs, locations, events } = data;
+    const { generalInfo, guardians, programs, locations, gatherings } = data;
 
     if (
       !generalInfo.length &&
       !guardians.length &&
       !programs.length &&
       !locations.length &&
-      !events.length
+      !gatherings.length
     ) {
       this.searchResults.innerHTML =
         '<h2 class="search-overlay__section-title">No results found</h2>';
@@ -237,8 +237,8 @@ class Search {
         <div class="one-third">
           <h2 class="search-overlay__section-title">Locations</h2>
           ${locations.length ? this.getGenericTypeHtml(locations) : ''}
-          <h2 class="search-overlay__section-title">Events</h2>
-          ${events.length ? this.getEventTypeHtml(events) : ''}
+          <h2 class="search-overlay__section-title">Gatherings</h2>
+          ${gatherings.length ? this.getEventTypeHtml(gatherings) : ''}
         </div>
       </div>
     `;

@@ -263,13 +263,51 @@ function mythguard_update_contract($request)
         }
     }
 
+    // Update meta fields
+    if (isset($request['meta'])) {
+        // Handle dates - convert from ISO format if needed
+        if (isset($request['meta']['contract_start'])) {
+            $start_date = $request['meta']['contract_start'];
+            if (strpos($start_date, 'T') !== false) { // ISO format
+                $start_date = date('Y-m-d H:i:s', strtotime($start_date));
+            }
+            update_field('contract_start', $start_date, $contract_id);
+        }
+        if (isset($request['meta']['contract_end'])) {
+            $end_date = $request['meta']['contract_end'];
+            if (strpos($end_date, 'T') !== false) { // ISO format
+                $end_date = date('Y-m-d H:i:s', strtotime($end_date));
+            }
+            update_field('contract_end', $end_date, $contract_id);
+        }
+        
+        // Handle program - frontend sends 'related_program', we store as 'related_programs'
+        if (isset($request['meta']['related_program'])) {
+            update_field('related_programs', $request['meta']['related_program'], $contract_id);
+        }
+        
+        // Handle guardian
+        if (isset($request['meta']['related_guardian'])) {
+            update_field('related_guardian', $request['meta']['related_guardian'], $contract_id);
+        }
+    }
+
+    // Get updated meta values
+    $updated_meta = array(
+        'contract_start' => get_field('contract_start', $contract_id),
+        'contract_end' => get_field('contract_end', $contract_id),
+        'related_programs' => get_field('related_programs', $contract_id),
+        'related_guardian' => get_field('related_guardian', $contract_id)
+    );
+
     return new WP_REST_Response(array(
         'updated' => true,
         'message' => 'Contract updated successfully',
         'contract' => array(
             'id' => $contract_id,
             'title' => $updates['post_title'] ?? $contract->post_title,
-            'content' => $updates['post_content'] ?? $contract->post_content
+            'content' => $updates['post_content'] ?? $contract->post_content,
+            'meta' => $updated_meta
         )
     ), 200);
 }

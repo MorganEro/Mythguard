@@ -37,7 +37,7 @@
       'two three'
       'four four';
 
-    @include m.atSmall {
+    @include m.atMedium {
       justify-items: start;
       grid-template-columns: 1fr 1fr 1fr max-content;
       grid-template-areas: 'one two three four';

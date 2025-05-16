@@ -52,7 +52,7 @@ while (have_posts()) {
 
         <div class="single-contract-item" data-id="<?php echo get_the_ID(); ?>">
             <div class="single-contract-title-wrapper">
-                <input type="text" class="single-contract-title-field" value="<?php echo esc_attr(mg_clean_private_title(get_the_title())); ?>" readonly>
+                <input type="text" class="single-contract-title-field" name="title" value="<?php echo esc_attr(mg_clean_private_title(get_the_title())); ?>" readonly>
                 <span class="single-contract-status <?php echo $is_active ? 'active' : 'inactive'; ?>">
                     <?php echo $is_active ? 'Active' : 'Inactive'; ?>
                 </span>
@@ -61,31 +61,26 @@ while (have_posts()) {
             <div class="single-contract-details">
                 <div class="single-contract-details__row">
                     <strong>Program:</strong>
-                    <select class="single-contract-program-field" disabled>
+                    <select class="single-contract-program-field" name="program" disabled>
                         <option value="<?php echo $program ? esc_attr($program->ID) : ''; ?>"><?php echo $program_name; ?></option>
                     </select>
                 </div>
 
                 <div class="single-contract-details__row">
                     <strong>Guardian:</strong>
-                    <select class="single-contract-guardian-field" disabled>
+                    <select class="single-contract-guardian-field" name="guardian" disabled>
                         <option value="<?php echo $guardian ? esc_attr($guardian->ID) : ''; ?>"><?php echo $guardian_name; ?></option>
                     </select>
                 </div>
 
                 <div class="single-contract-details__row">
-                    <strong>Start Date:</strong>
-                    <input type="datetime-local" class="single-contract-start-field" value="<?php echo date('Y-m-d\TH:i', strtotime($contract_start)); ?>" readonly>
-                </div>
-
-                <div class="single-contract-details__row">
-                    <strong>End Date:</strong>
-                    <input type="datetime-local" class="contract-end-field" value="<?php echo date('Y-m-d\TH:i', strtotime($contract_end)); ?>" readonly>
+                    <strong>Contract Dates:</strong>
+                    <input type="text" class="single-contract-date-range" name="date_range" value="<?php echo date('m/d/Y h:i A', strtotime($contract_start)) . ' to ' . date('m/d/Y h:i A', strtotime($contract_end)); ?>" readonly>
                 </div>
 
                 <div class="single-contract-details__row">
                     <strong>Description:</strong>
-                    <textarea class="single-contract-description-field" readonly><?php echo esc_textarea(wp_strip_all_tags(get_the_content())); ?></textarea>
+                    <textarea class="single-contract-description-field" name="description" readonly><?php echo esc_textarea(wp_strip_all_tags(get_the_content())); ?></textarea>
                 </div>
 
                 <?php if ($can_edit) : ?>

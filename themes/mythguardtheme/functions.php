@@ -14,6 +14,7 @@ require_once get_theme_file_path('/includes/search-route.php');
 require_once get_theme_file_path('/includes/codex-route.php');
 require_once get_theme_file_path('/includes/like-route.php');
 require_once get_theme_file_path('/includes/contract-route.php');
+require_once get_theme_file_path('/includes/calendar-route.php');
 
 /**
  * SECTION 2: Theme Setup & Features
@@ -213,8 +214,8 @@ function mythguard_adjust_queries($query)
         $query->set('posts_per_page', -1);
     }
 
-    if (!is_admin() && is_post_type_archive('event') && $query->is_main_query()) {
-        $today = date('Ymd');
+    if (!is_admin() && is_post_type_archive('gathering') && $query->is_main_query()) {
+        $today = date('Y-m-d H:i:s');
         $query->set('meta_key', 'event_date');
         $query->set('orderby', 'meta_value_num');
         $query->set('order', 'ASC');
@@ -223,7 +224,7 @@ function mythguard_adjust_queries($query)
                 'key' => 'event_date',
                 'compare' => '>=',
                 'value' => $today,
-                'type' => 'numeric'
+                'type' => 'datetime'
             )
         ));
     }

@@ -48,24 +48,14 @@
       </select>
     </div>
 
-    <div class="form-group form-group--start floating-label is-hidden">
+    <div class="form-group form-group--date-range floating-label is-hidden">
       <button type="button"
         class="reveal-input-btn"
-        aria-controls="contract-start"
+        aria-controls="contract-date-range"
         aria-expanded="false">
-        Start Date
+        Contract Dates
       </button>
-      <input id="contract-start" class="new-contract-start" type="datetime-local" required>
-    </div>
-
-    <div class="form-group form-group--end floating-label is-hidden">
-      <button type="button"
-        class="reveal-input-btn"
-        aria-controls="contract-end"
-        aria-expanded="false">
-        End Date
-      </button>
-      <input id="contract-end" class="new-contract-end" type="datetime-local" required>
+      <input id="contract-date-range" class="new-contract-date-range" type="text" placeholder="Select dates..." required>
     </div>
   </div>
 

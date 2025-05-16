@@ -1,23 +1,23 @@
 <?php
 function mythguard_custom_post_types()
 {
-    // Event Post Type
-    register_post_type('event', array(
-        'capability_type' => 'event',
+    // Gathering Post Type
+    register_post_type('gathering', array(
+        'capability_type' => 'gathering',
         'map_meta_cap' => true,
         'public' => true,
         'show_in_rest' => true,
         'supports' => array('title', 'editor', 'excerpt'),
         'rewrite' => array(
-            'slug' => 'events',
+            'slug' => 'gatherings',
         ),
         'has_archive' => true,
         'labels' => array(
-            'name' => 'Events',
-            'singular_name' => 'Event',
-            'add_new_item' => 'Add New Event',
-            'edit_item' => 'Edit Event',
-            'all_items' => 'All Events',
+            'name' => 'Gatherings',
+            'singular_name' => 'Gathering',
+            'add_new_item' => 'Add New Gathering',
+            'edit_item' => 'Edit Gathering',
+            'all_items' => 'All Gatherings',
 
         ),
 

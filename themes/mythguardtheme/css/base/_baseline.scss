@@ -117,12 +117,16 @@ select option {
   font-size: 0.75rem;
 }
 
-select:invalid,
-select option[value=""],
-select:not(:focus):valid {
-  color: v.$text-muted;
-}
 
 input[type="datetime-local"]:not(:valid) {
   color: v.$text-muted;
+}
+
+
+textarea:read-only,
+input:read-only {
+  color: rgba(v.$rusty-orange, 0.7);
+}
+select:disabled {
+  color: v.$rusty-orange;
 }
