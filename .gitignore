@@ -1,11 +1,74 @@
-uploads 
-node_modules
-upgrade
-upgrade-temp-backup
-ai1wm-backups
-/index.php
-wpvivid_staging
-wpvivid_uploads
-wpvividbackups
-/themes/index.php
-/plugins/index.php
+# ===========================
+# WordPress wp-content Git Ignore
+# ===========================
+
+# 🧹 Ignore everything first
+*
+
+# ✅ Then explicitly include what you DO want
+
+# Custom theme
+!themes/
+!themes/mythguardtheme/
+!themes/mythguardtheme/**
+
+# Must-use plugins
+!mu-plugins/
+!mu-plugins/mythguard-post-types.php
+
+# 🗃 Include index.php files to preserve structure
+!index.php
+!plugins/index.php
+!themes/index.php
+
+# ===========================
+# 🚫 Ignore large/volatile folders
+# ===========================
+
+# WordPress core and generated files
+uploads/
+upgrade/
+upgrade-temp-backup/
+
+# Ignore all plugin folders except index.php (and custom plugin if needed)
+plugins/*
+!plugins/index.php
+# !plugins/mycustomplugin/
+# !plugins/mycustomplugin/**
+
+# Backup and staging plugins
+ai1wm-backups/
+wpvivid_staging/
+wpvivid_uploads/
+wpvividbackups/
+wpvividbackups_restore/
+wpvivid_staging_site/
+
+# Cache and temporary files
+cache/
+*.log
+.htaccess
+*.bak
+*.swp
+*.zip
+*.tar.gz
+.sass-cache/
+dist/
+build/
+
+# Development dependencies
+node_modules/
+vendor/
+
+# Environment and IDE files
+.env
+.env.*
+!.env.example
+.DS_Store
+.idea/
+.vscode/
+Thumb.db
+
+# Security and sensitive files
+*auth.json
+
