@@ -86,20 +86,44 @@ class OpenStreetMap {
     // Add marker to map
     const leafletMarker = L.marker(position, { icon }).addTo(map);
 
+    // Add tooltip that shows on hover
+    const tooltipContent = marker.querySelector('.tooltip__content')?.innerHTML;
+    if (tooltipContent) {
+      leafletMarker.bindTooltip(tooltipContent, {
+        direction: 'right',
+        offset: L.point(20, 0),
+        className: 'location-tooltip'
+      });
+
+      // Disable tooltip when popup is open
+      leafletMarker.on('popupopen', () => {
+        leafletMarker.unbindTooltip();
+      });
+
+      // Re-enable tooltip when popup is closed
+      leafletMarker.on('popupclose', () => {
+        leafletMarker.bindTooltip(tooltipContent, {
+          direction: 'right',
+          offset: L.point(20, 0),
+          className: 'location-tooltip'
+        });
+      });
+    }
+
     // Add popup with marker content
-    const markerContent = marker.innerHTML;
+    const markerContent = marker.querySelector('.marker__content')?.innerHTML;
     const popupContent = `
-            <div class="map-popup-content">
-                ${markerContent}
-                <div class="directions-form">
-                    <input type="text" id="start-address" placeholder="Enter your starting point">
-                    <div class="button-group">
-                        <button onclick="window.openStreetMap.getDirectionsFromAddress(${lat}, ${lng})" class="get-directions">Get Directions</button>
-                        <button onclick="window.openStreetMap.getDirectionsFromCurrentLocation(${lat}, ${lng})" class="use-current-location">Use Current Location</button>
-                    </div>
-                </div>
-            </div>
-        `;
+      <div class="map-popup-content">
+        ${markerContent || ''}
+        <div class="directions-form">
+          <input type="text" id="start-address" placeholder="Enter your starting point">
+          <div class="button-group">
+            <button onclick="window.openStreetMap.getDirectionsFromAddress(${lat}, ${lng})" class="get-directions">Get Directions</button>
+            <button onclick="window.openStreetMap.getDirectionsFromCurrentLocation(${lat}, ${lng})" class="use-current-location">Use Current Location</button>
+          </div>
+        </div>
+      </div>
+    `;
     leafletMarker.bindPopup(popupContent);
 
     bounds.push(position);

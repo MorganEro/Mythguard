@@ -25,7 +25,7 @@ function mythguard_custom_post_types()
     ));
     // Location Post Type
     register_post_type('location', array(
-        'supports' => array('title', 'editor', 'excerpt'),
+        'supports' => array('title', 'editor', 'excerpt', 'thumbnail'),
         'public' => true,
         'show_in_rest' => true,
         'rewrite' => array(

@@ -53,7 +53,7 @@ while (have_posts()) {
         }
 
 
-        wp_reset_postdata(); // Reset the main query loop before starting a new one
+        wp_reset_postdata(); 
 
         $today = date('Y-m-d H:i:s');
         $homepageGatherings = new WP_Query(array(

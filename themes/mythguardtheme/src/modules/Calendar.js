@@ -58,7 +58,7 @@ class Calendar {
                     events.forEach(event => {
                         // Add base class for the event type
                         dayElem.classList.add(`has-${event.type}`);
-                        
+
                         // Add specific classes for contract start/end dates
                         if (event.type === 'contract') {
                             if (event.isStart) dayElem.classList.add('contract-start');
@@ -203,6 +203,11 @@ class Calendar {
         });
     }
 
+    formatDate(dateStr) {
+        const date = new Date(dateStr);
+        return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+    }
+
     updateListView() {
         if (!this.listView) return;
 
@@ -210,7 +215,7 @@ class Calendar {
         const contractsList = this.listView.querySelector('.calendar-list-view__contracts .calendar-list-view__items');
         if (contractsList) {
             contractsList.innerHTML = '';
-            
+
             // Group contracts by ID to show start and end dates together
             const contractsById = this.dates.contracts.reduce((acc, contract) => {
                 if (!acc[contract.url]) {
@@ -234,8 +239,11 @@ class Calendar {
                     link.href = contract.url;
                     link.className = 'calendar-list-item';
                     link.innerHTML = `
-                        <span class="calendar-list-item__date">${contract.start} - ${contract.end}</span>
-                        <span class="calendar-list-item__title">${contract.title}</span>
+                    <div class="calendar-list-item__date">
+                        <span>${this.formatDate(contract.start)}</span>
+                        <span>${this.formatDate(contract.end)}</span>
+                    </div>
+                    <span class="calendar-list-item__title">${contract.title}</span>
                     `;
                     li.appendChild(link);
                     contractsList.appendChild(li);
@@ -253,7 +261,7 @@ class Calendar {
                 link.href = gathering.url;
                 link.className = 'calendar-list-item';
                 link.innerHTML = `
-                    <span class="calendar-list-item__date">${gathering.date}</span>
+                    <span class="calendar-list-item__date">${this.formatDate(gathering.date)}</span>
                     <span class="calendar-list-item__title">${gathering.title}</span>
                 `;
                 li.appendChild(link);

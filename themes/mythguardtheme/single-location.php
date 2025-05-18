@@ -22,101 +22,34 @@ while (have_posts()) {
 
         <!-- Map Container -->
         <div class="acf-map">
-            <div class="marker" 
-                 data-lat="<?php echo get_field('coordinates')['latitude']; ?>"
-                 data-lng="<?php echo get_field('coordinates')['longitude']; ?>"
-                 data-type="<?php echo get_field('location_type'); ?>">
-                <h3><?php the_title(); ?></h3>
-                <p><?php echo get_field('address'); ?></p>
+            <div class="marker"
+                data-lat="<?php echo get_field('coordinates')['latitude']; ?>"
+                data-lng="<?php echo get_field('coordinates')['longitude']; ?>"
+                data-type="<?php echo get_field('location_type'); ?>">
+                <?php get_template_part('template-parts/content', 'tooltip'); ?>
+                <?php get_template_part('template-parts/content', 'map-popup'); ?>
             </div>
         </div>
 
         <?php
-        $relatedPrograms = get_field('related_programs');
-
-        if ($relatedPrograms) {
+        $relatedGuardians = get_field('related_guardian');
+        if ($relatedGuardians) {
             echo '<hr class="section-break">';
-            echo '<h2 class="headline headline--medium">Available Programs</h2>';
-            echo '<ul class="link-list min-list">';
-            foreach($relatedPrograms as $program) { ?>
-                <li><a href="<?php echo get_the_permalink($program); ?>"><?php echo get_the_title($program); ?></a></li>
-            <?php }
-            echo '</ul>';
-        }
-        ?>
-
-        <?php
-        $relatedGuardians = new WP_Query(array(
-            'posts_per_page' => -1,
-            'post_type' => 'guardian',
-            'orderby' => 'title',
-            'order' => 'ASC',
-            'meta_query' => array(
-                array(
-                    'key' => 'related_programs',
-                    'compare' => 'LIKE',
-                    'value' => '"' . get_the_ID() . '"'
-                )
-            )
-
-        ));
-
-        if ($relatedGuardians->have_posts()) {
-
-            echo '<hr class="section-break">';
-            echo '<h2 class="headline headline--medium">' . get_the_title() . ' Guardians</h2>';
+            echo '<h2 class="headline headline--small">Some guardians stationed at ' . get_the_title() . '</h2>';
 
 
             echo '<ul class="guardian-cards">';
-            while ($relatedGuardians->have_posts()) {
-                $relatedGuardians->the_post(); ?>
+            foreach ($relatedGuardians as $guardian) { ?>
                 <li class="guardian-card__list-item">
-                    <a class="guardian-card" href="<?php the_permalink(); ?>">
-                        <img class="guardian-card__image" src="<?php the_post_thumbnail_url('guardianLandscape') ?>">
-                        <span class="guardian-card__name"><?php the_title(); ?></span>
+                    <a class="guardian-card" href="<?php echo get_permalink($guardian); ?>">
+                        <img class="guardian-card__image" src="<?php echo get_the_post_thumbnail_url($guardian, 'guardianLandscape') ?>">
+                        <span class="guardian-card__name"><?php echo get_the_title($guardian); ?></span>
                     </a>
                 </li>
-        <?php
-            }
+        <?php }
             echo '</ul>';
         }
 
-
-        wp_reset_postdata(); // Reset the main query loop before starting a new one
-
-        $today = date('Y-m-d H:i:s');
-        $homepageGatherings = new WP_Query(array(
-            'posts_per_page' => 2,
-            'post_type' => 'gathering',
-            'orderby' => 'meta_value',
-            'meta_key' => 'event_date',
-            'order' => 'ASC',
-            'meta_query' => array(
-                array(
-                    'key' => 'event_date',
-                    'compare' => '>=',
-                    'value' => $today,
-                    'type' => 'datetime'
-                ),
-                array(
-                    'key' => 'related_programs',
-                    'compare' => 'LIKE',
-                    'value' => '"' . get_the_ID() . '"'
-                )
-            )
-
-        ));
-
-        if ($homepageGatherings->have_posts()) {
-
-            echo '<hr class="section-break">';
-            echo '<h2 class="headline headline--medium">Upcoming ' . get_the_title() . ' Gatherings</h2>';
-
-            while ($homepageGatherings->have_posts()) {
-                $homepageGatherings->the_post();
-                get_template_part('template-parts/content', 'gathering');
-            }
-        }
         ?>
 
     </div>

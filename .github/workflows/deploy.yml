@@ -2,13 +2,40 @@ name: Deploy to DreamHost
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # ✅ Checkout the repo
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # ✅ Optional: Setup Node.js for Sass/Vite build (skip if not needed)
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          if [ -f package.json ]; then
+            npm ci
+          else
+            echo "No package.json found. Skipping build step."
+          fi
+
+      - name: Run build (Sass → CSS)
+        run: |
+          if [ -f package.json ]; then
+            npm run build
+          else
+            echo "No build script found. Skipping."
+          fi
+
+      # ✅ Deploy via SSH to DreamHost
       - name: Deploy to DreamHost via SSH
         uses: appleboy/ssh-action@v0.1.6
         with:
@@ -21,3 +48,4 @@ jobs:
             git reset --hard
             git clean -fd
             git pull origin main
+            echo '<?php if (function_exists("opcache_reset")) opcache_reset();' | php

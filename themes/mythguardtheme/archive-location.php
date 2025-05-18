@@ -10,6 +10,7 @@ pageBanner(array(
 
 <div class="container container--narrow page-section">
 
+    <p class="headline headline--tiny-reg">MythGuard locations are expertly camouflaged to blend into the fabric of everyday life—appearing as parks, storefronts, transit hubs, or forgotten alleyways. Invisible to the uninitiated, they reveal themselves only to those who have been granted the Sight.</p>
 
     <!-- Map Container -->
     <div class="acf-map">
@@ -23,8 +24,8 @@ pageBanner(array(
                     data-lat="<?php echo $coordinates['latitude']; ?>"
                     data-lng="<?php echo $coordinates['longitude']; ?>"
                     data-type="<?php echo get_field('location_type'); ?>">
-                    <h3><?php the_title(); ?></h3>
-                    <p><?php echo get_field('address'); ?></p>
+                    <?php get_template_part('template-parts/content', 'tooltip'); ?>
+                    <?php get_template_part('template-parts/content', 'map-popup'); ?>
                 </div>
         <?php
             }
@@ -41,6 +42,7 @@ pageBanner(array(
                 <h5>
                     <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                 </h5>
+                <p><?php echo get_field('address'); ?></p>
             </li>
         <?php }
         rewind_posts(); // Reset the post query for the map

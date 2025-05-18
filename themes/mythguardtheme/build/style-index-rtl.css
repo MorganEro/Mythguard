@@ -219,7 +219,6 @@ select:disabled {
   }
 }
 .headline--small-plus {
-  font-family: "Cinzel", serif;
   font-size: 1.6875rem;
   font-weight: 400;
   margin-bottom: 1.9rem;
@@ -237,7 +236,11 @@ select:disabled {
   font-size: 1.5rem;
 }
 .headline--tiny {
-  font-family: "Cinzel", serif;
+  font-size: 1.3875rem;
+  margin-bottom: 0.25rem;
+}
+.headline--tiny-reg {
+  font-family: "Open Sans", sans-serif;
   font-size: 1.3875rem;
   margin-bottom: 0.25rem;
 }
@@ -1356,8 +1359,8 @@ select:disabled {
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
-  -o-object-position: center;
-     object-position: center;
+  -o-object-position: 50% 10%;
+     object-position: 50% 10%;
 }
 .guardian-image .guardian-image-link {
   display: block;
@@ -1763,7 +1766,7 @@ body.login::before {
   height: 330px;
   display: none;
   flex-direction: column;
-  overflow: hidden;
+  overflow-y: auto;
 }
 .calendar-widget .calendar-list-view.active {
   display: flex;
@@ -1816,12 +1819,6 @@ body.login::before {
   padding: 0;
   pointer-events: none;
 }
-.calendar-widget .calendar-list-view__items li:nth-child(odd) {
-  background-color: #f5f2eb;
-}
-.calendar-widget .calendar-list-view__items li:nth-child(even) {
-  background-color: rgba(36, 49, 62, 0.03);
-}
 .calendar-widget .calendar-list-view__items::after {
   content: "";
   position: absolute;
@@ -1859,6 +1856,8 @@ body.login::before {
   background-color: rgba(184, 138, 61, 0.06);
 }
 .calendar-widget .calendar-list-view .calendar-list-item__date {
+  display: flex;
+  flex-direction: column;
   font-weight: 600;
   font-size: 0.8rem;
   color: #999189;
@@ -2032,15 +2031,20 @@ body.login::before {
   height: 700px;
 }
 
+.leaflet-popup-content p {
+  margin: 0;
+}
+
 .map-popup-content {
-  padding: 1.3rem;
   max-width: 300px;
   font-family: "Open Sans", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .map-popup-content h3 {
   font-family: "Cinzel", serif;
   font-size: 1.3rem;
-  margin-bottom: 1rem;
   color: #24313e;
   font-weight: 600;
 }
@@ -2102,7 +2106,7 @@ body.login::before {
   display: none;
 }
 .acf-map.show-directions .leaflet-routing-container {
-  background: #f5f2eb;
+  background: white;
   border-radius: 0.5rem;
   box-shadow: 0 8px 16px rgba(36, 49, 62, 0.1);
   border: 1px solid rgba(36, 49, 62, 0.1);
@@ -2135,7 +2139,7 @@ body.login::before {
 }
 .acf-map.show-directions .leaflet-routing-container .leaflet-routing-alt {
   padding: 1.5rem;
-  background: linear-gradient(to bottom, rgba(27, 54, 93, 0.02), transparent);
+  background: white;
 }
 .acf-map.show-directions .leaflet-routing-container .leaflet-routing-alt h2,
 .acf-map.show-directions .leaflet-routing-container .leaflet-routing-alt h3 {
@@ -2270,6 +2274,52 @@ body.login::before {
 .leaflet-routing-collapse-btn {
   left: 1rem;
   cursor: pointer;
+}
+
+.leaflet-tooltip.location-tooltip {
+  background-color: #121212;
+  border: 1px solid #b88a3d;
+  color: #f5f2eb;
+  padding: 0;
+  border-radius: 0.25rem;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  overflow: hidden;
+}
+@media (max-width: 768px) {
+  .leaflet-tooltip.location-tooltip {
+    display: none !important;
+  }
+}
+
+.location-tooltip__thumbnail {
+  width: 100%;
+  border-bottom: 1px solid #b88a3d;
+}
+.location-tooltip__thumbnail img {
+  width: 100%;
+  height: 120px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  display: block;
+}
+
+.location-tooltip__content {
+  text-align: center;
+  padding: 0.5rem;
+}
+.location-tooltip__content strong {
+  color: #b88a3d;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.tooltip__content {
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .custom-modal {

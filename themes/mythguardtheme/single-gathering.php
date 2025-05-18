@@ -17,25 +17,6 @@ while (have_posts()) {
         <div class="generic-content">
             <?php the_content(); ?>
         </div>
-
-        <?php
-        $relatedPrograms = get_field('related_programs');
-
-        if ($relatedPrograms) {
-
-
-            echo '<hr class="section-break">';
-            echo '<h2 class="headline headline--medium">Related Programs</h2>';
-            echo '<ul class="link-list min-list">';
-            foreach ($relatedPrograms as $program) {  ?>
-
-                <?php get_template_part('template-parts/content', 'related-program-list-item', array('program' => $program)); ?>
-
-        <?php
-            }
-            echo '</ul>';
-        }
-        ?>
     </div>
 
 <?php

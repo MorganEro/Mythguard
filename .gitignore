@@ -5,7 +5,11 @@
 # 🧹 Ignore everything first
 *
 
-# ✅ Then explicitly include what you DO want
+# ✅ Then explicitly include what you DO 
+
+# Unignore GitHub Actions workflow folder
+!.github/
+!.github/**
 
 # Custom theme
 !themes/
@@ -71,4 +75,5 @@ Thumb.db
 
 # Security and sensitive files
 *auth.json
+
 

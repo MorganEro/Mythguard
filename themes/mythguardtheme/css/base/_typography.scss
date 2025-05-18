@@ -28,7 +28,6 @@
   }
 
   &--small-plus {
-    font-family: 'Cinzel', serif;
     font-size: 1.6875rem;
     font-weight: 400;
     margin-bottom: 1.9rem;
@@ -47,7 +46,11 @@
   }
 
   &--tiny {
-    font-family: 'Cinzel', serif;
+    font-size: 1.3875rem;
+    margin-bottom: 0.25rem;
+  }
+  &--tiny-reg {
+    font-family: 'Open Sans', sans-serif;
     font-size: 1.3875rem;
     margin-bottom: 0.25rem;
   }

@@ -16,7 +16,7 @@
   "dependencies": {
     "@glidejs/glide": "^3.4.1",
     "@splidejs/splide": "^4.1.4",
-    "@wordpress/scripts": "^30.16.0",
+    "@wordpress/scripts": "^30.7.0",
     "axios": "^1.9.0",
     "flatpickr": "^4.6.13",
     "normalize.css": "^8.0.1"
