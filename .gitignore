@@ -21,9 +21,9 @@
 !mu-plugins/mythguard-post-types.php
 
 # 🗃 Include index.php files to preserve structure
-!index.php
 !plugins/index.php
 !themes/index.php
+!mu-plugins/index.php
 
 # ===========================
 # 🚫 Ignore large/volatile folders

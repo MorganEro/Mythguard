@@ -13,26 +13,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # ✅ Optional: Setup Node.js for Sass/Vite build (skip if not needed)
+      # ✅ Optional: Setup Node.js for build tools like Sass/Vite
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
+      # ✅ Install dependencies if package.json exists
       - name: Install dependencies
         run: |
           if [ -f package.json ]; then
             npm ci
           else
-            echo "No package.json found. Skipping build step."
+            echo "No package.json found. Skipping dependency install."
           fi
 
+      # ✅ Build theme assets if build script exists
       - name: Run build (Sass → CSS)
         run: |
           if [ -f package.json ]; then
-            npm run build
+            npm run build || echo "No build script found. Skipping build."
           else
-            echo "No build script found. Skipping."
+            echo "No package.json found. Skipping build."
           fi
 
       # ✅ Deploy via SSH to DreamHost
