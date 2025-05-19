@@ -7039,7 +7039,8 @@ class Codex {
   }
   insertNewCodexItem(codex) {
     const codexList = document.getElementById('codex');
-    const newCodexHtml = `
+    const tempContainer = document.createElement('div');
+    tempContainer.innerHTML = `
             <li class="codex-item" data-id="${codex.id}">
                 <div class="codex-title-wrapper">
                     <input class="codex-title-field" value="${codex.title}" readonly>
@@ -7051,8 +7052,13 @@ class Codex {
                 <textarea class="codex-body-field" readonly>${codex.body}</textarea>
                 <button class="update-codex btn btn--small btn--blue">Save</button>
             </li>
-        `;
-    codexList.insertAdjacentHTML('afterbegin', newCodexHtml);
+    `.trim();
+    const newCodexItem = tempContainer.firstElementChild;
+    if (codexList.firstChild) {
+      codexList.insertBefore(newCodexItem, codexList.firstChild);
+    } else {
+      codexList.appendChild(newCodexItem);
+    }
   }
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Codex);
