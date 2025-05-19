@@ -30,12 +30,7 @@ class Codex {
       }
     });
 
-    //   document.addEventListener('click', (e) => {
-    //     const clickedElement = e.target.closest('.add-codex');
-    //     if (clickedElement) {
-    //         this.showCreateForm();
-    //     }
-    //   });
+
 
     document.addEventListener('click', e => {
       const clickedElement = e.target.closest('.submit-codex');
@@ -44,12 +39,7 @@ class Codex {
       }
     });
 
-    //   document.addEventListener('click', (e) => {
-    //     const clickedElement = e.target.closest('.cancel-codex');
-    //     if (clickedElement) {
-    //         this.hideCreateForm();
-    //     }
-    //   });
+
   }
 
   //UI Methods

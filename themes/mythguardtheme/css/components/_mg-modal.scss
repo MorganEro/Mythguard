@@ -41,17 +41,17 @@
     height: 80%;
     padding: 2rem;
     // Default background
-    background-image: url('../images/contract-background.png');
+    background-image: url(var(--theme-url) + '/images/contract-background.png.webp');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
 
     &--contract {
-      background-image: url('../images/contract-background.png');
+      background-image: url(var(--theme-url) + '/images/contract-background.png.webp');
     }
 
     &--codex {
-      background-image: url('../images/codex-background.png');
+      background-image: url(var(--theme-url) + '/images/codex-background.png.webp');
     }
   }
 

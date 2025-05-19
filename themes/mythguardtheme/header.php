@@ -7,7 +7,7 @@
   <?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
+<body <?php body_class(); ?> style="--theme-url: '<?php echo get_theme_file_uri(); ?>';">
   <header class="site-header">
     <div class="container">
       <div class="site-header__inner">

@@ -2371,16 +2371,16 @@ body.login::before {
   max-width: 600px;
   height: 80%;
   padding: 2rem;
-  background-image: url(images/contract-background.af9a6a26.png);
+  background-image: url(images/contract-background.png.72a5b7b1.webp);
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
 }
 .custom-modal__content--contract {
-  background-image: url(images/contract-background.af9a6a26.png);
+  background-image: url(images/contract-background.png.72a5b7b1.webp);
 }
 .custom-modal__content--codex {
-  background-image: url(images/codex-background.3b45b125.png);
+  background-image: url(images/codex-background.png.be8e0da9.webp);
 }
 .custom-modal__close {
   position: absolute;
