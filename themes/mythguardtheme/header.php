@@ -7,7 +7,7 @@
   <?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?> style="--theme-url: '<?php echo get_theme_file_uri(); ?>';">
+<body <?php body_class(); ?> style="--contract-bg: url('<?php echo get_theme_file_uri('/images/contract-background.png.webp'); ?>'); --codex-bg: url('<?php echo get_theme_file_uri('/images/codex-background.png.webp'); ?>');">
   <header class="site-header">
     <div class="container">
       <div class="site-header__inner">
