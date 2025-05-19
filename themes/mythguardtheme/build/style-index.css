@@ -806,8 +806,16 @@ select:disabled {
 }
 
 .guardian-cards {
+  display: flex;
+  overflow-x: auto;
+  gap: 1.5rem;
   margin: 0;
   padding: 0;
+}
+@media (min-width: 960px) {
+  .guardian-cards {
+    flex-wrap: wrap;
+  }
 }
 .search-overlay .guardian-cards {
   padding-top: 1.5rem;
@@ -817,7 +825,6 @@ select:disabled {
   position: relative;
   display: inline-block;
   width: 200px;
-  margin-right: 1rem;
   background-color: #c24900;
   overflow: hidden;
 }
@@ -1830,6 +1837,9 @@ body.login::before {
   pointer-events: none;
   opacity: 0.8;
 }
+.calendar-widget .calendar-list-view__items:hover {
+  background: rgba(184, 138, 61, 0.5);
+}
 .calendar-widget .calendar-list-view__items::-webkit-scrollbar {
   width: 6px;
 }
@@ -1839,9 +1849,6 @@ body.login::before {
 .calendar-widget .calendar-list-view__items::-webkit-scrollbar-thumb {
   background: rgba(184, 138, 61, 0.3);
   border-radius: 9999rem;
-}
-.calendar-widget .calendar-list-view__items::-webkit-scrollbar-thumb:hover {
-  background: rgba(184, 138, 61, 0.5);
 }
 .calendar-widget .calendar-list-view .calendar-list-item {
   display: flex;
@@ -1978,11 +1985,15 @@ body.login::before {
   flex-direction: row;
   align-items: center;
   margin-left: 0.5rem;
+  flex-shrink: 0;
 }
 .program-icon svg {
-  width: 3rem;
-  height: 3rem;
+  width: clamp(2rem, 8vw, 3rem);
+  height: clamp(2rem, 8vw, 3rem);
   fill: #c24900;
+  max-width: 3rem;
+  max-height: 3rem;
+  flex-shrink: 0;
 }
 
 .flatpickr-calendar {
@@ -2360,16 +2371,16 @@ body.login::before {
   max-width: 600px;
   height: 80%;
   padding: 2rem;
-  background-image: url(images/contract-background.a8581d24.png);
+  background-image: url(images/contract-background.af9a6a26.png);
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
 }
 .custom-modal__content--contract {
-  background-image: url(images/contract-background.a8581d24.png);
+  background-image: url(images/contract-background.af9a6a26.png);
 }
 .custom-modal__content--codex {
-  background-image: url(images/codex-background.0bb4561a.png);
+  background-image: url(images/codex-background.3b45b125.png);
 }
 .custom-modal__close {
   position: absolute;

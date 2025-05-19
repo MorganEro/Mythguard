@@ -3,7 +3,7 @@ get_header();
 pageBanner(array(
     'title' => 'Our Locations',
     'subtitle' => 'Find a MythGuard location near you.',
-    'photo' => get_theme_file_uri('/images/archive-locations.jpg'),
+    'photo' => get_theme_file_uri('/images/archive-locations.jpg.webp'),
 
 ));
 ?>

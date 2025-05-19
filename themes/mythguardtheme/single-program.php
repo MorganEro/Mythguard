@@ -41,12 +41,7 @@ while (have_posts()) {
             echo '<ul class="guardian-cards">';
             while ($relatedGuardians->have_posts()) {
                 $relatedGuardians->the_post(); ?>
-                <li class="guardian-card__list-item">
-                    <a class="guardian-card" href="<?php the_permalink(); ?>">
-                        <img class="guardian-card__image" src="<?php the_post_thumbnail_url('guardianLandscape') ?>">
-                        <span class="guardian-card__name"><?php the_title(); ?></span>
-                    </a>
-                </li>
+                <?php get_template_part('template-parts/content', 'guardian'); ?>
         <?php
             }
             echo '</ul>';

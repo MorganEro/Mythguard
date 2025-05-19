@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 
 <div class="page-banner">
-    <div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri('/images/front-page.png') ?>)"></div>
+    <div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri('/images/front-page.png.webp') ?>)"></div>
     <div class="page-banner__content container t-center c-white">
         <h1 class="headline headline--large">Welcome to MythGuard!</h1>
         <h2 class="headline headline--medium">Your protection is our specialty.</h2>
@@ -84,7 +84,7 @@
 <div class="hero-slider splide">
     <div class="splide__track">
         <div class="splide__list">
-            <div class="splide__slide hero-slider__slide" style="background-image: url(<?php echo get_theme_file_uri('/images/transport-dragon.png') ?>)">
+            <div class="splide__slide hero-slider__slide" style="background-image: url(<?php echo get_theme_file_uri('/images/transport-dragon.png.webp') ?>)">
                 <div class="hero-slider__interior container">
                     <div class="hero-slider__overlay">
                         <h2 class="headline headline--medium t-center">Free Transportation</h2>
@@ -93,7 +93,7 @@
                     </div>
                 </div>
             </div>
-            <div class="splide__slide hero-slider__slide" style="background-image: url(<?php echo get_theme_file_uri('/images/fireFruit.png') ?>)">
+            <div class="splide__slide hero-slider__slide" style="background-image: url(<?php echo get_theme_file_uri('/images/fireFruit.png.webp') ?>)">
                 <div class="hero-slider__interior container">
                     <div class="hero-slider__overlay">
                         <h2 class="headline headline--medium t-center">Bonding Tips from the Phoenix</h2>
@@ -102,7 +102,7 @@
                     </div>
                 </div>
             </div>
-            <div class="splide__slide hero-slider__slide" style="background-image: url(<?php echo get_theme_file_uri('/images/raw-diet.png') ?>)">
+            <div class="splide__slide hero-slider__slide" style="background-image: url(<?php echo get_theme_file_uri('/images/raw-diet.png.webp') ?>)">
                 <div class="hero-slider__interior container">
                     <div class="hero-slider__overlay">
                         <h2 class="headline headline--medium t-center">Guardian Nourishment Program</h2>

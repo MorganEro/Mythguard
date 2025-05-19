@@ -30,33 +30,16 @@ function mythguard_get_calendar_dates() {
         'post_type' => 'contract',
         'posts_per_page' => -1,
         'post_status' => array('publish', 'private'),
-        'fields' => 'ids' // First get just IDs to verify query works
     );
 
-    // If not admin, only show user's own contracts
     if (!$is_admin) {
         $args['author'] = $user_id;
     }
 
-    // Save query args for debugging
-    $dates['debug']['query_args'] = $args;
-
-    // Get contract IDs first
-    $contract_ids = get_posts($args);
-    if (empty($contract_ids)) {
-        return $dates;
-    }
-
-    // Now get full contract data
-    $args['fields'] = 'all';
-    $args['post__in'] = $contract_ids;
     $contracts = get_posts($args);
 
 
-
-
     foreach ($contracts as $contract) {
-        // Get dates in the same way as gatherings
         $start_date = get_field('contract_start', $contract->ID);
         $end_date = get_field('contract_end', $contract->ID);
 

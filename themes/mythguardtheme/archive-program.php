@@ -4,7 +4,7 @@ get_header();
 pageBanner(array(
     'title' => 'All Programs',
     'subtitle' => 'We offer many forms of protection. Please explore',
-    'photo' => get_theme_file_uri('/images/archive-programs.jpg'),
+    'photo' => get_theme_file_uri('/images/archive-programs.jpg.webp'),
 
 ))
 ?>

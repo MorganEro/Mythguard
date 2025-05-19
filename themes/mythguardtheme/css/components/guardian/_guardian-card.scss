@@ -1,9 +1,19 @@
 @use 'sass:color';
 @use '../../abstracts/variables' as v;
+@use '../../abstracts/mixins' as m;
 
 .guardian-cards {
+  display: flex;
+  overflow-x: auto;
+  gap: 1.5rem;
   margin: 0;
   padding: 0;
+
+  @include m.atMedium {
+    flex-wrap: wrap;
+  }
+
+
 
   .search-overlay & {
     padding-top: 1.5rem;
@@ -14,7 +24,6 @@
   position: relative;
   display: inline-block;
   width: 200px;
-  margin-right: 1rem;
   background-color: v.$rusty-orange;
   overflow: hidden;
 

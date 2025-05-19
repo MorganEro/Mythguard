@@ -4,7 +4,7 @@ get_header();
 pageBanner(array(
     'title' => 'All Gatherings',
     'subtitle' => 'See what is going on in our world',
-    'photo' => get_theme_file_uri('/images/gatherings-banner.jpg'),
+    'photo' => get_theme_file_uri('/images/gatherings-banner.jpg.webp'),
 
 ));
 ?>

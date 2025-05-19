@@ -1,5 +1,3 @@
-// Using wp.apiFetch instead of axios
-
 class Calendar {
     constructor() {
         this.currentView = 'calendar';
@@ -7,7 +5,6 @@ class Calendar {
     }
 
     init() {
-        // Elements
         this.trigger = document.querySelector('.calendar-widget__trigger');
         this.content = document.querySelector('.calendar-widget__content');
         this.calendarView = document.querySelector('.calendar-view');
@@ -24,22 +21,18 @@ class Calendar {
             gatherings: []
         };
 
-        // Set up collapsible carets
         const carets = this.content.querySelectorAll('.calendar-list-view__header .fas.fa-caret-up');
         carets.forEach(caret => {
             caret.addEventListener('click', () => this.toggleSection(caret));
         });
 
-        // Initialize Flatpickr
         this.flatpickr = flatpickr(this.calendar, this.getFlatpickrConfig());
 
-        // Event Listeners
         this.trigger.addEventListener('click', () => this.toggleCalendar());
         document.addEventListener('click', (e) => this.handleClickOutside(e));
         this.calendarBtn.addEventListener('click', () => this.switchView('calendar'));
         this.listBtn.addEventListener('click', () => this.switchView('list'));
 
-        // Initial data fetch
         this.fetchDates();
     }
 
@@ -105,10 +98,8 @@ class Calendar {
     updateCalendarDates() {
         if (!this.dates || !this.flatpickr) return;
 
-        // Update list view
         this.updateListView();
 
-        // Force calendar redraw by destroying and reinitializing
         const currentMonth = this.flatpickr.currentMonth;
         const currentYear = this.flatpickr.currentYear;
         if (this.flatpickr && typeof this.flatpickr.destroy === 'function') {
@@ -145,7 +136,7 @@ class Calendar {
     toggleCalendar() {
         const isHidden = this.content.style.display === 'none';
         this.content.style.display = isHidden ? 'block' : 'none';
-        if (isHidden) this.fetchDates(); // Refresh dates when opening
+        if (isHidden) this.fetchDates();
     }
 
     handleClickOutside(e) {
@@ -159,15 +150,12 @@ class Calendar {
     switchView(view) {
         this.currentView = view;
 
-        // Update button states
         this.calendarBtn.classList.toggle('active', view === 'calendar');
         this.listBtn.classList.toggle('active', view === 'list');
 
-        // Show/hide views
         this.calendarView.classList.toggle('active', view === 'calendar');
         this.listView.classList.toggle('active', view === 'list');
 
-        // Update list view if switching to it
         if (view === 'list') {
             this.updateListView();
         }
@@ -176,13 +164,11 @@ class Calendar {
     toggleSection(caret) {
         const section = caret.closest('div');
         const items = section.querySelector('.calendar-list-view__items');
-        // Toggle the collapsed state
         caret.classList.toggle('collapsed');
         caret.classList.toggle('fa-caret-up');
         caret.classList.toggle('fa-caret-down');
         items.classList.toggle('collapsed');
 
-        // Store the new collapsed state in localStorage
         const sectionId = section.classList[0];
         const isCollapsed = caret.classList.contains('collapsed');
         localStorage.setItem(`${sectionId}-collapsed`, isCollapsed);
@@ -211,12 +197,9 @@ class Calendar {
     updateListView() {
         if (!this.listView) return;
 
-        // Update contracts list
         const contractsList = this.listView.querySelector('.calendar-list-view__contracts .calendar-list-view__items');
         if (contractsList) {
             contractsList.innerHTML = '';
-
-            // Group contracts by ID to show start and end dates together
             const contractsById = this.dates.contracts.reduce((acc, contract) => {
                 if (!acc[contract.url]) {
                     acc[contract.url] = {
@@ -231,7 +214,6 @@ class Calendar {
                 return acc;
             }, {});
 
-            // Create list items
             Object.values(contractsById).forEach(contract => {
                 if (contract.start && contract.end) {
                     const li = document.createElement('li');
@@ -251,7 +233,6 @@ class Calendar {
             });
         }
 
-        // Update gatherings list
         const gatheringsList = this.listView.querySelector('.calendar-list-view__gatherings .calendar-list-view__items');
         if (gatheringsList) {
             gatheringsList.innerHTML = '';

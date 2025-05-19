@@ -186,6 +186,10 @@
         opacity: 0.8;
       }
 
+      &:hover {
+        background: rgba(v.$gold, 0.5);
+      }
+
       /* Webkit scrollbar styling */
       &::-webkit-scrollbar {
         width: 6px;
@@ -198,10 +202,6 @@
       &::-webkit-scrollbar-thumb {
         background: rgba(v.$gold, 0.3);
         border-radius: v.$radius-full;
-
-        &:hover {
-          background: rgba(v.$gold, 0.5);
-        }
       }
     }
 

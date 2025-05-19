@@ -144,6 +144,10 @@ function mythguard_files()
 
     // WordPress API Dependencies
     wp_enqueue_script('wp-api-fetch');
+    wp_localize_script('wp-api-fetch', 'wpApiSettings', array(
+        'root' => esc_url_raw(rest_url()),
+        'nonce' => wp_create_nonce('wp_rest')
+    ));
     wp_enqueue_script('mythguard_main_js', get_theme_file_uri('/build/index.js'), array('jquery', 'leaflet-js', 'wp-api', 'wp-api-fetch'), '1.0', true);
 
     // Localize script with theme URL and nonce

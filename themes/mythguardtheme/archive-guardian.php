@@ -3,7 +3,7 @@ get_header();
 pageBanner(array(
     'title' => 'All Guardians',
     'subtitle' => 'Meet our Guardians',
-    'photo' => get_theme_file_uri('/images/archive-banner.png'),
+    'photo' => get_theme_file_uri('/images/archive-banner.png.webp'),
 ));
 ?>
 
