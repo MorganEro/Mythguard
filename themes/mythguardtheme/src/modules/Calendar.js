@@ -60,9 +60,11 @@ class Calendar {
 
                         // Add visual indicator
                         const dot = document.createElement('span');
-                        dot.className = `event-dot ${event.type}-dot`;
-                        if (event.isStart) dot.classList.add('start-dot');
-                        if (event.isEnd) dot.classList.add('end-dot');
+                        if (event.type === 'contract') {
+                            dot.className = `event-dot ${event.isStart ? 'contract-start-dot' : 'contract-end-dot'}`;
+                        } else {
+                            dot.className = `event-dot ${event.type}-dot`;
+                        }
                         dayElem.appendChild(dot);
                     });
                     if (events.length > 1) dayElem.classList.add('has-multiple');
@@ -80,7 +82,7 @@ class Calendar {
             this.dates = response;
             this.updateCalendarDates();
         } catch (error) {
-            console.error('Error fetching calendar dates:', error);
+            // Handle error silently
         }
     }
 
@@ -115,21 +117,37 @@ class Calendar {
             existingEvents.remove();
         }
 
-        const events = [
-            ...this.dates.contracts.filter(item => item.date === dateStr),
-            ...this.dates.gatherings.filter(item => item.date === dateStr)
-        ];
+        // Get all contracts that match this date
+        const contractEvents = this.dates.contracts.filter(contract => 
+            contract.date === dateStr
+        ).map(contract => ({
+            ...contract,
+            type: 'contract'
+        }));
+        
+
+        // Get all gatherings on this date
+        const gatheringEvents = this.dates.gatherings.filter(item => 
+            item.date === dateStr
+        ).map(gathering => ({ ...gathering, type: 'gathering' }));
+
+        const events = [...contractEvents, ...gatheringEvents];
 
         if (events.length > 0) {
             const eventList = events.map(event => `
-                <div class="calendar-event calendar-event--${event.type}">
+                <a href="${event.url}" class="calendar-event calendar-event--${event.type}${event.isStart ? '-start' : event.isEnd ? '-end' : ''}">
                     <span class="calendar-event__type">${event.type}</span>
-                    <a href="${event.url}" class="calendar-event__title">${event.title}</a>
-                </div>
+                    <span class="calendar-event__title ${event.isStart ? 'start' : event.isEnd ? 'end' : ''}">${event.title}</span>
+                </a>
             `).join('');
 
-            this.content.querySelector('.calendar-legend').insertAdjacentHTML('afterend',
-                `<div class="calendar-events">${eventList}</div>`);
+            const legendElement = this.content.querySelector('.calendar-legend');
+            if (legendElement) {
+                legendElement.insertAdjacentHTML('afterend',
+                    `<div class="calendar-events">${eventList}</div>`);
+            } else {
+                console.error('Could not find .calendar-legend element');
+            }
         }
     }
 

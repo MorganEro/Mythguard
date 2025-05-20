@@ -29,8 +29,12 @@
             <!-- Event Legend -->
             <div class="calendar-legend">
                 <div class="legend-item">
-                    <span class="legend-dot contract"></span>
-                    <span>Contracts</span>
+                    <span class="legend-dot contract-start"></span>
+                    <span>Contract Start</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot contract-end"></span>
+                    <span>Contract End</span>
                 </div>
                 <div class="legend-item">
                     <span class="legend-dot event"></span>

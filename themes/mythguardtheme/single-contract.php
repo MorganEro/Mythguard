@@ -33,11 +33,13 @@ while (have_posts()) {
         $guardian_name = esc_html(get_the_title($guardian));
     }
 
-    // Check if contract is active
     $is_active = false;
-    $today = date('Y-m-d');
+    $now = date('m/d/Y g:i a');
     if ($contract_start && $contract_end) {
-        $is_active = ($today >= $contract_start && $today <= $contract_end);
+        $start_time = strtotime($contract_start);
+        $end_time = strtotime($contract_end);
+        $current_time = strtotime($now);
+        $is_active = ($current_time >= $start_time && $current_time <= $end_time);
     }
 
     pageBanner();
@@ -74,8 +76,13 @@ while (have_posts()) {
                 </div>
 
                 <div class="single-contract-details__row">
-                    <strong>Contract Dates:</strong>
-                    <input type="text" class="single-contract-date-range" name="date_range" value="<?php echo date('m/d/Y h:i A', strtotime($contract_start)) . ' to ' . date('m/d/Y h:i A', strtotime($contract_end)); ?>" readonly>
+                    <strong>Contract Starts:</strong>
+                    <input type="text" class="single-contract-start-date" name="start_date" value="<?php echo date('m/d/Y h:i A', strtotime($contract_start)); ?>" readonly>
+                </div>
+
+                <div class="single-contract-details__row">
+                    <strong>Contract Ends:</strong>
+                    <input type="text" class="single-contract-end-date" name="end_date" value="<?php echo date('m/d/Y h:i A', strtotime($contract_end)); ?>" readonly>
                 </div>
 
                 <div class="single-contract-details__row">

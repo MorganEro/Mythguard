@@ -39,13 +39,27 @@ class Contract {
   }
 
   setupDatePickers() {
-    const dateRange = document.querySelector('.new-contract-date-range');
+    const startDate = document.querySelector('.new-contract-start-date');
+    const endDate = document.querySelector('.new-contract-end-date');
+    
+    // Initialize both date pickers with shared config
+    const commonConfig = {
+      enableTime: true,
+      allowInput: true,
+      altInput: true,
+      altFormat: 'm/d/Y h:i K',
+      dateFormat: 'Y-m-d H:i:s',
+      minDate: 'today',
+      time_24hr: false,
+      minuteIncrement: 30,
+      disableMobile: true
+    };
 
-    if (dateRange) {
-      flatpickr(dateRange, {
+    if (startDate) {
+      flatpickr(startDate, {
+        ...commonConfig,
         enableTime: true,
         allowInput: true,
-        mode: 'range',
         altInput: true,
         altFormat: 'm/d/Y h:i K',
         dateFormat: 'Y-m-d H:i',
@@ -53,11 +67,28 @@ class Contract {
         time_24hr: false,
         minuteIncrement: 30,
         defaultHour: 9,
-        placeholder: 'Select contract dates...',
-        onClose: (selectedDates) => {
-          // Ensure both dates are selected
-          if (selectedDates.length === 2) {
-            dateRange.dispatchEvent(new Event('change'));
+        placeholder: 'Select start date...',
+        onChange: (selectedDates) => {
+          if (selectedDates[0]) {
+            // Update end date min date when start date changes
+            const endDatePicker = document.querySelector('.new-contract-end-date')._flatpickr;
+            if (endDatePicker) {
+              endDatePicker.set('minDate', selectedDates[0]);
+            }
+            startDate.dispatchEvent(new Event('change'));
+          }
+        }
+      });
+    }
+
+    if (endDate) {
+      flatpickr(endDate, {
+        ...commonConfig,
+        defaultHour: 17, // Default to 5 PM for end time
+        placeholder: 'Select end date...',
+        onChange: (selectedDates) => {
+          if (selectedDates[0]) {
+            endDate.dispatchEvent(new Event('change'));
           }
         }
       });
@@ -67,8 +98,6 @@ class Contract {
   setupRevealFields() {
     // Add click handlers to reveal buttons
     this.revealButtons.forEach(button => {
-      // Make sure button is clickable
-      button.style.cursor = 'pointer';
 
       const handleClick = e => {
         const group = button.closest('.form-group');
@@ -273,7 +302,8 @@ class Contract {
       ),
       programField: contractItem.querySelector('.contract-program-field, .single-contract-program-field'),
       guardianField: contractItem.querySelector('.contract-guardian-field, .single-contract-guardian-field'),
-      dateRangeField: contractItem.querySelector('.contract-date-range, .single-contract-date-range'),
+      startDateField: contractItem.querySelector('.contract-start-date, .single-contract-start-date'),
+      endDateField: contractItem.querySelector('.contract-end-date, .single-contract-end-date'),
 
       updateButton: contractItem.querySelector(
         '[data-action="update-contract"]'
@@ -333,22 +363,23 @@ class Contract {
       state.originalDescription = elements.descriptionField.value;
       state.originalProgram = elements.programField.value;
       state.originalGuardian = elements.guardianField.value;
-      state.originalDateRange = elements.dateRangeField.value;
-      state.originalNotes = elements.notesField?.value || '';
+      state.originalStartDate = elements.startDateField.value;
+      state.originalEndDate = elements.endDateField.value;
 
       // Enable editing
       elements.titleField.removeAttribute('readonly');
       elements.descriptionField.removeAttribute('readonly');
       elements.programField.removeAttribute('disabled');
       elements.guardianField.removeAttribute('disabled');
-      elements.dateRangeField.removeAttribute('readonly');
+      elements.startDateField.removeAttribute('readonly');
+      elements.endDateField.removeAttribute('readonly');
 
       // Update program and guardian options
       this.updateProgramOptions(this.programs, elements.programField);
       this.updateGuardianOptions(this.guardians, elements.guardianField);
 
       // Initialize Flatpickr on the date range field
-      const fp = flatpickr(elements.dateRangeField, {
+      const fp = flatpickr(elements.startDateField, {
         enableTime: true,
         allowInput: true,
         mode: 'range',
@@ -361,7 +392,23 @@ class Contract {
           const [date, time, ampm] = dateStr.split(' ');
           return new Date(date + ' ' + time + ' ' + ampm);
         },
-        defaultDate: elements.dateRangeField.value.split(' to ').map(date => date.trim())
+        defaultDate: elements.startDateField.value
+      });
+
+      const fp2 = flatpickr(elements.endDateField, {
+        enableTime: true,
+        allowInput: true,
+        mode: 'range',
+        altInput: true,
+        altFormat: 'm/d/Y h:i K',
+        dateFormat: 'Y-m-d H:i:s',
+        time_24hr: false,
+        minuteIncrement: 30,
+        parseDate: (dateStr) => {
+          const [date, time, ampm] = dateStr.split(' ');
+          return new Date(date + ' ' + time + ' ' + ampm);
+        },
+        defaultDate: elements.endDateField.value
       });
 
       if (elements.updateButton) elements.updateButton.style.display = 'inline-block';
@@ -376,20 +423,27 @@ class Contract {
       elements.descriptionField.value = state.originalDescription;
       elements.programField.value = state.originalProgram;
       elements.guardianField.value = state.originalGuardian;
-      elements.dateRangeField.value = state.originalDateRange;
+      elements.startDateField.value = state.originalStartDate;
+      elements.endDateField.value = state.originalEndDate;
 
       // Disable editing
       elements.titleField.setAttribute('readonly', true);
       elements.descriptionField.setAttribute('readonly', true);
       elements.programField.setAttribute('disabled', true);
       elements.guardianField.setAttribute('disabled', true);
-      elements.dateRangeField.setAttribute('readonly', true);
+      elements.startDateField.setAttribute('readonly', true);
+      elements.endDateField.setAttribute('readonly', true);
 
       // Destroy Flatpickr instance and ensure readonly
-      if (elements.dateRangeField._flatpickr) {
-        elements.dateRangeField._flatpickr.destroy();
+      if (elements.startDateField._flatpickr) {
+        elements.startDateField._flatpickr.destroy();
       }
-      elements.dateRangeField.setAttribute('readonly', true);
+      elements.startDateField.setAttribute('readonly', true);
+
+      if (elements.endDateField._flatpickr) {
+        elements.endDateField._flatpickr.destroy();
+      }
+      elements.endDateField.setAttribute('readonly', true);
 
       if (elements.updateButton) elements.updateButton.style.display = 'none';
       if (elements.editButton) {
@@ -464,16 +518,17 @@ class Contract {
     const description = form.querySelector('.new-contract-description').value;
     const programId = form.querySelector('.new-contract-program').value;
     const guardianId = form.querySelector('.new-contract-guardian').value;
-    const dateRange = form.querySelector('.new-contract-date-range')._flatpickr;
+    const startDatePicker = form.querySelector('.new-contract-start-date')._flatpickr;
+    const endDatePicker = form.querySelector('.new-contract-end-date')._flatpickr;
     
-    if (!dateRange || !dateRange.selectedDates || dateRange.selectedDates.length !== 2) {
+    if (!startDatePicker?.selectedDates[0] || !endDatePicker?.selectedDates[0]) {
       singletonToast.show('Please select both start and end dates', 'error');
       this.isProcessing = false;
       return;
     }
 
-    const startDate = dateRange.formatDate(dateRange.selectedDates[0], 'Y-m-d H:i:s');
-    const endDate = dateRange.formatDate(dateRange.selectedDates[1], 'Y-m-d H:i:s');
+    const startDate = startDatePicker.formatDate(startDatePicker.selectedDates[0], 'Y-m-d H:i:s');
+    const endDate = endDatePicker.formatDate(endDatePicker.selectedDates[0], 'Y-m-d H:i:s');
 
     if (!title || !programId || !guardianId) {
       singletonToast.show('Please fill in all required fields', 'error');
@@ -518,7 +573,8 @@ class Contract {
       descriptionField,
       programField,
       guardianField,
-      dateRangeField
+      startDateField,
+      endDateField
     } = this.getContractElements(clickedElement);
 
     if (!contractId) {
@@ -526,14 +582,17 @@ class Contract {
       return;
     }
 
-    if (!dateRangeField || !dateRangeField._flatpickr || !dateRangeField._flatpickr.selectedDates || dateRangeField._flatpickr.selectedDates.length !== 2) {
+    const startDatePicker = startDateField._flatpickr;
+    const endDatePicker = endDateField._flatpickr;
+
+    if (!startDatePicker?.selectedDates[0] || !endDatePicker?.selectedDates[0]) {
       singletonToast.show('Please select both start and end dates', 'error');
       this.isProcessing = false;
       return;
     }
 
-    const startDate = dateRangeField._flatpickr.formatDate(dateRangeField._flatpickr.selectedDates[0], 'Y-m-d H:i:s');
-    const endDate = dateRangeField._flatpickr.formatDate(dateRangeField._flatpickr.selectedDates[1], 'Y-m-d H:i:s');
+    const startDate = startDatePicker.formatDate(startDatePicker.selectedDates[0], 'Y-m-d H:i:s');
+    const endDate = endDatePicker.formatDate(endDatePicker.selectedDates[0], 'Y-m-d H:i:s');
 
     try {
       await wp.apiFetch({
