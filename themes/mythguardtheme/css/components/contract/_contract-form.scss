@@ -52,6 +52,13 @@
   border-radius: v.$radius-sm;
 }
 
+.expired-contract {
+  color: v.$text-muted !important;
+  background-color: rgba(v.$text-muted, 0.1);
+  padding: 0.5rem;
+  border-radius: v.$radius-sm;
+}
+
 .contract-count,
 .contract-count--admin {
   font-size: 1rem;

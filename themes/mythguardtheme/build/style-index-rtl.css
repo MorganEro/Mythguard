@@ -588,6 +588,13 @@ select:disabled {
   border-radius: 0.25rem;
 }
 
+.expired-contract {
+  color: #999189 !important;
+  background-color: rgba(153, 145, 137, 0.1);
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+}
+
 .contract-count,
 .contract-count--admin {
   font-size: 1rem;
@@ -1494,6 +1501,23 @@ select:disabled {
 }
 .search-overlay .link-list li {
   font-size: 1.3rem;
+}
+.link-list li.expired-contract {
+  position: relative;
+}
+.link-list li.expired-contract::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  border-radius: inherit;
+}
+.link-list li.expired-contract a {
+  color: #999189;
 }
 .link-list a {
   color: #b75330;

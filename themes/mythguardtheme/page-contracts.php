@@ -49,6 +49,10 @@ while (have_posts()) {
                     $contract_date = get_the_date('F j, Y');
                     $contract_start = get_field('contract_start');
                     $contract_end = get_field('contract_end');
+                    
+                    // Check if contract is expired
+                    $is_expired = $contract_end && strtotime($contract_end) < current_time('timestamp', true);
+                    $expired_class = $is_expired ? 'expired-contract' : '';
 
                     $related_program = get_field('related_programs');
                     $related_guardian = get_field('related_guardian');
@@ -74,7 +78,7 @@ while (have_posts()) {
                         $is_active = ($current_time >= $start_time && $current_time <= $end_time);
                     }
             ?>
-                    <li class="contract-item" data-id="<?php echo get_the_ID(); ?>">
+                    <li class="contract-item <?php echo $expired_class; ?>" data-id="<?php echo get_the_ID(); ?>">
                         <h2 class="contract-item__heading headline headline--medium">
                             <a href="<?php the_permalink(); ?>"><?php echo str_replace('Private: ', '', get_the_title()) ?></a>
                             <small class="single-contract-status <?php echo $is_active ? 'active' : 'inactive'; ?>"><?php echo $is_active ? 'Active' : 'Inactive'; ?></small>

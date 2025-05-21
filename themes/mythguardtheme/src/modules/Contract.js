@@ -480,7 +480,11 @@ class Contract {
       });
 
       // Update user's contract count
-      this.countElement.textContent = countResponse.isAdmin ? countResponse.userCount.toString() : `${countResponse.userCount}/5`;
+      const totalCount = countResponse.userCount;
+      const activeCount = countResponse.activeCount;
+      this.countElement.textContent = countResponse.isAdmin ? 
+        `${totalCount} (${activeCount} active)` : 
+        `${activeCount}/5 active (${totalCount} total)`;
 
       // Update total count for admin
       if (countResponse.isAdmin && this.adminCountElement) {
@@ -490,10 +494,10 @@ class Contract {
         this.adminCountElement.parentElement.style.display = 'none';
       }
 
-      // Hide the add contract button if user has reached limit and is not admin
+      // Hide the add contract button if user has reached active contract limit and is not admin
       const addButton = document.querySelector('.add-contract');
       if (addButton) {
-        addButton.style.display = (!countResponse.isAdmin && countResponse.userCount >= 5) ? 'none' : 'inline-block';
+        addButton.style.display = (!countResponse.isAdmin && activeCount >= 5) ? 'none' : 'inline-block';
       }
     } catch (error) {
       singletonToast.error('Failed to update contract count');

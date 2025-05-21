@@ -275,13 +275,35 @@ function mythguard_make_codex_private($data, $postarr)
 
 function mythguard_make_contract_private($data, $postarr)
 {
+    // Only check limit for non-admins
+    if (!current_user_can('administrator')) {
+        // Get current date in UTC
+        $current_date = current_time('mysql', true);
 
-    $user_id = get_current_user_id();
-    if (!current_user_can('administrator') && count_user_posts($user_id, 'contract') > 5 && !$postarr['ID']) {
-        wp_send_json_error([
-            'message' => 'You have reached the maximum limit of 5 contracts'
-        ], 403);
-        return;
+        // Count future contracts
+        $args = array(
+            'post_type' => 'contract',
+            'author' => get_current_user_id(),
+            'post_status' => 'private',
+            'posts_per_page' => -1,
+            'fields' => 'ids',
+            'meta_query' => array(
+                array(
+                    'key' => 'contract_end',
+                    'value' => $current_date,
+                    'compare' => '>',
+                    'type' => 'DATETIME'
+                )
+            )
+        );
+        $future_contracts = new WP_Query($args);
+
+        if ($future_contracts->found_posts >= 5) {
+            wp_send_json_error([
+                'message' => 'You have reached the maximum limit of 5 active contracts'
+            ], 403);
+            return;
+        }
     }
     if ($data['post_type'] == 'contract' && $data['post_status'] != 'trash') {
         $data['post_status'] = 'private';

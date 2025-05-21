@@ -123,11 +123,19 @@ function mythguard_get_contracts()
     $contracts = get_posts($args);
     $formatted_contracts = array();
 
+    // Get current date in UTC
+    $current_date = current_time('mysql', true);
+
     foreach ($contracts as $contract) {
+        $end_date = get_post_meta($contract->ID, 'contract_end', true);
+        $is_expired = $end_date && strtotime($end_date) < strtotime($current_date);
+
         $formatted_contracts[] = array(
             'id' => $contract->ID,
             'title' => $contract->post_title,
             'date' => $contract->post_date,
+            'endDate' => $end_date,
+            'isExpired' => $is_expired,
             'userContractCount' => count_user_posts($user_id, 'contract'),
             'isAdmin' => $is_admin
         );
@@ -140,18 +148,40 @@ function mythguard_get_contract_count() {
     $user_id = get_current_user_id();
     $is_admin = current_user_can('administrator');
     
-    // Get user's contract count
+    // Get current date in UTC
+    $current_date = current_time('mysql', true);
+
+    // Get user's active (future) contract count
     $args = array(
+        'post_type' => 'contract',
+        'author' => $user_id,
+        'post_status' => 'private',
+        'posts_per_page' => -1,
+        'fields' => 'ids',
+        'meta_query' => array(
+            array(
+                'key' => 'contract_end',
+                'value' => $current_date,
+                'compare' => '>',
+                'type' => 'DATETIME'
+            )
+        )
+    );
+    $future_contracts = new WP_Query($args);
+
+    // Get total contract count (including past contracts)
+    $args_total = array(
         'post_type' => 'contract',
         'author' => $user_id,
         'post_status' => 'private',
         'posts_per_page' => -1,
         'fields' => 'ids'
     );
-    $user_query = new WP_Query($args);
+    $total_contracts = new WP_Query($args_total);
     
     $response = array(
-        'userCount' => $user_query->found_posts,
+        'userCount' => $total_contracts->found_posts,
+        'activeCount' => $future_contracts->found_posts,
         'isAdmin' => $is_admin
     );
 
