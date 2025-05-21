@@ -84,33 +84,42 @@
 <div class="hero-slider splide">
     <div class="splide__track">
         <div class="splide__list">
-            <div class="splide__slide hero-slider__slide" style="background-image: url(<?php echo get_theme_file_uri('/images/transport-dragon.png.webp') ?>)">
-                <div class="hero-slider__interior container">
-                    <div class="hero-slider__overlay">
-                        <h2 class="headline headline--medium t-center">Free Transportation</h2>
-                        <p class="t-center">Travel between you and your guardian is complimentary.</p>
-                        <p class="t-center no-margin"><a href="#" class="btn btn--blue">Learn more</a></p>
+            <?php 
+            $heroSliderPosts = new WP_Query(array(
+                'posts_per_page' => 3,
+                'post_type' => 'post',
+                'meta_query' => array(
+                    array(
+                        'key' => '_thumbnail_id',
+                        'compare' => 'EXISTS'
+                    )
+                )
+            ));
+
+            while($heroSliderPosts->have_posts()) {
+                $heroSliderPosts->the_post();
+                $featuredImage = wp_get_attachment_image_src(get_post_thumbnail_id(), 'full');
+                ?>
+                <div class="splide__slide hero-slider__slide" style="background-image: url(<?php echo $featuredImage[0] ?>)">
+                    <div class="hero-slider__interior container">
+                        <div class="hero-slider__overlay">
+                            <h2 class="headline headline--medium t-center"><?php the_title(); ?></h2>
+                            <p class="t-center"><?php 
+                                if (has_excerpt()) {
+                                    echo get_the_excerpt();
+                                } else {
+                                    echo wp_trim_words(get_the_content(), 18);
+                                } 
+                            ?></p>
+                            <p class="t-center no-margin">
+                                <a href="<?php the_permalink(); ?>" class="btn btn--blue">Read More</a>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="splide__slide hero-slider__slide" style="background-image: url(<?php echo get_theme_file_uri('/images/fireFruit.png.webp') ?>)">
-                <div class="hero-slider__interior container">
-                    <div class="hero-slider__overlay">
-                        <h2 class="headline headline--medium t-center">Bonding Tips from the Phoenix</h2>
-                        <p class="t-center">Boost affinity with daily firefruit — a mythical favorite.</p>
-                        <p class="t-center no-margin"><a href="#" class="btn btn--blue">Learn more</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="splide__slide hero-slider__slide" style="background-image: url(<?php echo get_theme_file_uri('/images/raw-diet.png.webp') ?>)">
-                <div class="hero-slider__interior container">
-                    <div class="hero-slider__overlay">
-                        <h2 class="headline headline--medium t-center">Guardian Nourishment Program</h2>
-                        <p class="t-center">We ensure every guardian is well-fed and ready for duty.</p>
-                        <p class="t-center no-margin"><a href="#" class="btn btn--blue">Learn more</a></p>
-                    </div>
-                </div>
-            </div>
+            <?php }
+            wp_reset_postdata();
+            ?>
         </div>
     </div>
 </div>
