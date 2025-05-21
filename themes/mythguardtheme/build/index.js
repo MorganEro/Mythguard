@@ -7477,36 +7477,38 @@ class Contract {
       this.updateProgramOptions(this.programs, elements.programField);
       this.updateGuardianOptions(this.guardians, elements.guardianField);
 
-      // Initialize Flatpickr on the date range field
+      // Initialize Flatpickr on start date field
       const fp = (0,flatpickr__WEBPACK_IMPORTED_MODULE_1__["default"])(elements.startDateField, {
         enableTime: true,
         allowInput: true,
-        mode: 'range',
         altInput: true,
         altFormat: 'm/d/Y h:i K',
         dateFormat: 'Y-m-d H:i:s',
         time_24hr: false,
         minuteIncrement: 30,
-        parseDate: dateStr => {
-          const [date, time, ampm] = dateStr.split(' ');
-          return new Date(date + ' ' + time + ' ' + ampm);
-        },
-        defaultDate: elements.startDateField.value
+        defaultDate: elements.startDateField.value,
+        onChange: selectedDates => {
+          if (selectedDates[0]) {
+            // Update end date min date when start date changes
+            const endDatePicker = elements.endDateField._flatpickr;
+            if (endDatePicker) {
+              endDatePicker.set('minDate', selectedDates[0]);
+            }
+          }
+        }
       });
+
+      // Initialize Flatpickr on end date field
       const fp2 = (0,flatpickr__WEBPACK_IMPORTED_MODULE_1__["default"])(elements.endDateField, {
         enableTime: true,
         allowInput: true,
-        mode: 'range',
         altInput: true,
         altFormat: 'm/d/Y h:i K',
         dateFormat: 'Y-m-d H:i:s',
         time_24hr: false,
         minuteIncrement: 30,
-        parseDate: dateStr => {
-          const [date, time, ampm] = dateStr.split(' ');
-          return new Date(date + ' ' + time + ' ' + ampm);
-        },
-        defaultDate: elements.endDateField.value
+        defaultDate: elements.endDateField.value,
+        minDate: elements.startDateField.value
       });
       if (elements.updateButton) elements.updateButton.style.display = 'inline-block';
       if (elements.editButton) {
