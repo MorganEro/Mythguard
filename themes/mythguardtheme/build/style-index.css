@@ -1830,17 +1830,6 @@ body.login::before {
   padding: 0;
   pointer-events: none;
 }
-.calendar-widget .calendar-list-view__items::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 1.5rem;
-  background: linear-gradient(to bottom, transparent, rgba(245, 242, 235, 0.8));
-  pointer-events: none;
-  opacity: 0.8;
-}
 .calendar-widget .calendar-list-view__items::-webkit-scrollbar {
   width: 6px;
 }
@@ -1878,12 +1867,19 @@ body.login::before {
 .calendar-widget__content {
   position: absolute;
   bottom: calc(100% + 1rem);
-  right: 0;
+  right: 50%;
+  transform: translateX(50%);
   background-color: #eae4d3;
   padding: 1.5rem;
   border-radius: 0.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   width: 355px;
+}
+@media (min-width: 767px) {
+  .calendar-widget__content {
+    right: 0;
+    transform: translateX(0);
+  }
 }
 .calendar-widget__content .calendar-legend {
   display: flex;

@@ -1,4 +1,5 @@
 @use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
 
 .calendar-widget {
   position: fixed;
@@ -174,22 +175,6 @@
         pointer-events: none;
       }
 
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 1.5rem;
-        background: linear-gradient(
-          to bottom,
-          transparent,
-          rgba(v.$white, 0.8)
-        );
-        pointer-events: none;
-        opacity: 0.8;
-      }
-
       /* Webkit scrollbar styling */
       &::-webkit-scrollbar {
         width: 6px;
@@ -237,12 +222,18 @@
   &__content {
     position: absolute;
     bottom: calc(100% + 1rem);
-    right: 0;
+    right: 50%;
+    transform: translateX(50%);
     background-color: v.$background-light;
     padding: 1.5rem;
     border-radius: v.$radius-md;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     width: 355px;
+    
+    @include m.atSmallMedium {
+      right: 0;
+      transform: translateX(0);
+    }
 
     .calendar-legend {
       display: flex;
