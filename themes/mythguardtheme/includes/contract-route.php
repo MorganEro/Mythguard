@@ -78,7 +78,8 @@ function mythguard_register_contract_routes()
         'callback' => 'mythguard_delete_contract',
         'permission_callback' => function ($request) {
             $contract = get_post($request['id']);
-            return current_user_can('delete_contract', $request['id']) && get_current_user_id() == $contract->post_author;
+            return current_user_can('administrator') || 
+                   (current_user_can('delete_contract', $request['id']) && get_current_user_id() == $contract->post_author);
         },
         'args' => array(
             'id' => $id_arg
@@ -139,10 +140,34 @@ function mythguard_get_contract_count() {
     $user_id = get_current_user_id();
     $is_admin = current_user_can('administrator');
     
-    return new WP_REST_Response(array(
-        'count' => count_user_posts($user_id, 'contract'),
+    // Get user's contract count
+    $args = array(
+        'post_type' => 'contract',
+        'author' => $user_id,
+        'post_status' => 'private',
+        'posts_per_page' => -1,
+        'fields' => 'ids'
+    );
+    $user_query = new WP_Query($args);
+    
+    $response = array(
+        'userCount' => $user_query->found_posts,
         'isAdmin' => $is_admin
-    ), 200);
+    );
+
+    if ($is_admin) {
+        // Get total contract count
+        $args = array(
+            'post_type' => 'contract',
+            'post_status' => 'private',
+            'posts_per_page' => -1,
+            'fields' => 'ids'
+        );
+        $total_query = new WP_Query($args);
+        $response['totalCount'] = $total_query->found_posts;
+    }
+    
+    return new WP_REST_Response($response, 200);
 }
 
 function mythguard_get_contract($request)

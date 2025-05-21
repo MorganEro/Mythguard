@@ -62,18 +62,6 @@ function mythguard_custom_rest_fields()
         }
     ));
 
-    //Register contract endpoint
-    register_rest_route('mythguard/v1', '/contract-count', array(
-        'methods' => 'GET',
-        'callback' => function () {
-            return array(
-                'count' => count_user_posts(get_current_user_id(), 'contract')
-            );
-        },
-        'permission_callback' => function () {
-            return is_user_logged_in();
-        }
-    ));
 
     // Register other fields
     register_rest_field('post', 'authorName', array(

@@ -23,7 +23,8 @@ while (have_posts()) {
     <div class="container container--narrow page-section">
         <div class="create-contract">
             <button class="add-contract btn btn--blue" data-modal-trigger="create-contract-modal">New Contract</button>
-            <p class="contract-count"></p>
+            <p class="contract-count"><strong>Contracts:</strong> <span></span></p>
+            <p class="contract-count--admin"><strong>All Contracts:</strong> <span></span></p>
             <?php get_template_part('template-parts/content-modal', null, ['content' => $content, 'id' => $id]); ?>
         </div>
         <hr class="section-break">

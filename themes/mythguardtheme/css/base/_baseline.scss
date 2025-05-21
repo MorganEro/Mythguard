@@ -57,6 +57,11 @@ li {
   line-height: 1.65;
 }
 
+.wp-block-list {
+  list-style-type: disc;
+  padding-left: 2rem;
+}
+
 ul,
 ol {
   list-style: none;

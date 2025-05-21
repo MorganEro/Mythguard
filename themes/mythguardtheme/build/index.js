@@ -7146,7 +7146,8 @@ class Contract {
   constructor() {
     this.isProcessing = false;
     this.form = document.querySelector('.create-contract-form');
-    this.countElement = document.querySelector('.contract-count');
+    this.countElement = document.querySelector('.contract-count span');
+    this.adminCountElement = document.querySelector('.contract-count--admin span');
     this.guardianSelect = document.querySelector('.new-contract-guardian');
     this.programSelect = document.querySelector('.new-contract-program');
     this.formGroups = document.querySelectorAll('.form-group');
@@ -7562,24 +7563,26 @@ class Contract {
   async updateContractCount() {
     if (!this.countElement) return;
     try {
-      const response = await wp.apiFetch({
-        path: '/mythguard/v1/contracts?per_page=1'
-      });
-      if (Array.isArray(response) && response.length > 0) {
-        const totalCount = response[0].userContractCount;
-        const isAdmin = response[0].isAdmin;
-        this.countElement.textContent = isAdmin ? totalCount.toString() : `${totalCount}/5`;
-        // Hide the add contract button if user has reached limit and is not admin
-        const addButton = document.querySelector('.add-contract');
-        if (addButton) {
-          addButton.style.display = !isAdmin && totalCount >= 5 ? 'none' : 'inline-block';
-        }
-        return;
-      }
       const countResponse = await wp.apiFetch({
         path: '/mythguard/v1/contract-count'
       });
-      this.countElement.textContent = countResponse.isAdmin ? countResponse.count.toString() : `${countResponse.count}/5`;
+
+      // Update user's contract count
+      this.countElement.textContent = countResponse.isAdmin ? countResponse.userCount.toString() : `${countResponse.userCount}/5`;
+
+      // Update total count for admin
+      if (countResponse.isAdmin && this.adminCountElement) {
+        this.adminCountElement.textContent = countResponse.totalCount.toString();
+        this.adminCountElement.parentElement.style.display = 'block';
+      } else if (this.adminCountElement) {
+        this.adminCountElement.parentElement.style.display = 'none';
+      }
+
+      // Hide the add contract button if user has reached limit and is not admin
+      const addButton = document.querySelector('.add-contract');
+      if (addButton) {
+        addButton.style.display = !countResponse.isAdmin && countResponse.userCount >= 5 ? 'none' : 'inline-block';
+      }
     } catch (error) {
       _Toast__WEBPACK_IMPORTED_MODULE_0__.singletonToast.error('Failed to update contract count');
     }

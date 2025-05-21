@@ -103,6 +103,11 @@ li {
   line-height: 1.65;
 }
 
+.wp-block-list {
+  list-style-type: disc;
+  padding-right: 2rem;
+}
+
 ul,
 ol {
   list-style: none;
@@ -581,6 +586,12 @@ select:disabled {
   background-color: rgb(202.8693877551, 213.8, 224.7306122449);
   padding: 1.5rem;
   border-radius: 0.25rem;
+}
+
+.contract-count,
+.contract-count--admin {
+  font-size: 1rem;
+  margin: 0;
 }
 
 .form-group {

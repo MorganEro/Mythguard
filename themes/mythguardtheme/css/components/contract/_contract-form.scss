@@ -52,6 +52,14 @@
   border-radius: v.$radius-sm;
 }
 
+.contract-count,
+.contract-count--admin {
+  font-size: 1rem;
+  margin: 0;
+
+  
+}
+
 // Reveal Fields
 .form-group {
   position: relative;
