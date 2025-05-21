@@ -2335,6 +2335,28 @@ body.login::before {
   align-items: center;
 }
 
+.other-locations {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: -1rem;
+  border-radius: 0.5rem;
+  list-style: none;
+}
+.other-locations li {
+  background-color: #24313e;
+  padding: 3px 5px;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+.other-locations li:hover {
+  transform: translateY(1px);
+}
+.other-locations li a {
+  color: #f5f2eb;
+}
+
 .custom-modal {
   position: fixed;
   inset: 0;

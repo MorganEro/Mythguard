@@ -19,6 +19,28 @@ while (have_posts()) {
         <div class="generic-content">
             <?php the_content(); ?>
         </div>
+        <ul class="other-locations">
+            
+            <?php
+            $args = array(
+                'post_type' => 'location',
+                'posts_per_page' => -1,
+                'post__not_in' => array(get_the_ID()),
+            );
+            $query = new WP_Query($args);
+            if ($query->have_posts()) {
+                while ($query->have_posts()) {
+                    $query->the_post();
+            ?>
+                    <li class="other-locations__item">
+                        <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                    </li>
+            <?php
+                }
+            }
+            wp_reset_postdata();
+            ?>
+        </ul>
 
         <!-- Map Container -->
         <div class="acf-map">
