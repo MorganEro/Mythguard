@@ -24,6 +24,7 @@ class Contract {
     this.setupSelectListeners();
     this.setupRevealFields();
     this.setupDatePickers();
+    this.checkAutoEditMode();
   }
 
   setupSelectListeners() {
@@ -358,7 +359,10 @@ class Contract {
       document.querySelector(`[data-id="${contractId}"]`)
     );
 
-    if (!state.isEditing) {
+    // Toggle the editing state
+    state.isEditing = !state.isEditing;
+
+    if (state.isEditing) {
       // Save current values before editing
       state.originalTitle = elements.titleField.value;
       state.originalDescription = elements.descriptionField.value;
@@ -379,6 +383,10 @@ class Contract {
       this.updateProgramOptions(this.programs, elements.programField);
       this.updateGuardianOptions(this.guardians, elements.guardianField);
 
+      // Get today's date at midnight for comparison
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
       // Initialize Flatpickr on start date field
       const fp = flatpickr(elements.startDateField, {
         enableTime: true,
@@ -389,6 +397,7 @@ class Contract {
         time_24hr: false,
         minuteIncrement: 30,
         defaultDate: elements.startDateField.value,
+        minDate: today,
         onChange: (selectedDates) => {
           if (selectedDates[0]) {
             // Update end date min date when start date changes
@@ -410,10 +419,13 @@ class Contract {
         time_24hr: false,
         minuteIncrement: 30,
         defaultDate: elements.endDateField.value,
-        minDate: elements.startDateField.value
+        minDate: Math.max(new Date(elements.startDateField.value), today)
       });
 
-      if (elements.updateButton) elements.updateButton.style.display = 'inline-block';
+      // Update button states
+      if (elements.updateButton) {
+        elements.updateButton.style.display = 'inline-block';
+      }
       if (elements.editButton) {
         elements.editButton.textContent = 'Cancel';
         elements.editButton.classList.remove('btn--blue');
@@ -447,10 +459,13 @@ class Contract {
       }
       elements.endDateField.setAttribute('readonly', true);
 
-      if (elements.updateButton) elements.updateButton.style.display = 'none';
+      // Reset button states
+      if (elements.updateButton) {
+        elements.updateButton.style.display = 'none';
+      }
       if (elements.editButton) {
         elements.editButton.textContent = 'Edit';
-        elements.editButton.classList.remove('btn--dark-orange');
+        elements.editButton.classList.remove('btn--orange');
         elements.editButton.classList.add('btn--blue');
       }
 
@@ -505,11 +520,39 @@ class Contract {
     }
   }
 
+  // Check if we should automatically enter edit mode
+  async checkAutoEditMode() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('edit') === 'true') {
+      // Wait for guardians and programs to load
+      await Promise.all([
+        this.loadGuardians(),
+        this.loadPrograms()
+      ]);
+
+      const contractItem = document.querySelector('[data-id]');
+      if (contractItem) {
+        this.handleEditContract(contractItem.querySelector('[data-action="edit-contract"]'));
+      }
+    }
+  }
+
   // Contract Methods
   handleEditContract(clickedElement) {
-    const { contractId } = this.getContractElements(clickedElement);
-    if (!contractId) {
-      singletonToast.show('Contract ID not found', 'error');
+    const contractItem = clickedElement.closest('[data-id]');
+    const contractId = contractItem.dataset.id;
+    const state = this.getContractState(contractId);
+
+    // Check if contract is expired
+    const isExpired = contractItem.classList.contains('expired-contract');
+    if (isExpired) {
+      singletonToast.error('Cannot edit expired contracts');
+      return;
+    }
+
+    if (state.isEditing) {
+      // Cancel editing
+      this.toggleEditMode(contractId);
       return;
     }
     this.toggleEditMode(contractId);

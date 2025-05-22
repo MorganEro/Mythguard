@@ -2,7 +2,8 @@
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins' as m;
 
-.btn {
+.btn,
+.wp-block-button__link {
   display: inline-block;
   cursor: pointer;
   border-radius: v.$radius-sm;
@@ -10,7 +11,7 @@
   text-decoration: none;
   color: v.$text-main;
   font-size: 1.19rem;
-  padding: .7rem 2rem;
+  padding: 0.7rem 2rem;
   border: none;
   outline: none;
   color: v.$white;
@@ -27,7 +28,7 @@
 
   &--small {
     font-size: 0.88rem;
-    padding: .5rem .9rem;
+    padding: 0.5rem 0.9rem;
     font-weight: 300;
   }
 
@@ -130,7 +131,7 @@
   &--red {
     background-color: v.$deep-red;
     color: v.$white;
-  
+
     &:hover {
       background: linear-gradient(
         v.$deep-red,
@@ -139,7 +140,6 @@
       color: v.$white;
     }
   }
-  
 
   &--large {
     font-size: 1.3rem;
@@ -154,5 +154,17 @@
     background-color: transparent;
     cursor: default;
     color: v.$text-dark;
+  }
+}
+
+.wp-block-button__link {
+  background-color: v.$blue-grey;
+  margin-bottom: 1rem;
+
+  &:hover {
+    background: linear-gradient(
+      color.scale(v.$blue-grey, $lightness: 20%),
+      v.$blue-grey
+    );
   }
 }

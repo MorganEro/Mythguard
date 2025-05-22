@@ -90,13 +90,24 @@ while (have_posts()) {
                     <textarea class="single-contract-description-field" name="description" readonly><?php echo esc_textarea(wp_strip_all_tags(get_the_content())); ?></textarea>
                 </div>
 
-                <?php if ($can_edit) : ?>
+                <?php
+    // Check if contract is expired
+    $current_date = current_time('mysql', true);
+    $is_expired = $contract_end && strtotime($contract_end) < strtotime($current_date);
+    
+    // Check if we should automatically enter edit mode
+    $auto_edit = isset($_GET['edit']) && $_GET['edit'] === 'true' && !$is_expired;
+    
+    if ($can_edit) : ?>
                     <div class="single-contract-actions">
-                        <button data-action="edit-contract" class="btn btn--blue btn--small">Edit</button>
-                        <button data-action="update-contract" class="btn btn--blue btn--small" style="display: none;">Update</button>
+                        <?php if (!$is_expired) : ?>
+                            <button data-action="edit-contract" class="btn btn--blue btn--small">Edit</button>
+                            <button data-action="update-contract" class="btn btn--blue btn--small" style="display: none;">Update</button>
+                        <?php endif; ?>
                         <button data-action="delete-contract" class="btn btn--red btn--small">Delete</button>
                     </div>
                 <?php endif; ?>
+
             </div>
 
 

@@ -27,6 +27,7 @@ while (have_posts()) {
             <p class="contract-count--admin"><strong>All Contracts:</strong> <span></span></p>
             <?php get_template_part('template-parts/content-modal', null, ['content' => $content, 'id' => $id]); ?>
         </div>
+        <a href="<?php echo esc_url(site_url('/contract-agreement')); ?>" class="disclaimer">***Please read these terms and conditions before creating a contract.***</a>
         <hr class="section-break">
 
 
@@ -49,7 +50,10 @@ while (have_posts()) {
                     $contract_date = get_the_date('F j, Y');
                     $contract_start = get_field('contract_start');
                     $contract_end = get_field('contract_end');
-                    
+
+                    // Check if user can edit this contract
+                    $can_edit = current_user_can('administrator') || get_current_user_id() === get_the_author_meta('ID');
+
                     // Check if contract is expired
                     $is_expired = $contract_end && strtotime($contract_end) < current_time('timestamp', true);
                     $expired_class = $is_expired ? 'expired-contract' : '';
@@ -85,26 +89,36 @@ while (have_posts()) {
                         </h2>
                         <div class="meta-info">
                             <div class="meta-info__row">
-                                <strong>Program: </strong>
-                                <span><?php 
-                                    if ($program && $program_name !== 'N/A') {
-                                        echo '<a href="' . esc_url(get_permalink($program)) . '">' . $program_name . '</a>';
-                                    } else {
-                                        echo $program_name;
-                                    }
-                                ?></span>
+                                <p class="meta-info__program">Program: </p>
+                                <span><?php
+                                        if ($program && $program_name !== 'N/A') {
+                                            echo '<a href="' . esc_url(get_permalink($program)) . '">' . $program_name . '</a>';
+                                        } else {
+                                            echo $program_name;
+                                        }
+                                        ?></span>
                             </div>
                             <div class="meta-info__row">
-                                <strong>Guardian: </strong>
-                                <span><?php 
-                                    if ($guardian && $guardian_name !== 'N/A') {
-                                        echo '<a href="' . esc_url(get_permalink($guardian)) . '">' . $guardian_name . '</a>';
-                                    } else {
-                                        echo $guardian_name;
-                                    }
-                                ?></span>
+                                <p class="meta-info__guardian">Guardian: </p>
+                                <span><?php
+                                        if ($guardian && $guardian_name !== 'N/A') {
+                                            echo '<a href="' . esc_url(get_permalink($guardian)) . '">' . $guardian_name . '</a>';
+                                        } else {
+                                            echo $guardian_name;
+                                        }
+                                        ?></span>
                             </div>
-                            <small class="contract-date">Created on <?php echo $contract_date; ?></small>
+                            <!-- <small class="contract-date">Created on <?php echo $contract_date; ?></small> -->
+                            <?php if ($can_edit) : ?>
+                                <div class="contract-actions card__actions">
+                                    <?php if (!$is_expired) : ?>
+                                        <a href="<?php echo esc_url(get_permalink() . '?edit=true'); ?>" class="contract-edit-link">
+                                            <i class="fa fa-edit" title="Edit Contract"></i>
+                                        </a>
+                                    <?php endif; ?>
+                                    <i data-action="delete-contract" class="fa fa-trash" title="Delete Contract"></i>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </li>
                 <?php

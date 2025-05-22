@@ -493,7 +493,7 @@ select:disabled {
 }
 .contract-item .contract-item__heading small.single-contract-status {
   padding: 0.3rem 0.6rem;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
   border-radius: 9999rem;
@@ -510,6 +510,7 @@ select:disabled {
 }
 .contract-item .meta-info {
   background-color: rgba(245, 242, 235, 0.6);
+  font-size: 1.25rem;
   padding: 1.25rem;
   border-radius: 0.25rem;
   border: 1px solid rgba(36, 49, 62, 0.1);
@@ -520,10 +521,6 @@ select:disabled {
   gap: 0.75rem;
   margin-bottom: 0.75rem;
 }
-.contract-item .meta-info__row strong {
-  font-weight: 500;
-  color: #0f0f0f;
-}
 .contract-item .meta-info__row span a {
   font-weight: 400;
   color: #999189;
@@ -531,11 +528,41 @@ select:disabled {
 .contract-item .meta-info__row span a:hover {
   color: #c24900;
 }
+.contract-item .meta-info__guardian, .contract-item .meta-info__program {
+  font-weight: bold;
+  color: #0f0f0f;
+}
 .contract-item .meta-info .contract-date {
   display: block;
   margin-top: 1rem;
   font-size: 0.75rem;
   color: #999189;
+}
+
+.expired-contract {
+  color: #999189 !important;
+  background-color: rgba(153, 145, 137, 0.1);
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+}
+.expired-contract .meta-info__program,
+.expired-contract .meta-info__guardian {
+  color: rgba(153, 145, 137, 0.8);
+}
+
+.contract-actions.card__actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+.contract-actions.card__actions .fa-trash {
+  cursor: pointer;
+  color: #b75330;
+  transition: all 0.2s ease;
+}
+.contract-actions.card__actions .fa-trash:hover {
+  color: #994628;
 }
 
 /* Import Sass modules */
@@ -582,17 +609,14 @@ select:disabled {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   background-color: rgb(202.8693877551, 213.8, 224.7306122449);
   padding: 1.5rem;
   border-radius: 0.25rem;
 }
 
-.expired-contract {
-  color: #999189 !important;
-  background-color: rgba(153, 145, 137, 0.1);
-  padding: 0.5rem;
-  border-radius: 0.25rem;
+a.disclaimer {
+  font-weight: bold;
 }
 
 .contract-count,
@@ -886,7 +910,8 @@ select:disabled {
   align-items: center;
 }
 
-.btn {
+.btn,
+.wp-block-button__link {
   display: inline-block;
   cursor: pointer;
   border-radius: 0.25rem;
@@ -899,101 +924,135 @@ select:disabled {
   outline: none;
   color: #f5f2eb;
 }
-.btn:hover {
+.btn:hover,
+.wp-block-button__link:hover {
   text-decoration: none;
   color: #f5f2eb;
 }
-.btn:focus {
+.btn:focus,
+.wp-block-button__link:focus {
   outline: 2px solid #24313e;
   outline-offset: 2px;
 }
-.btn--small {
+.btn--small,
+.wp-block-button__link--small {
   font-size: 0.88rem;
   padding: 0.5rem 0.9rem;
   font-weight: 300;
 }
-.btn--with-photo {
+.btn--with-photo,
+.wp-block-button__link--with-photo {
   padding-left: 2.5rem;
   position: relative;
 }
-.btn--primary {
+.btn--primary,
+.wp-block-button__link--primary {
   background-color: #c24900;
 }
-.btn--primary:hover {
+.btn--primary:hover,
+.wp-block-button__link--primary:hover {
   background: linear-gradient(#c24900, rgb(145.5, 54.75, 0));
 }
-.btn--emphasis {
+.btn--emphasis,
+.wp-block-button__link--emphasis {
   background-color: #24313e;
 }
-.btn--emphasis:hover {
+.btn--emphasis:hover,
+.wp-block-button__link--emphasis:hover {
   background: linear-gradient(rgb(52.6481632653, 71.66, 90.6718367347), #24313e);
 }
-.btn--orange {
+.btn--orange,
+.wp-block-button__link--orange {
   background-color: #c24900;
 }
-.btn--orange:hover {
+.btn--orange:hover,
+.wp-block-button__link--orange:hover {
   background: linear-gradient(#c24900, rgb(145.5, 54.75, 0));
   color: #f5f2eb;
   mix-blend-mode: difference;
 }
-.btn--dark-orange {
+.btn--dark-orange,
+.wp-block-button__link--dark-orange {
   background-color: rgb(174.6, 65.7, 0);
 }
-.btn--dark-orange:hover {
+.btn--dark-orange:hover,
+.wp-block-button__link--dark-orange:hover {
   background: linear-gradient(rgb(174.6, 65.7, 0), rgb(126.1, 47.45, 0));
 }
-.btn--blue {
+.btn--blue,
+.wp-block-button__link--blue {
   background-color: #24313e;
 }
-.btn--blue:hover {
+.btn--blue:hover,
+.wp-block-button__link--blue:hover {
   background: linear-gradient(rgb(52.6481632653, 71.66, 90.6718367347), #24313e);
 }
-.btn--yellow {
+.btn--yellow,
+.wp-block-button__link--yellow {
   background-color: #b88a3d;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.22);
 }
-.btn--yellow:hover {
+.btn--yellow:hover,
+.wp-block-button__link--yellow:hover {
   background: linear-gradient(#b88a3d, rgb(173.95, 108.8955284553, 0));
 }
-.btn--beige {
+.btn--beige,
+.wp-block-button__link--beige {
   background-color: #f5f2eb;
   color: #24313e;
 }
-.btn--beige:hover {
+.btn--beige:hover,
+.wp-block-button__link--beige:hover {
   background-color: #b88a3d;
 }
-.btn--gray {
+.btn--gray,
+.wp-block-button__link--gray {
   background-color: #24313e;
 }
-.btn--white {
+.btn--white,
+.wp-block-button__link--white {
   background-color: #f5f2eb;
   color: #24313e;
 }
-.btn--white:hover {
+.btn--white:hover,
+.wp-block-button__link--white:hover {
   background-color: rgb(221, 210.8, 187);
 }
-.btn--red {
+.btn--red,
+.wp-block-button__link--red {
   background-color: #91222b;
   color: #f5f2eb;
 }
-.btn--red:hover {
+.btn--red:hover,
+.wp-block-button__link--red:hover {
   background: linear-gradient(#91222b, rgb(129.15, 5.1, 15.1581081081));
   color: #f5f2eb;
 }
-.btn--large {
+.btn--large,
+.wp-block-button__link--large {
   font-size: 1.3rem;
   padding: 1rem 2rem;
   border-radius: 0.5rem;
 }
 @media (min-width: 530px) {
-  .btn--large {
+  .btn--large,
+  .wp-block-button__link--large {
     font-size: 1.9rem;
   }
 }
-.btn--inactive {
+.btn--inactive,
+.wp-block-button__link--inactive {
   background-color: transparent;
   cursor: default;
   color: #0f0f0f;
+}
+
+.wp-block-button__link {
+  background-color: #24313e;
+  margin-bottom: 1rem;
+}
+.wp-block-button__link:hover {
+  background: linear-gradient(rgb(66.2693877551, 90.2, 114.1306122449), #24313e);
 }
 
 /* Import Sass modules */

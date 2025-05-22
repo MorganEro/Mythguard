@@ -46,25 +46,19 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   background-color: color.scale(v.$blue-grey, $lightness: 80%);
   padding: 1.5rem;
   border-radius: v.$radius-sm;
 }
 
-.expired-contract {
-  color: v.$text-muted !important;
-  background-color: rgba(v.$text-muted, 0.1);
-  padding: 0.5rem;
-  border-radius: v.$radius-sm;
+a.disclaimer {
+  font-weight: bold;
 }
-
 .contract-count,
 .contract-count--admin {
   font-size: 1rem;
   margin: 0;
-
-  
 }
 
 // Reveal Fields
@@ -140,8 +134,6 @@
     }
   }
 
- 
-
   &.active {
     &.floating-label {
       button:not(.reveal-input-btn) {
@@ -161,4 +153,3 @@
     }
   }
 }
-
