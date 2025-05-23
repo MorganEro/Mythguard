@@ -13,7 +13,7 @@
 }
 
 .single-contract-title-field {
-  font-size: 1.5rem;
+  font-size: v.$font-xxl;
   font-weight: bold;
   border: none;
   background: transparent;
@@ -23,7 +23,7 @@
 .single-contract-status {
   font-family: 'Cinzel', serif;
   padding: 0.3rem 0.6rem;
-  font-size: 0.8rem;
+  font-size: v.$font-xs;
   font-weight: 600;
   text-transform: uppercase;
   border-radius: v.$radius-full;
@@ -47,11 +47,10 @@
   gap: 1rem;
   margin-bottom: 1.5rem;
   align-items: center;
-
 }
 
 .single-contract-details__row strong {
-  color: #666;
+  color: v.$text-muted-dark;
 }
 
 .single-contract-details__row textarea {
@@ -65,5 +64,3 @@
   display: flex;
   gap: 1rem;
 }
-
-

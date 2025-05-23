@@ -23,8 +23,8 @@
     flex-direction: column;
     overflow-y: auto;
     min-height: 250px;
-    width: 95%;
-    max-width: 95%;
+    width: 100%;
+    max-width: 100%;
     padding-inline: 5px;
     padding-block: 5px;
     border: 1px solid rgba(v.$blue-grey, 0.25);
@@ -43,22 +43,96 @@
 /* Create contract */
 .create-contract {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
   gap: 1rem;
-  margin-bottom: 1rem;
-  background-color: color.scale(v.$blue-grey, $lightness: 80%);
-  padding: 1.5rem;
-  border-radius: v.$radius-sm;
-}
+  background-color: rgba(v.$text-muted, 0.05);
+  padding: 1rem;
+  border-radius: v.$radius-md;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 
-a.disclaimer {
-  font-weight: bold;
-}
-.contract-count,
-.contract-count--admin {
-  font-size: 1rem;
-  margin: 0;
+  @include m.atSmallMedium {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  @include m.atMedium {
+    flex-direction: row-reverse;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+
+    @include m.atMedium {
+      flex-direction: row-reverse;
+      align-items: center;
+    }
+  }
+
+  &__disclaimer {
+    font-size: v.$font-sm;
+    color: v.$link-color;
+    text-decoration: none;
+    transition: color 0.2s;
+
+    &:hover {
+      color: v.$link-hover-color;
+    }
+  }
+
+  &__counts {
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+    font-size: 1rem;
+    gap: 1rem;
+
+    @include m.atSmallMedium {
+      justify-content: space-evenly;
+      gap: 2rem;
+    }
+
+    .contract-count,
+    .contract-count--admin {
+      display: grid;
+      gap: 5px;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+
+      @include m.atSmall {
+        grid-template-columns: 1fr;
+        grid-template-rows: 40px 1fr;
+      }
+
+      @include m.atMedium {
+        grid-template-rows: 1fr;
+      }
+
+      &__title {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        align-items: center;
+        gap: 5px;
+        font-weight: 500;
+        color: v.$text-muted-dark;
+      }
+
+      span {
+        justify-self: end;
+
+        @include m.atSmall {
+          justify-self: start;
+        }
+
+        @include m.atSmallMedium {
+          justify-self: center;
+        }
+      }
+    }
+  }
 }
 
 // Reveal Fields
@@ -83,12 +157,6 @@ a.disclaimer {
       color: v.$text-muted;
       font-size: 1rem;
     }
-
-    input,
-    textarea,
-    select {
-      font-size: 1rem;
-    }
   }
 
   &.is-hidden {
@@ -110,7 +178,7 @@ a.disclaimer {
       transition: all 0.2s ease;
       position: relative;
       pointer-events: auto;
-      font-size: 1rem;
+      font-size: v.$font-base;
       padding: 0.1rem;
 
       &::after {
@@ -119,7 +187,7 @@ a.disclaimer {
         right: 1rem;
         top: 50%;
         transform: translateY(-50%);
-        font-size: 1.2rem;
+        font-size: v.$font-xl;
         font-weight: bold;
       }
 

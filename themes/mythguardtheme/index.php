@@ -11,6 +11,7 @@ pageBanner(array(
 
 <div class="container container--narrow page-section">
   <?php
+  get_template_part('template-parts/content', 'pagination');
 
   while (have_posts()) {
     the_post(); ?>
@@ -26,12 +27,8 @@ pageBanner(array(
     </div>
   <?php }
 
-  echo paginate_links();
   ?>
 </div>
-
-
-
 
 <?php
 get_footer();

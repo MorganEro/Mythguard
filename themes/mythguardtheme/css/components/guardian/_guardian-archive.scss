@@ -16,11 +16,12 @@
     justify-content: space-between;
     min-height: 350px;
     background-color: color.scale(v.$list-item-bg, $lightness: -2%);
-    border: 1px solid rgba(v.$rusty-orange, 0.35);
     border-radius: v.$radius-md;
     box-shadow: 0 4px 1rem rgba(0, 0, 0, 0.08);
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
 
     &:hover {
       transform: translateY(-4px);
@@ -31,7 +32,7 @@
   &__subtitle {
     padding: 1rem 1.25rem 0 1.25rem;
     font-weight: 600;
-    font-size: 1.05rem;
+    font-size: v.$font-lg;
     color: v.$rusty-orange;
     white-space: nowrap;
     overflow: hidden;
@@ -80,7 +81,7 @@
     text-align: center;
     font-weight: 700;
     padding: 0.75rem;
-    font-size: 1.5rem;
+    font-size: v.$font-xxl;
     letter-spacing: 0.5px;
 
     @include m.atMedium {

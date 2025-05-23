@@ -8,9 +8,9 @@ while (have_posts()) {
 
     <div class="container container--narrow page-section">
         <div class="metabox metabox--position-up metabox--with-home-link">
-            <p>
+            <div class="metabox__row">
                 <a class="metabox__blog-home-link" href="<?php echo get_post_type_archive_link('program') ?>"><i class="fa fa-home" aria-hidden="true"></i> Programs Home </a> <span class="metabox__main"><?php the_title(); ?></span>
-            </p>
+            </div>
         </div>
         <div class="generic-content">
             <?php the_content(); ?>
@@ -48,7 +48,7 @@ while (have_posts()) {
         }
 
 
-        wp_reset_postdata(); 
+        wp_reset_postdata();
 
         $today = date('Y-m-d H:i:s');
         $homepageGatherings = new WP_Query(array(

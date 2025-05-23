@@ -26,7 +26,7 @@
     }
 
     i {
-      font-size: 1.2rem;
+      font-size: v.$font-xl;
     }
   }
 
@@ -127,7 +127,7 @@
       justify-content: space-between;
       user-select: none;
       display: flex;
-      font-size: 1.5rem;
+      font-size: v.$font-xxl;
       padding: 0.75rem 1rem;
       margin: 0;
       background-color: v.$background-light;
@@ -137,7 +137,7 @@
         cursor: pointer;
         padding: 0.5rem;
         transition: color 0.2s ease;
-        font-size: 1.5rem;
+        font-size: v.$font-xxl;
 
         &:hover {
           color: v.$gold;
@@ -207,13 +207,13 @@
         display: flex;
         flex-direction: column;
         font-weight: 600;
-        font-size: 0.8rem;
+        font-size: v.$font-xs;
         color: v.$text-muted;
         min-width: 90px;
       }
 
       &__title {
-        font-size: 0.95rem;
+        font-size: v.$font-sm;
         flex-grow: 1;
       }
     }
@@ -229,7 +229,7 @@
     border-radius: v.$radius-md;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     width: 355px;
-    
+
     @include m.atSmallMedium {
       right: 0;
       transform: translateX(0);
@@ -248,7 +248,7 @@
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        font-size: 0.875rem;
+        font-size: v.$font-sm;
       }
 
       .legend-dot {
@@ -308,7 +308,7 @@
       }
 
       &__type {
-        font-size: 0.75rem;
+        font-size: v.$font-sm;
         padding: 0.25rem 0.5rem;
         border-radius: v.$radius-full;
         margin-right: 0.75rem;
@@ -320,9 +320,8 @@
       &__title {
         color: v.$text-dark;
         text-decoration: none;
-        font-size: 0.875rem;
+        font-size: v.$font-sm;
         font-weight: bold;
-
       }
 
       &--contract-start {

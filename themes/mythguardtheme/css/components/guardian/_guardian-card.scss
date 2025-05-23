@@ -13,8 +13,6 @@
     flex-wrap: wrap;
   }
 
-
-
   .search-overlay & {
     padding-top: 1.5rem;
   }
@@ -49,7 +47,7 @@
 
   &__name {
     font-weight: 300;
-    font-size: 0.9rem;
+    font-size: v.$font-base;
     position: absolute;
     bottom: 0;
     color: v.$text-main;

@@ -13,12 +13,14 @@
 
   li {
     padding: 1rem;
-    font-size: 1.5rem;
+    font-size: v.$font-xxl;
     border-radius: v.$radius-md;
     border: 1px solid rgba(v.$blue-grey, 0.18);
     background-color: color.scale(v.$list-item-bg, $lightness: -3%);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
 
     &:hover {
       transform: translateY(-2px);
@@ -26,12 +28,12 @@
     }
 
     .search-overlay & {
-      font-size: 1.3rem;
+      font-size: v.$font-xl;
     }
 
     &.expired-contract {
       position: relative;
-      
+
       &::before {
         content: '';
         position: absolute;
@@ -39,7 +41,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.3);
+        background-color: rgba(v.$contract-status-expired-bg, 0.3);
         pointer-events: none;
         border-radius: inherit;
       }
@@ -49,7 +51,6 @@
       }
     }
   }
-
 
   a {
     color: v.$link-color;

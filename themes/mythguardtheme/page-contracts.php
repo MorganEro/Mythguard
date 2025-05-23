@@ -22,12 +22,32 @@ while (have_posts()) {
 
     <div class="container container--narrow page-section">
         <div class="create-contract">
-            <button class="add-contract btn btn--blue" data-modal-trigger="create-contract-modal">New Contract</button>
-            <p class="contract-count"><strong>Contracts:</strong> <span></span></p>
-            <p class="contract-count--admin"><strong>All Contracts:</strong> <span></span></p>
+            <div class="create-contract__counts">
+                <div class="contract-count">
+                    <div class="contract-count__title">
+                        <i class="fas fa-user-check"></i> <strong>My Contracts:</strong>
+                    </div>
+                    <span></span>
+                </div>
+                <div class="contract-count--admin">
+                    <div class="contract-count__title">
+                        <i class="fas fa-users-cog"></i> <strong>All Contracts:</strong>
+                    </div>
+                    <span></span>
+                </div>
+            </div>
+            <div class="create-contract__actions">
+
+                <a href="<?php echo esc_url(site_url('/contract-agreement')); ?>" class="create-contract__disclaimer">
+                    <i class="fas fa-exclamation-circle"></i> Please read the agreement before creating a contract
+                </a>
+                <button class="btn btn--blue add-contract" data-modal-trigger="create-contract-modal">
+                    New Contract
+                </button>
+            </div>
+
             <?php get_template_part('template-parts/content-modal', null, ['content' => $content, 'id' => $id]); ?>
         </div>
-        <a href="<?php echo esc_url(site_url('/contract-agreement')); ?>" class="disclaimer">***Please read these terms and conditions before creating a contract.***</a>
         <hr class="section-break">
 
 
@@ -53,6 +73,8 @@ while (have_posts()) {
 
                     // Check if user can edit this contract
                     $can_edit = current_user_can('administrator') || get_current_user_id() === get_the_author_meta('ID');
+
+                    $author_name = get_the_author();
 
                     // Check if contract is expired
                     $is_expired = $contract_end && strtotime($contract_end) < current_time('timestamp', true);
@@ -108,9 +130,13 @@ while (have_posts()) {
                                         }
                                         ?></span>
                             </div>
-                            <!-- <small class="contract-date">Created on <?php echo $contract_date; ?></small> -->
+
+
                             <?php if ($can_edit) : ?>
                                 <div class="contract-actions card__actions">
+                                    <?php if ($is_admin) : ?>
+                                        <small class="contract-author">Created by <?php echo $author_name; ?></small>
+                                    <?php endif; ?>
                                     <?php if (!$is_expired) : ?>
                                         <a href="<?php echo esc_url(get_permalink() . '?edit=true'); ?>" class="contract-edit-link">
                                             <i class="fa fa-edit" title="Edit Contract"></i>

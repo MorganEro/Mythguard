@@ -88,7 +88,7 @@ class Search {
       `
       <div class="search-overlay">
         <div class="search-overlay__top">
-          <div class="container">
+          <div class="container search-overlay__top-inner">
             <i class="fa-solid fa-magnifying-glass search-overlay__icon" aria-hidden="true"></i>
             <input type="text" class="search-term" placeholder="What do you seek?" id="search-term">
             <i class="fa-solid fa-square-xmark search-overlay__close" aria-hidden="true"></i>

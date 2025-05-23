@@ -27,7 +27,6 @@ body.login .button-primary:hover {
   box-shadow: 0 1px 0 color.scale(v.$rusty-orange, $lightness: -25%);
 }
 
-
 body.login {
   background: v.$white url('../screenshot.png') center center no-repeat;
   background-size: cover;
@@ -46,10 +45,9 @@ body.login {
   }
 }
 
-
 .login h1 a {
   color: v.$white;
-  font-size: 2rem;
+  font-size: v.$font-xxxl;
   font-weight: 300;
   background-image: none;
   width: auto;
@@ -64,15 +62,18 @@ body.login {
   }
 }
 
-
-.login #loginform, .login .message, .login .notice, .login .success{
+.login #loginform,
+.login .message,
+.login .notice,
+.login .success {
   background-color: rgba(v.$white, 0.5);
   border-radius: v.$radius-sm;
   border: none;
   font-family: 'Open Sans', sans-serif;
 }
 
-.login #nav a, .login #backtoblog a {
+.login #nav a,
+.login #backtoblog a {
   color: v.$white;
   font-family: 'Open Sans', sans-serif;
 

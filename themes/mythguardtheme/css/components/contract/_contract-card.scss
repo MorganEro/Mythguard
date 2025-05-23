@@ -3,14 +3,18 @@
 @use '../../abstracts/mixins' as m;
 @use '../../base/animations' as a;
 
+#contracts {
+  align-items: center;
+}
+
 .contract-item {
   display: flex;
   flex-direction: column;
   width: 100%;
   padding: 2rem;
 
-  @include m.atSmallMedium {
-    width: 70%;
+  @include m.atMedium {
+    width: 80%;
   }
 
   .contract-item__heading {
@@ -79,19 +83,11 @@
       font-weight: bold;
       color: v.$text-dark;
     }
-
-    .contract-date {
-      display: block;
-      margin-top: 1rem;
-      font-size: 0.75rem;
-      color: v.$text-muted;
-    }
   }
 }
 
 .expired-contract {
   color: v.$text-muted !important;
-  background-color: rgba(v.$text-muted, 0.1);
   padding: 0.5rem;
   border-radius: v.$radius-sm;
 
@@ -103,9 +99,18 @@
 
 .contract-actions.card__actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: end;
   align-items: center;
   gap: 1rem;
+
+  .contract-author {
+    display: block;
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: v.$text-muted;
+    text-transform: capitalize;
+    margin-right: auto;
+  }
 
   .fa-trash {
     cursor: pointer;

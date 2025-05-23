@@ -8,9 +8,7 @@
   margin-top: -2.5rem;
   background-color: transparent;
   float: right;
-
-
-} 
+}
 
 .pagination {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
@@ -27,20 +25,20 @@
     height: 1.5rem;
     padding: 0 3px;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: v.$font-base;
     text-decoration: none;
-    border: 1px solid rgba(v.$text-muted, .4);
+    border: 1px solid rgba(v.$text-muted, 0.4);
     transition: all 0.2s ease;
 
     &:hover {
-      border-color: rgba(v.$rusty-orange, .5);
-      background-color: rgba(v.$rusty-orange, .1);
+      border-color: rgba(v.$rusty-orange, 0.5);
+      background-color: rgba(v.$rusty-orange, 0.1);
       transform: translateY(1px);
     }
 
     &.current {
-      background-color: rgba(v.$rusty-orange, .3);
-      border-color: rgba(v.$rusty-orange, .5);
+      background-color: rgba(v.$rusty-orange, 0.3);
+      border-color: rgba(v.$rusty-orange, 0.5);
       pointer-events: none;
       color: v.$rusty-orange;
     }
@@ -54,29 +52,26 @@
       justify-content: center;
       gap: 3px;
       padding: 0 1rem;
-      font-size: 0.9rem;
+      font-size: v.$font-sm;
       font-weight: 600;
-      
     }
   }
 }
 
 .pagination--blue-grey {
-  
   .page-numbers {
     color: v.$blue-grey;
     &:hover {
-      border-color: rgba(v.$blue-grey, .5);
-      background-color: rgba(v.$blue-grey, .1);
+      border-color: rgba(v.$blue-grey, 0.5);
+      background-color: rgba(v.$blue-grey, 0.1);
       transform: translateY(1px);
     }
 
     &.current {
-      background-color: rgba(v.$blue-grey, .3);
-      border-color: rgba(v.$blue-grey, .5);
+      background-color: rgba(v.$blue-grey, 0.3);
+      border-color: rgba(v.$blue-grey, 0.5);
       pointer-events: none;
       color: v.$blue-grey;
     }
-
   }
 }

@@ -9,7 +9,7 @@ class Table {
 
   addMobileLabels() {
     document.querySelectorAll(".guardian-roster tbody tr").forEach(row => {
-      const headers = ["Guardian Type", "Guardian Description", "Quantity"];
+      const headers = ["Guardian Type", "Guardian Description"];
       row.querySelectorAll("td").forEach((cell, i) => {
         cell.setAttribute("data-label", headers[i]);
       });

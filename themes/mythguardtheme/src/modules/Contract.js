@@ -6,12 +6,16 @@ class Contract {
     this.isProcessing = false;
     this.form = document.querySelector('.create-contract-form');
     this.countElement = document.querySelector('.contract-count span');
-    this.adminCountElement = document.querySelector('.contract-count--admin span');
+    this.adminCountElement = document.querySelector(
+      '.contract-count--admin span'
+    );
     this.guardianSelect = document.querySelector('.new-contract-guardian');
     this.programSelect = document.querySelector('.new-contract-program');
     this.formGroups = document.querySelectorAll('.form-group');
     this.revealButtons = document.querySelectorAll('.reveal-input-btn');
-    this.formInputs = document.querySelectorAll('.form-group.is-hidden input, .form-group.is-hidden textarea, .form-group.is-hidden select');
+    this.formInputs = document.querySelectorAll(
+      '.form-group.is-hidden input, .form-group.is-hidden textarea, .form-group.is-hidden select'
+    );
 
     this.state = new Map();
     this.guardians = [];
@@ -43,7 +47,7 @@ class Contract {
   setupDatePickers() {
     const startDate = document.querySelector('.new-contract-start-date');
     const endDate = document.querySelector('.new-contract-end-date');
-    
+
     // Initialize both date pickers with shared config
     const commonConfig = {
       enableTime: true,
@@ -54,7 +58,7 @@ class Contract {
       minDate: 'today',
       time_24hr: false,
       minuteIncrement: 30,
-      disableMobile: true
+      disableMobile: true,
     };
 
     if (startDate) {
@@ -70,16 +74,18 @@ class Contract {
         minuteIncrement: 30,
         defaultHour: 9,
         placeholder: 'Select start date...',
-        onChange: (selectedDates) => {
+        onChange: selectedDates => {
           if (selectedDates[0]) {
             // Update end date min date when start date changes
-            const endDatePicker = document.querySelector('.new-contract-end-date')._flatpickr;
+            const endDatePicker = document.querySelector(
+              '.new-contract-end-date'
+            )._flatpickr;
             if (endDatePicker) {
               endDatePicker.set('minDate', selectedDates[0]);
             }
             startDate.dispatchEvent(new Event('change'));
           }
-        }
+        },
       });
     }
 
@@ -88,11 +94,11 @@ class Contract {
         ...commonConfig,
         defaultHour: 17, // Default to 5 PM for end time
         placeholder: 'Select end date...',
-        onChange: (selectedDates) => {
+        onChange: selectedDates => {
           if (selectedDates[0]) {
             endDate.dispatchEvent(new Event('change'));
           }
-        }
+        },
       });
     }
   }
@@ -100,7 +106,6 @@ class Contract {
   setupRevealFields() {
     // Add click handlers to reveal buttons
     this.revealButtons.forEach(button => {
-
       const handleClick = e => {
         const group = button.closest('.form-group');
         if (!group) {
@@ -293,19 +298,31 @@ class Contract {
 
   // UI Methods
   getContractElements(clickedElement) {
-    const contractItem = clickedElement.closest('li') || clickedElement.closest('.single-contract-item');
-    
+    const contractItem =
+      clickedElement.closest('li') ||
+      clickedElement.closest('.single-contract-item');
+
     if (!contractItem) return null;
     return {
       contractItem,
-      titleField: contractItem.querySelector('.contract-title-field, .single-contract-title-field'),
+      titleField: contractItem.querySelector(
+        '.contract-title-field, .single-contract-title-field'
+      ),
       descriptionField: contractItem.querySelector(
         '.contract-description-field, .single-contract-description-field'
       ),
-      programField: contractItem.querySelector('.contract-program-field, .single-contract-program-field'),
-      guardianField: contractItem.querySelector('.contract-guardian-field, .single-contract-guardian-field'),
-      startDateField: contractItem.querySelector('.contract-start-date, .single-contract-start-date'),
-      endDateField: contractItem.querySelector('.contract-end-date, .single-contract-end-date'),
+      programField: contractItem.querySelector(
+        '.contract-program-field, .single-contract-program-field'
+      ),
+      guardianField: contractItem.querySelector(
+        '.contract-guardian-field, .single-contract-guardian-field'
+      ),
+      startDateField: contractItem.querySelector(
+        '.contract-start-date, .single-contract-start-date'
+      ),
+      endDateField: contractItem.querySelector(
+        '.contract-end-date, .single-contract-end-date'
+      ),
 
       updateButton: contractItem.querySelector(
         '[data-action="update-contract"]'
@@ -360,9 +377,7 @@ class Contract {
     );
 
     // Toggle the editing state
-    state.isEditing = !state.isEditing;
-
-    if (state.isEditing) {
+    if (!state.isEditing) {
       // Save current values before editing
       state.originalTitle = elements.titleField.value;
       state.originalDescription = elements.descriptionField.value;
@@ -387,6 +402,14 @@ class Contract {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
+      // Parse the dates from m/d/Y h:i A format
+      const startDateValue = elements.startDateField.value;
+      const endDateValue = elements.endDateField.value;
+      
+      // Parse dates using the display format
+      const parsedStartDate = flatpickr.parseDate(startDateValue, 'm/d/Y h:i A');
+      const parsedEndDate = flatpickr.parseDate(endDateValue, 'm/d/Y h:i A');
+      
       // Initialize Flatpickr on start date field
       const fp = flatpickr(elements.startDateField, {
         enableTime: true,
@@ -396,9 +419,9 @@ class Contract {
         dateFormat: 'Y-m-d H:i:s',
         time_24hr: false,
         minuteIncrement: 30,
-        defaultDate: elements.startDateField.value,
+        defaultDate: parsedStartDate,
         minDate: today,
-        onChange: (selectedDates) => {
+        onChange: selectedDates => {
           if (selectedDates[0]) {
             // Update end date min date when start date changes
             const endDatePicker = elements.endDateField._flatpickr;
@@ -406,10 +429,15 @@ class Contract {
               endDatePicker.set('minDate', selectedDates[0]);
             }
           }
-        }
+        },
       });
 
       // Initialize Flatpickr on end date field
+      const minEndDate = Math.max(
+        parsedStartDate?.getTime() || today.getTime(),
+        today.getTime()
+      );
+
       const fp2 = flatpickr(elements.endDateField, {
         enableTime: true,
         allowInput: true,
@@ -418,8 +446,8 @@ class Contract {
         dateFormat: 'Y-m-d H:i:s',
         time_24hr: false,
         minuteIncrement: 30,
-        defaultDate: elements.endDateField.value,
-        minDate: Math.max(new Date(elements.startDateField.value), today)
+        defaultDate: parsedEndDate,
+        minDate: new Date(minEndDate),
       });
 
       // Update button states
@@ -459,7 +487,6 @@ class Contract {
       }
       elements.endDateField.setAttribute('readonly', true);
 
-      // Reset button states
       if (elements.updateButton) {
         elements.updateButton.style.display = 'none';
       }
@@ -498,14 +525,15 @@ class Contract {
       // Update user's contract count
       const totalCount = countResponse.userCount;
       const activeCount = countResponse.activeCount;
-      this.countElement.textContent = countResponse.isAdmin ? 
-        `${totalCount} (${activeCount} active)` : 
-        `${activeCount}/5 active (${totalCount} total)`;
+      this.countElement.textContent = countResponse.isAdmin
+        ? `${activeCount} active / ${totalCount} total`
+        : `${activeCount}/5 active (${totalCount} total)`;
 
       // Update total count for admin
       if (countResponse.isAdmin && this.adminCountElement) {
-        this.adminCountElement.textContent = countResponse.totalCount.toString();
-        this.adminCountElement.parentElement.style.display = 'block';
+        this.adminCountElement.textContent =
+          countResponse.totalCount.toString();
+        this.adminCountElement.parentElement.style.display = 'grid';
       } else if (this.adminCountElement) {
         this.adminCountElement.parentElement.style.display = 'none';
       }
@@ -513,7 +541,8 @@ class Contract {
       // Hide the add contract button if user has reached active contract limit and is not admin
       const addButton = document.querySelector('.add-contract');
       if (addButton) {
-        addButton.style.display = (!countResponse.isAdmin && activeCount >= 5) ? 'none' : 'inline-block';
+        addButton.style.display =
+          !countResponse.isAdmin && activeCount >= 5 ? 'none' : 'inline-block';
       }
     } catch (error) {
       singletonToast.error('Failed to update contract count');
@@ -525,14 +554,13 @@ class Contract {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('edit') === 'true') {
       // Wait for guardians and programs to load
-      await Promise.all([
-        this.loadGuardians(),
-        this.loadPrograms()
-      ]);
+      await Promise.all([this.loadGuardians(), this.loadPrograms()]);
 
       const contractItem = document.querySelector('[data-id]');
       if (contractItem) {
-        this.handleEditContract(contractItem.querySelector('[data-action="edit-contract"]'));
+        this.handleEditContract(
+          contractItem.querySelector('[data-action="edit-contract"]')
+        );
       }
     }
   }
@@ -567,17 +595,30 @@ class Contract {
     const description = form.querySelector('.new-contract-description').value;
     const programId = form.querySelector('.new-contract-program').value;
     const guardianId = form.querySelector('.new-contract-guardian').value;
-    const startDatePicker = form.querySelector('.new-contract-start-date')._flatpickr;
-    const endDatePicker = form.querySelector('.new-contract-end-date')._flatpickr;
-    
-    if (!startDatePicker?.selectedDates[0] || !endDatePicker?.selectedDates[0]) {
+    const startDatePicker = form.querySelector(
+      '.new-contract-start-date'
+    )._flatpickr;
+    const endDatePicker = form.querySelector(
+      '.new-contract-end-date'
+    )._flatpickr;
+
+    if (
+      !startDatePicker?.selectedDates[0] ||
+      !endDatePicker?.selectedDates[0]
+    ) {
       singletonToast.show('Please select both start and end dates', 'error');
       this.isProcessing = false;
       return;
     }
 
-    const startDate = startDatePicker.formatDate(startDatePicker.selectedDates[0], 'Y-m-d H:i:s');
-    const endDate = endDatePicker.formatDate(endDatePicker.selectedDates[0], 'Y-m-d H:i:s');
+    const startDate = startDatePicker.formatDate(
+      startDatePicker.selectedDates[0],
+      'Y-m-d H:i:s'
+    );
+    const endDate = endDatePicker.formatDate(
+      endDatePicker.selectedDates[0],
+      'Y-m-d H:i:s'
+    );
 
     if (!title || !programId || !guardianId) {
       singletonToast.show('Please fill in all required fields', 'error');
@@ -623,7 +664,7 @@ class Contract {
       programField,
       guardianField,
       startDateField,
-      endDateField
+      endDateField,
     } = this.getContractElements(clickedElement);
 
     if (!contractId) {
@@ -634,14 +675,23 @@ class Contract {
     const startDatePicker = startDateField._flatpickr;
     const endDatePicker = endDateField._flatpickr;
 
-    if (!startDatePicker?.selectedDates[0] || !endDatePicker?.selectedDates[0]) {
+    if (
+      !startDatePicker?.selectedDates[0] ||
+      !endDatePicker?.selectedDates[0]
+    ) {
       singletonToast.show('Please select both start and end dates', 'error');
       this.isProcessing = false;
       return;
     }
 
-    const startDate = startDatePicker.formatDate(startDatePicker.selectedDates[0], 'Y-m-d H:i:s');
-    const endDate = endDatePicker.formatDate(endDatePicker.selectedDates[0], 'Y-m-d H:i:s');
+    const startDate = startDatePicker.formatDate(
+      startDatePicker.selectedDates[0],
+      'Y-m-d H:i:s'
+    );
+    const endDate = endDatePicker.formatDate(
+      endDatePicker.selectedDates[0],
+      'Y-m-d H:i:s'
+    );
 
     try {
       await wp.apiFetch({
@@ -663,7 +713,7 @@ class Contract {
       window.location.reload();
     } catch (error) {
       let errorMessage = 'Failed to update contract';
-      
+
       if (error.message) {
         errorMessage += `: ${error.message}`;
       } else if (!navigator.onLine) {
@@ -688,7 +738,9 @@ class Contract {
       return;
     }
 
-    const confirmed = await singletonToast.confirm('Are you sure you want to delete this contract?');
+    const confirmed = await singletonToast.confirm(
+      'Are you sure you want to delete this contract?'
+    );
     if (!confirmed) {
       this.isProcessing = false;
       return;
@@ -709,7 +761,6 @@ class Contract {
       this.isProcessing = false;
     }
   }
-
 }
 
 export default Contract;

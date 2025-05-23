@@ -4,7 +4,7 @@
 .metabox {
   background-color: v.$gold;
   border-radius: v.$radius-xs;
-  padding: .6rem 1rem;
+  padding: 0.6rem 1rem;
   display: inline-block;
   margin-bottom: 2rem;
   box-shadow: 2px 2px 1px color.adjust(v.$black, $alpha: -0.93);
@@ -20,12 +20,19 @@
   }
 
   &__main {
-    padding: .6rem 1rem .6rem 1rem;
+    padding: 0.6rem 1rem 0.6rem 1rem;
+    min-width: 0;
+    word-break: break-word;
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: max-content 1fr;
   }
 
   p {
     margin: 0;
-    font-size: 0.9rem;
+    font-size: v.$font-sm;
     color: v.$blue-grey;
   }
 
@@ -43,7 +50,7 @@
     background-color: v.$blue-grey;
     color: v.$text-main;
     display: inline-block;
-    padding: .6rem 1rem;
+    padding: 0.6rem 1rem;
     border-radius: v.$radius-xs;
     font-weight: normal;
   }

@@ -7459,8 +7459,7 @@ class Contract {
     const elements = this.getContractElements(document.querySelector(`[data-id="${contractId}"]`));
 
     // Toggle the editing state
-    state.isEditing = !state.isEditing;
-    if (state.isEditing) {
+    if (!state.isEditing) {
       // Save current values before editing
       state.originalTitle = elements.titleField.value;
       state.originalDescription = elements.descriptionField.value;
@@ -7485,6 +7484,14 @@ class Contract {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
+      // Parse the dates from m/d/Y h:i A format
+      const startDateValue = elements.startDateField.value;
+      const endDateValue = elements.endDateField.value;
+
+      // Parse dates using the display format
+      const parsedStartDate = flatpickr__WEBPACK_IMPORTED_MODULE_1__["default"].parseDate(startDateValue, 'm/d/Y h:i A');
+      const parsedEndDate = flatpickr__WEBPACK_IMPORTED_MODULE_1__["default"].parseDate(endDateValue, 'm/d/Y h:i A');
+
       // Initialize Flatpickr on start date field
       const fp = (0,flatpickr__WEBPACK_IMPORTED_MODULE_1__["default"])(elements.startDateField, {
         enableTime: true,
@@ -7494,7 +7501,7 @@ class Contract {
         dateFormat: 'Y-m-d H:i:s',
         time_24hr: false,
         minuteIncrement: 30,
-        defaultDate: elements.startDateField.value,
+        defaultDate: parsedStartDate,
         minDate: today,
         onChange: selectedDates => {
           if (selectedDates[0]) {
@@ -7508,6 +7515,7 @@ class Contract {
       });
 
       // Initialize Flatpickr on end date field
+      const minEndDate = Math.max(parsedStartDate?.getTime() || today.getTime(), today.getTime());
       const fp2 = (0,flatpickr__WEBPACK_IMPORTED_MODULE_1__["default"])(elements.endDateField, {
         enableTime: true,
         allowInput: true,
@@ -7516,8 +7524,8 @@ class Contract {
         dateFormat: 'Y-m-d H:i:s',
         time_24hr: false,
         minuteIncrement: 30,
-        defaultDate: elements.endDateField.value,
-        minDate: Math.max(new Date(elements.startDateField.value), today)
+        defaultDate: parsedEndDate,
+        minDate: new Date(minEndDate)
       });
 
       // Update button states
@@ -7555,8 +7563,6 @@ class Contract {
         elements.endDateField._flatpickr.destroy();
       }
       elements.endDateField.setAttribute('readonly', true);
-
-      // Reset button states
       if (elements.updateButton) {
         elements.updateButton.style.display = 'none';
       }
@@ -7589,12 +7595,12 @@ class Contract {
       // Update user's contract count
       const totalCount = countResponse.userCount;
       const activeCount = countResponse.activeCount;
-      this.countElement.textContent = countResponse.isAdmin ? `${totalCount} (${activeCount} active)` : `${activeCount}/5 active (${totalCount} total)`;
+      this.countElement.textContent = countResponse.isAdmin ? `${activeCount} active / ${totalCount} total` : `${activeCount}/5 active (${totalCount} total)`;
 
       // Update total count for admin
       if (countResponse.isAdmin && this.adminCountElement) {
         this.adminCountElement.textContent = countResponse.totalCount.toString();
-        this.adminCountElement.parentElement.style.display = 'block';
+        this.adminCountElement.parentElement.style.display = 'grid';
       } else if (this.adminCountElement) {
         this.adminCountElement.parentElement.style.display = 'none';
       }
@@ -8463,7 +8469,7 @@ class Search {
     document.body.insertAdjacentHTML('beforeend', `
       <div class="search-overlay">
         <div class="search-overlay__top">
-          <div class="container">
+          <div class="container search-overlay__top-inner">
             <i class="fa-solid fa-magnifying-glass search-overlay__icon" aria-hidden="true"></i>
             <input type="text" class="search-term" placeholder="What do you seek?" id="search-term">
             <i class="fa-solid fa-square-xmark search-overlay__close" aria-hidden="true"></i>
@@ -8660,7 +8666,7 @@ class Table {
   }
   addMobileLabels() {
     document.querySelectorAll(".guardian-roster tbody tr").forEach(row => {
-      const headers = ["Guardian Type", "Guardian Description", "Quantity"];
+      const headers = ["Guardian Type", "Guardian Description"];
       row.querySelectorAll("td").forEach((cell, i) => {
         cell.setAttribute("data-label", headers[i]);
       });

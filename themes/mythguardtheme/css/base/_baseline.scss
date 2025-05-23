@@ -7,6 +7,7 @@ body {
   overflow-x: hidden;
   position: relative;
   margin: 0;
+  font-size: v.$font-base;
 }
 
 * {
@@ -28,8 +29,6 @@ h6 {
   font-family: 'Cinzel', serif;
   text-transform: capitalize;
 }
-
-
 
 img {
   display: block;
@@ -66,72 +65,4 @@ ul,
 ol {
   list-style: none;
   padding: 0;
-}
-
-input,
-textarea,
-select {
-  background-color: v.$white;
-  border: none;
-  border: 1px solid rgba(v.$blue-grey, 0.25);
-  border-radius: v.$radius-sm;
-  outline: none;
-  width: 100%;
-  min-width: 0;
-  color: v.$text-dark;
-  padding: 0.5rem;
-  transition: all 0.2s ease;
-}
-textarea {
-  resize: vertical;
-}
-
-input:active,
-input:focus,
-select:active,
-select:focus,
-textarea:active,
-textarea:focus,
-input:hover,
-select:hover,
-textarea:hover {
-  border-color: v.$rusty-orange;
-  outline: none;
-  color: v.$text-dark;
-}
-input:focus::placeholder,
-input:active::placeholder,
-select:focus::placeholder,
-select:active::placeholder,
-textarea:active::placeholder,
-textarea:focus::placeholder {
-  color: v.$text-muted;
-  border: none;
-}
-input::placeholder,
-select::placeholder,
-textarea::placeholder {
-  color: v.$text-muted;
-}
-
-option:nth-of-type(odd) {
-  background: v.$background-light;
-}
-
-select option {
-  font-size: 0.75rem;
-}
-
-
-input[type="datetime-local"]:not(:valid) {
-  color: v.$text-muted;
-}
-
-
-textarea:read-only,
-input:read-only {
-  color: rgba(v.$rusty-orange, 0.7);
-}
-select:disabled {
-  color: v.$rusty-orange;
 }

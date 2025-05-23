@@ -3,39 +3,51 @@
 @use 'sass:math';
 @use 'sass:map';
 
+// abstracts/_typography.scss
+
+$font-xs: 0.8125rem; // 13px
+$font-sm: 0.875rem; // 14px
+$font-base: 1rem; // 16px
+$font-lg: 1.125rem; // 18px
+$font-xl: 1.25rem; // 20px
+$font-xxl: 1.5rem; // 24px
+$font-xxxl: 2rem; // 32px
+$font-banner: 3.6rem; // 58px
+$font-banner-lg: 5rem; // 80px
+
 // Core Colors
-$rusty-orange: #c24900;         
-$black: #0f0f0f;                
-$white: #f5f2eb;                
-$blue-grey: #24313e;            
-$gold: #b88a3d;                 
-$deep-red: #91222b;             
+$rusty-orange: #c24900;
+$black: #0f0f0f;
+$white: #f5f2eb;
+$blue-grey: #24313e;
+$gold: #b88a3d;
+$deep-red: #91222b;
 
 // Utility Colors
-$text-main: $white;             
-$text-dark: $black;             
-$text-muted: #999189;           
-$background-dark: #121212;      
-$background-light: #eae4d3;     
+$text-main: $white;
+$text-dark: $black;
+$text-muted: #999189;
+$text-muted-dark: #666;
+$background-dark: #121212;
+$background-light: #eae4d3;
 
 // Toast Colors
-$toast-success: #1f5c49;        
-$toast-error: #7e1c1c;          
+$toast-success: #1f5c49;
+$toast-error: #7e1c1c;
 
 // Contract Status Colors
-$contract-status-active: #2a8548;
+$contract-status-active: #358d53;
 $contract-status-active-bg: #e3f1e8;
 $contract-status-inactive: #b5323d;
 $contract-status-inactive-bg: #fbe6e8;
+$contract-status-expired-bg: #9d9995db;
 
 // Link Colors
-$link-color: #b75330;           
+$link-color: #b75330;
 $link-hover-color: #994628;
 $link-visited-color: #7d3a21;
-$list-item-bg: #ede6d5f3;       
-$list-item-shadow: 0 2px 8px rgba(28, 18, 10, 0.32); 
-
-
+$list-item-bg: #f1eee9f3;
+$list-item-shadow: 0 2px 8px rgba(28, 18, 10, 0.32);
 
 // Border Radius
 $radius-xs: 0.125rem;
