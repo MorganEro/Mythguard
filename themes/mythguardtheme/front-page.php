@@ -61,14 +61,13 @@
                         <span class="gathering-summary__day"><?php the_time('d') ?></span>
                     </a>
                     <div class="gathering-summary__content">
-                        <h5 class="gathering-summary__title headline headline--tiny"><a href="<?php the_permalink
-                        (); ?>"><?php the_title(); ?></a></h5>
+                        <h5 class="gathering-summary__title headline headline--tiny"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h5>
                         <div>
-                        <p><?php if (has_excerpt()) {
-                                echo get_the_excerpt();
-                            } else {
-                                echo wp_trim_words(get_the_content(), 18);
-                            } ?> <a href="<?php the_permalink(); ?>" class="nu gray">Read more</a></p>
+                            <p><?php if (has_excerpt()) {
+                                    echo get_the_excerpt();
+                                } else {
+                                    echo wp_trim_words(get_the_content(), 18);
+                                } ?> <a href="<?php the_permalink(); ?>" class="nu gray">Read more</a></p>
                         </div>
                     </div>
                 </div>
@@ -84,7 +83,7 @@
 <div class="hero-slider splide">
     <div class="splide__track">
         <div class="splide__list">
-            <?php 
+            <?php
             $heroSliderPosts = new WP_Query(array(
                 'posts_per_page' => 3,
                 'post_type' => 'post',
@@ -96,21 +95,22 @@
                 )
             ));
 
-            while($heroSliderPosts->have_posts()) {
+            while ($heroSliderPosts->have_posts()) {
                 $heroSliderPosts->the_post();
-                $featuredImage = wp_get_attachment_image_src(get_post_thumbnail_id(), 'full');
-                ?>
-                <div class="splide__slide hero-slider__slide" style="background-image: url(<?php echo $featuredImage[0] ?>)">
+                // $featuredImage = wp_get_attachment_image_src(get_post_thumbnail_id(), 'full');
+                $featuredImage = wp_get_attachment_image_url(get_post_thumbnail_id(), 'large');
+            ?>
+                <div class="splide__slide hero-slider__slide" style="background-image: url(<?php echo $featuredImage ?>)">
                     <div class="hero-slider__interior container">
                         <div class="hero-slider__overlay">
                             <h2 class="headline headline--medium t-center"><?php the_title(); ?></h2>
-                            <p class="t-center"><?php 
-                                if (has_excerpt()) {
-                                    echo get_the_excerpt();
-                                } else {
-                                    echo wp_trim_words(get_the_content(), 18);
-                                } 
-                            ?></p>
+                            <p class="t-center"><?php
+                                                if (has_excerpt()) {
+                                                    echo get_the_excerpt();
+                                                } else {
+                                                    echo wp_trim_words(get_the_content(), 18);
+                                                }
+                                                ?></p>
                             <p class="t-center no-margin">
                                 <a href="<?php the_permalink(); ?>" class="btn btn--blue">Read More</a>
                             </p>
