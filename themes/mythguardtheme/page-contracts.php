@@ -39,7 +39,7 @@ while (have_posts()) {
             <div class="create-contract__actions">
 
                 <a href="<?php echo esc_url(site_url('/contract-agreement')); ?>" class="create-contract__disclaimer">
-                    <i class="fas fa-exclamation-circle"></i> Please read the agreement before creating a contract
+                    <i class="fas fa-exclamation-circle"></i> Please read this agreement before creating a contract
                 </a>
                 <button class="btn btn--blue add-contract" data-modal-trigger="create-contract-modal">
                     New Contract
