@@ -28,8 +28,8 @@ jobs:
             echo "No package.json found. Skipping dependency install."
           fi
 
-      # ✅ Build assets
-      - name: Run build
+      # ✅ Build theme assets if build script exists
+      - name: Run build (Sass → CSS)
         run: |
           if [ -f package.json ]; then
             npm run build || echo "No build script found. Skipping build."
@@ -37,8 +37,8 @@ jobs:
             echo "No package.json found. Skipping build."
           fi
 
-      # ✅ Deploy theme/code to DreamHost
-      - name: Deploy theme/code via SSH
+      # ✅ Deploy via SSH to DreamHost
+      - name: Deploy to DreamHost via SSH
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.DH_HOST }}
@@ -51,14 +51,3 @@ jobs:
             git clean -fd
             git pull origin main
             echo '<?php if (function_exists("opcache_reset")) opcache_reset();' | php
-
-      # ✅ Upload new media files via rsync
-      - name: Sync media files via rsync
-        uses: burnett01/rsync-deployments@5.2
-        with:
-          switches: -avzr --ignore-existing
-          path: ./wp-content/uploads/
-          remote_path: ${{ secrets.DH_UPLOADS_PATH }}
-          remote_host: ${{ secrets.DH_HOST }}
-          remote_user: ${{ secrets.DH_USER }}
-          remote_key: ${{ secrets.DH_PRIVATE_KEY }}
