@@ -94,10 +94,13 @@
                     )
                 )
             ));
+            
+            echo "<!-- Debug: Number of posts found: " . $heroSliderPosts->post_count . " -->";
 
             while ($heroSliderPosts->have_posts()) {
                 $heroSliderPosts->the_post();
                 $featuredImage = wp_get_attachment_image_url(get_post_thumbnail_id(), 'large');
+                echo "<!-- Debug: Featured image URL for post '" . get_the_title() . "': " . $featuredImage . " -->";
             ?>
                 <div class="splide__slide hero-slider__slide" style="background-image: url(<?php echo $featuredImage ?>)">
                     <div class="hero-slider__interior container">
