@@ -56,3 +56,9 @@
   <?php if (is_user_logged_in()) : ?>
     <?php get_template_part('template-parts/content-calendar-widget'); ?>
   <?php endif; ?>
+  <?php if (!is_user_logged_in()) : ?>
+    <div class="login-message">
+
+      <a href="<?php echo wp_login_url(); ?>" class="login-message__text">Log in to reveal hidden features and unlock your journey with MythGuard.</a>
+    </div>
+  <?php endif; ?>

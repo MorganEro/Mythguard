@@ -238,3 +238,63 @@
     }
   }
 }
+
+.login-message {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: v.$modal;
+  width: 90%;
+  max-width: 600px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgba(v.$blue-grey, 0.7);
+  padding: 1rem 2rem 1rem 4rem;
+  border-radius: v.$radius-sm;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px); //
+  -webkit-backdrop-filter: blur(5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background-color: v.$blue-grey;
+    outline: 1px solid v.$gold;
+
+    a {
+      color: v.$gold;
+    }
+  }
+
+  @include m.atMedium {
+    right: 2rem;
+    transform: translateX(-14px);
+    background-color: rgba(v.$blue-grey, 0.5);
+  }
+
+  .login-message__text {
+    color: v.$gold;
+    margin: 0;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2.5rem;
+      height: 2.5rem;
+      background-image: url('../images/spinner/mythguard-emblem.svg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    @include m.atMedium {
+      color: v.$white;
+    }
+  }
+}
